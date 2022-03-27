@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/res/img">
+        <file alias="ico_about">res/img/about.png</file>
+        <file alias="ico_add_person">res/img/addPerson.png</file>
+        <file alias="ico_edit_person">res/img/editPerson.png</file>
+        <file alias="ico_exit">res/img/exit.png</file>
+        <file alias="ico_main">res/img/mainIcon.png</file>
+        <file alias="ico_qt">res/img/qt.png</file>
+    </qresource>
+</RCC>
