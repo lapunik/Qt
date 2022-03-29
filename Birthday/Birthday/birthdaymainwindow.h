@@ -30,7 +30,7 @@ private:
     void create_action(); // funkce kde si vytvoříme všechny akce
 
 private slots:
-    void not_implemented(); // dobrý je si vytvořit nějakou takovouhle funkci, na kterou budeme signály přesměrovávat, pokud ještě nebudou deklarovány
+    void not_implemented(); // dobrý je si vytvořit nějakou takovouhle funkci/slot, na kterou budeme signály přesměrovávat, pokud ještě nebudou deklarovány
     void toggle_statusbar(); // vyrolování a srolování stavového řádku/ nástrojového řádku
     void toggle_toolbar();
     void about_dialog(); // zobrazí informace o programu/qt
