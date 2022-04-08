@@ -9,11 +9,21 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    edit_person_dialog.cpp \
     main.cpp \
-    birthdaymainwindow.cpp
+    birthdaymainwindow.cpp \
+    new_person_dialog.cpp \
+    person.cpp \
+    person_model.cpp \
+    result_widget.cpp
 
 HEADERS += \
-    birthdaymainwindow.h
+    birthdaymainwindow.h \
+    edit_person_dialog.h \
+    new_person_dialog.h \
+    person.h \
+    person_model.h \
+    result_widget.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -1,0 +1,18 @@
+[
+    {
+        "day": 25,
+        "id": 1,
+        "month": 8,
+        "name": "Vojtěch",
+        "surname": "Lapuník",
+        "year": 1997
+    },
+    {
+        "day": 5,
+        "id": 2,
+        "month": 4,
+        "name": "Někdo",
+        "surname": "Jiný",
+        "year": 1987
+    }
+]

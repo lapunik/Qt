@@ -7,4 +7,8 @@
         <file alias="ico_main">res/img/mainIcon.png</file>
         <file alias="ico_qt">res/img/qt.png</file>
     </qresource>
+    <qresource prefix="/res/file">
+        <file alias="when">res/file/when.json</file>
+        <file alias="who">res/file/who.json</file>
+    </qresource>
 </RCC>

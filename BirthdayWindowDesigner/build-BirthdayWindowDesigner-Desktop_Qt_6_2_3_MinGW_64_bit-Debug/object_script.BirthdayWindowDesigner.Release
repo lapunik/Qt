@@ -1,0 +1,14 @@
+release/edit_person_dialog.o
+release/main.o
+release/birthdaywindow.o
+release/new_person_dialog.o
+release/person.o
+release/person_model.o
+release/result_widget.o
+release/qrc_resources.o
+release/moc_birthdaywindow.o
+release/moc_edit_person_dialog.o
+release/moc_new_person_dialog.o
+release/moc_person.o
+release/moc_person_model.o
+release/moc_result_widget.o

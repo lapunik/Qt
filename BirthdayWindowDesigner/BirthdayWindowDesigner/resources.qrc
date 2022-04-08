@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/res/img">
+        <file>res/img/about.png</file>
+        <file>res/img/addPerson.png</file>
+        <file>res/img/editPerson.png</file>
+        <file>res/img/exit.png</file>
+        <file>res/img/mainIcon.png</file>
+        <file>res/img/qt.png</file>
+    </qresource>
+    <qresource prefix="/res/file">
+        <file alias="when">res/file/when.json</file>
+        <file alias="who">res/file/who.json</file>
+    </qresource>
+</RCC>

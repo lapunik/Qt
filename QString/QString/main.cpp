@@ -6,33 +6,33 @@ int main()
 {
     QTextStream cout (stdout); // dopředu si vytvořím výstupní stream cout (jméno si můžu vybrat jaké chci)
 
-//    QString str = "Nejaka veta. "; // vytvořím libovolný string
-//    str.prepend("Pridani textu pred vetu. "); // mohu přidávat ke stringu ze předu
-//    str.append("Pridani textu na konec."); // i ze zadu další text
+    QString str = "Nejaka veta. "; // vytvořím libovolný string
+    str.prepend("Pridani textu pred vetu. "); // mohu přidávat ke stringu ze předu
+    str.append("Pridani textu na konec."); // i ze zadu další text
 
-//    cout << str << "\n";
-//    cout << "Retezec obsahuje " << str.size() << "znaku.\n";
-//    cout << str.toUpper() << "\n"; // obsah proměnné QString je zachovaný, jen výpis je změněn
-//    cout << str.toLower() << "\n";
+    cout << str << "\n";
+    cout << "Retezec obsahuje " << str.size() << "znaku.\n";
+    cout << str.toUpper() << "\n"; // obsah proměnné QString je zachovaný, jen výpis je změněn
+    cout << str.toLower() << "\n";
 
-//    cout << str[3] << "\n";
-//    cout << str[0] << "\n";
+    cout << str[3] << "\n";
+    cout << str[0] << "\n";
 
-//    int modre = 10;
-//    int cervene = 5;
+    int modre = 10;
+    int cervene = 5;
 
-//    QString str2("V nadobe se nachazi %1 modrych a %2 cervenych kulicek.");
+    QString str2("V nadobe se nachazi %1 modrych a %2 cervenych kulicek.");
 
-//    cout << str2.arg(modre).arg(cervene) << "\n";
+    cout << str2.arg(modre).arg(cervene) << "\n";
 
-//    double desetinne_cislo = 0.05;
-//    char znak = '+';
+    double desetinne_cislo = 0.05;
+    char znak = '+';
 
-//    cout << str2.arg(desetinne_cislo).arg(znak) << "\n";
+    cout << str2.arg(desetinne_cislo).arg(znak) << "\n";
 
-//    cout << str.left(4) << "\n"; // ctyři písmena z řetězce z leva
-//    cout << str.right(5) << "\n"; // pět písmen z řetězce z prava
-//    cout << str.mid(4,8) << "\n"; // písmena od čtvrtého do osmého
+    cout << str.left(4) << "\n"; // ctyři písmena z řetězce z leva
+    cout << str.right(5) << "\n"; // pět písmen z řetězce z prava
+    cout << str.mid(4,8) << "\n"; // písmena od čtvrtého do osmého
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -219,36 +219,36 @@ int main()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    QVector<int> vec = {1,3,5,4,8};
+//    QVector<int> vec = {1,3,5,4,8};
 
-    for(auto i : vec)
-    {
-        cout << i << ", ";
-    }
-    cout << "\n";
+//    for(auto i : vec)
+//    {
+//        cout << i << ", ";
+//    }
+//    cout << "\n";
 
-    QList<int> list = {1,3,5,4,8};
+//    QList<int> list = {1,3,5,4,8};
 
-    while(!list.isEmpty())
-    {
-        cout << list.front() << ", ";
-        list.pop_front();
-    }
-    cout << "\n";
+//    while(!list.isEmpty())
+//    {
+//        cout << list.front() << ", ";
+//        list.pop_front();
+//    }
+//    cout << "\n";
 
-    QStringList str_list = {"ahoj, nazdar, cus"};
+//    QStringList str_list = {"ahoj, nazdar, cus"};
 
-    while(!str_list.isEmpty())
-    {
-        cout << str_list.front() << ", ";
-        str_list.pop_front();
-    }
-    cout << "\n";
+//    while(!str_list.isEmpty())
+//    {
+//        cout << str_list.front() << ", ";
+//        str_list.pop_front();
+//    }
+//    cout << "\n";
 
-    QMap<QString,int> slovnik = {{"Ahoj",1},{"Cau",2},{"Nazdar",3},};
+//    QMap<QString,int> slovnik = {{"Ahoj",1},{"Cau",2},{"Nazdar",3},};
 
-    cout << slovnik.value("Ahoj") << "\n";
-    cout << slovnik.value("Cau") << "\n";
-    cout << slovnik.value("Nazdar") << "\n\n";
+//    cout << slovnik.value("Ahoj") << "\n";
+//    cout << slovnik.value("Cau") << "\n";
+//    cout << slovnik.value("Nazdar") << "\n\n";
 
 }

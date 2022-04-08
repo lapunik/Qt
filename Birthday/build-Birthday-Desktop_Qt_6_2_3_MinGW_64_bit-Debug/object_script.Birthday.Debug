@@ -1,0 +1,14 @@
+debug/edit_person_dialog.o
+debug/main.o
+debug/birthdaymainwindow.o
+debug/new_person_dialog.o
+debug/person.o
+debug/person_model.o
+debug/result_widget.o
+debug/qrc_resources.o
+debug/moc_birthdaymainwindow.o
+debug/moc_edit_person_dialog.o
+debug/moc_new_person_dialog.o
+debug/moc_person.o
+debug/moc_person_model.o
+debug/moc_result_widget.o

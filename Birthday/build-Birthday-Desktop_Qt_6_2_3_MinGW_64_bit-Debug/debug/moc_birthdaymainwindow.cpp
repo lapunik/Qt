@@ -8,6 +8,7 @@
 
 #include <memory>
 #include "../../Birthday/birthdaymainwindow.h"
+#include <QtGui/qtextcursor.h>
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
@@ -22,25 +23,28 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_BirthdayMainWindow_t {
-    const uint offsetsAndSize[14];
-    char stringdata0[97];
+    const uint offsetsAndSize[18];
+    char stringdata0[134];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_BirthdayMainWindow_t, stringdata0) + ofs), len 
 static const qt_meta_stringdata_BirthdayMainWindow_t qt_meta_stringdata_BirthdayMainWindow = {
     {
 QT_MOC_LITERAL(0, 18), // "BirthdayMainWindow"
-QT_MOC_LITERAL(19, 15), // "not_implemented"
-QT_MOC_LITERAL(35, 0), // ""
-QT_MOC_LITERAL(36, 16), // "toggle_statusbar"
-QT_MOC_LITERAL(53, 14), // "toggle_toolbar"
-QT_MOC_LITERAL(68, 12), // "about_dialog"
-QT_MOC_LITERAL(81, 15) // "about_qt_dialog"
+QT_MOC_LITERAL(19, 16), // "toggle_statusbar"
+QT_MOC_LITERAL(36, 0), // ""
+QT_MOC_LITERAL(37, 14), // "toggle_toolbar"
+QT_MOC_LITERAL(52, 12), // "about_dialog"
+QT_MOC_LITERAL(65, 15), // "about_qt_dialog"
+QT_MOC_LITERAL(81, 15), // "not_implemented"
+QT_MOC_LITERAL(97, 17), // "add_person_dialog"
+QT_MOC_LITERAL(115, 18) // "edit_person_dialog"
 
     },
-    "BirthdayMainWindow\0not_implemented\0\0"
-    "toggle_statusbar\0toggle_toolbar\0"
-    "about_dialog\0about_qt_dialog"
+    "BirthdayMainWindow\0toggle_statusbar\0"
+    "\0toggle_toolbar\0about_dialog\0"
+    "about_qt_dialog\0not_implemented\0"
+    "add_person_dialog\0edit_person_dialog"
 };
 #undef QT_MOC_LITERAL
 
@@ -50,7 +54,7 @@ static const uint qt_meta_data_BirthdayMainWindow[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -58,13 +62,17 @@ static const uint qt_meta_data_BirthdayMainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   44,    2, 0x08,    1 /* Private */,
-       3,    0,   45,    2, 0x08,    2 /* Private */,
-       4,    0,   46,    2, 0x08,    3 /* Private */,
-       5,    0,   47,    2, 0x08,    4 /* Private */,
-       6,    0,   48,    2, 0x08,    5 /* Private */,
+       1,    0,   56,    2, 0x08,    1 /* Private */,
+       3,    0,   57,    2, 0x08,    2 /* Private */,
+       4,    0,   58,    2, 0x08,    3 /* Private */,
+       5,    0,   59,    2, 0x08,    4 /* Private */,
+       6,    0,   60,    2, 0x08,    5 /* Private */,
+       7,    0,   61,    2, 0x08,    6 /* Private */,
+       8,    0,   62,    2, 0x08,    7 /* Private */,
 
  // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -80,11 +88,13 @@ void BirthdayMainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
         auto *_t = static_cast<BirthdayMainWindow *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->not_implemented(); break;
-        case 1: _t->toggle_statusbar(); break;
-        case 2: _t->toggle_toolbar(); break;
-        case 3: _t->about_dialog(); break;
-        case 4: _t->about_qt_dialog(); break;
+        case 0: _t->toggle_statusbar(); break;
+        case 1: _t->toggle_toolbar(); break;
+        case 2: _t->about_dialog(); break;
+        case 3: _t->about_qt_dialog(); break;
+        case 4: _t->not_implemented(); break;
+        case 5: _t->add_person_dialog(); break;
+        case 6: _t->edit_person_dialog(); break;
         default: ;
         }
     }
@@ -99,7 +109,7 @@ const QMetaObject BirthdayMainWindow::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_BirthdayMainWindow_t
 , QtPrivate::TypeAndForceComplete<BirthdayMainWindow, std::true_type>
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
 
 
 >,
@@ -126,13 +136,13 @@ int BirthdayMainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 7)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 5;
+        _id -= 7;
     }
     return _id;
 }

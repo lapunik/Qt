@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BirthdayWindow</class>
+ <widget class="QMainWindow" name="BirthdayWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>622</width>
+    <height>407</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Narozeniny</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/res/img/res/img/mainIcon.png</normaloff>:/res/img/res/img/mainIcon.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>622</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuOsoby">
+    <property name="title">
+     <string>Osoby</string>
+    </property>
+    <addaction name="mp_action_pridat_osobu"/>
+    <addaction name="action_upravit_osobu"/>
+    <addaction name="separator"/>
+    <addaction name="action_exit"/>
+   </widget>
+   <widget class="QMenu" name="menuZobrazit">
+    <property name="title">
+     <string>Zobrazit</string>
+    </property>
+    <addaction name="action_panel_nastroju"/>
+    <addaction name="action_stavovy_radek"/>
+   </widget>
+   <widget class="QMenu" name="menuN_pov_da">
+    <property name="title">
+     <string>Nápověda</string>
+    </property>
+    <addaction name="action_o_programu"/>
+    <addaction name="action_o_Qt"/>
+   </widget>
+   <addaction name="menuOsoby"/>
+   <addaction name="menuZobrazit"/>
+   <addaction name="menuN_pov_da"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="tool_bar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>LeftToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="mp_action_pridat_osobu"/>
+   <addaction name="action_upravit_osobu"/>
+   <addaction name="action_o_programu"/>
+   <addaction name="action_o_Qt"/>
+   <addaction name="action_exit"/>
+  </widget>
+  <action name="mp_action_pridat_osobu">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/img/res/img/addPerson.png</normaloff>:/res/img/res/img/addPerson.png</iconset>
+   </property>
+   <property name="text">
+    <string>Přidat osobu</string>
+   </property>
+   <property name="statusTip">
+    <string>Přidat novou osobu do seznamu.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="action_upravit_osobu">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/img/res/img/editPerson.png</normaloff>:/res/img/res/img/editPerson.png</iconset>
+   </property>
+   <property name="text">
+    <string>Upravit osobu</string>
+   </property>
+   <property name="statusTip">
+    <string>Upravit existující osobu v seznamu.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="action_panel_nastroju">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Panel nástrojů</string>
+   </property>
+   <property name="statusTip">
+    <string>Zobrazení nebo skrytí nástrojového panelu.</string>
+   </property>
+  </action>
+  <action name="action_stavovy_radek">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Stavový řádek</string>
+   </property>
+   <property name="statusTip">
+    <string>Zobrazení nebo skrytí status panelu.</string>
+   </property>
+  </action>
+  <action name="action_o_programu">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/img/res/img/about.png</normaloff>:/res/img/res/img/about.png</iconset>
+   </property>
+   <property name="text">
+    <string>O programu</string>
+   </property>
+   <property name="statusTip">
+    <string>Informace o programu.</string>
+   </property>
+  </action>
+  <action name="action_o_Qt">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/img/res/img/qt.png</normaloff>:/res/img/res/img/qt.png</iconset>
+   </property>
+   <property name="text">
+    <string>O Qt</string>
+   </property>
+   <property name="statusTip">
+    <string>Informace o Qt.</string>
+   </property>
+  </action>
+  <action name="action_exit">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/img/res/img/exit.png</normaloff>:/res/img/res/img/exit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Exit</string>
+   </property>
+   <property name="statusTip">
+    <string>Ukončení aplikace.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>
