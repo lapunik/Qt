@@ -20,6 +20,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    void setRoundedButton(QPushButton *button,int size,int base_color,int hover_color, int focus_color);
+    void setRoundedButton(QPushButton *button,int size,QString icon);
 };
 #endif // MAINWINDOW_H
