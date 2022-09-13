@@ -21,5 +21,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     void setRoundedButton(QPushButton *button,int size,QString icon);
+    void mouseDoubleClickEvent( QMouseEvent * e );
 };
 #endif // MAINWINDOW_H
