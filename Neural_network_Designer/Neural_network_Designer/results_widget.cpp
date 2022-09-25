@@ -14,7 +14,6 @@ void Results_widget::setWindow()
 {
     setContentsMargins(0,0,0,0);
 
-
     output_layout = new QHBoxLayout();
     download = new QPushButton();
     download->setText("  Download");
@@ -40,6 +39,7 @@ void Results_widget::setWindow()
     output_layout->addWidget(new QLabel("Output data: "));
     output_layout->addWidget(download);
 
+    connect(download,SIGNAL(clicked()),this,SLOT(download_clicked()));
 
     control_layout = new QHBoxLayout();
     left = new QPushButton();
@@ -93,9 +93,9 @@ void Results_widget::setWindow()
     main_widget->setLayout(main_V_layout);
 
     graph_l = new QLabel();
-    //graph.load(":/res/graphs/id");
-    //graph_l->setAlignment(Qt::AlignCenter);
-    //graph_l->setPixmap(graph);
+    graph_l->setAlignment(Qt::AlignCenter);
+    graph_l->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+     //graph_l->setPixmap(graph); // set blank plot?
 
     ////////////////////   TODO ////////////////////// Zkusit udělat real time vytváření grafu a jeho nahrávání do okna ve správném scaleu
     //graph_l->setPixmap(graph.scaled(graph_l->width(),graph_l->height(),Qt::KeepAspectRatio));
@@ -141,8 +141,8 @@ void Results_widget::redraw()
     }
 
     ScatterPlotSettings* settings = GetDefaultScatterPlotSettings();
-    settings->width = 1000; // TODO ////// Velikost okna v pixelech
-    settings->height = 750;
+    settings->width = graph_l->width()-50; // TODO ////// Velikost okna v pixelech
+    settings->height = graph_l->height()-50;
     settings->autoBoundaries = true;
     settings->autoPadding = true;
     settings->title = toVector(L"");
@@ -156,65 +156,21 @@ void Results_widget::redraw()
 
     DrawScatterPlotFromSettings(imageReference, settings, errorMessage);
 
-    graph_l = new QLabel();
-
     QImage *img = new QImage(settings->width, settings->height, QImage::Format_RGB16);
 
     for(int i = 0; i < settings->width; i++)
     {
         for(int u = 0; u < settings->height; u++)
         {
-            img->setPixel(i, u,
-                          QColor(imageReference->image->x->at(i)->y->at(u)->r,
-                                 imageReference->image->x->at(i)->y->at(u)->g,
-                                 imageReference->image->x->at(i)->y->at(u)->b,
-                                 imageReference->image->x->at(i)->y->at(u)->a)
-                          );
+            img->setPixelColor(i, u,QColor(static_cast<int>(255*imageReference->image->x->at(i)->y->at(u)->r),
+                                           static_cast<int>(255*imageReference->image->x->at(i)->y->at(u)->g),
+                                           static_cast<int>(255*imageReference->image->x->at(i)->y->at(u)->b),
+                                           static_cast<int>(255*imageReference->image->x->at(i)->y->at(u)->a))
+                               );
         }
     }
-    graph = (QPixmap::fromImage(*img));
-
-
-
-    //auto a = ConvertToPNG(imageReference->image);
-
-//    mp_equation->setFixedHeight(100);
-//    graph = new QPixmap((ConvertToPNG(imageReference->image)));
-
-//    mp_equation->setAlignment(Qt::AlignCenter);
-//    //equation = equation.scaled(QSize(100,50));
-//    mp_equation->setPixmap(equation);
-//    //mp_equation->setScaledContents(true);
-
-//    mp_picture = new QLabel();
-
-//    mp_graph_layout->addWidget(mp_picture);
-//    mp_graph_layout->addWidget(mp_equation);
-
-//    graph.load(":/res/graphs/id");
-//    mp_picture->setPixmap(graph);
-//    //mp_picture->setScaledContents(true);
-//    //mp_picture->setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored);
-
-//    mp_picture->setStyleSheet(QString("QLabel{"
-//                                      "background-color: rgba(255, 255, 255, 255);"
-//                                      "color: rgba(0, 0, 0, 255);"
-//                                      "border: none;"
-//                                      "border-radius: 3px;"
-//                                      "}"
-//                                      "}"));
-
-//    mp_equation->setStyleSheet(QString("QLabel{"
-//                                       "background-color: rgba(255, 255, 255, 255);"
-//                                       "color: rgba(0, 0, 0, 255);"
-//                                       "border: none;"
-//                                       "border-radius: 3px;"
-//                                       "}"
-//                                       "}"));
-
-
-    //WriteToFile(ConvertToPNG(imageReference->image), "model.png");
-
+    graph = QPixmap::fromImage(*img);
+    graph_l->setPixmap(graph);
 
 
 }
@@ -226,4 +182,9 @@ std::vector<int> Results_widget::change_color(std::vector<int> color)
     color.at(0) = c & 0x1 ? 1 : 0, color.at(1) = c & 0x2 ? 1 : 0, color.at(2) = c & 0x4 ? 1 : 0;
 
     return color;
+}
+
+void Results_widget::download_clicked()
+{
+
 }

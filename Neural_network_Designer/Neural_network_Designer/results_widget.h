@@ -43,6 +43,9 @@ private:
 
 signals:
 
+private slots:
+    void download_clicked();
+
 public slots:
     //void load_img_ref(RGBABitmapImageReference ref);
     void load_model(Neural_network_model *nn_model);
