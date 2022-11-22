@@ -23,8 +23,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Settings_widget_t {
-    const uint offsetsAndSize[20];
-    char stringdata0[191];
+    const uint offsetsAndSize[26];
+    char stringdata0[245];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_Settings_widget_t, stringdata0) + ofs), len 
@@ -39,7 +39,10 @@ QT_MOC_LITERAL(78, 5), // "state"
 QT_MOC_LITERAL(84, 28), // "max_iterations_check_clicked"
 QT_MOC_LITERAL(113, 23), // "tolerance_check_clicked"
 QT_MOC_LITERAL(137, 28), // "regularization_check_clicked"
-QT_MOC_LITERAL(166, 24) // "calculate_button_clicked"
+QT_MOC_LITERAL(166, 25), // "regularization_from_check"
+QT_MOC_LITERAL(192, 3), // "val"
+QT_MOC_LITERAL(196, 23), // "regularization_to_check"
+QT_MOC_LITERAL(220, 24) // "calculate_button_clicked"
 
     },
     "Settings_widget\0calculate\0\0"
@@ -48,6 +51,8 @@ QT_MOC_LITERAL(166, 24) // "calculate_button_clicked"
     "max_iterations_check_clicked\0"
     "tolerance_check_clicked\0"
     "regularization_check_clicked\0"
+    "regularization_from_check\0val\0"
+    "regularization_to_check\0"
     "calculate_button_clicked"
 };
 #undef QT_MOC_LITERAL
@@ -58,7 +63,7 @@ static const uint qt_meta_data_Settings_widget[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -66,15 +71,17 @@ static const uint qt_meta_data_Settings_widget[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   56,    2, 0x06,    1 /* Public */,
+       1,    0,   68,    2, 0x06,    1 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       3,    0,   57,    2, 0x08,    2 /* Private */,
-       4,    1,   58,    2, 0x08,    3 /* Private */,
-       6,    1,   61,    2, 0x08,    5 /* Private */,
-       7,    1,   64,    2, 0x08,    7 /* Private */,
-       8,    1,   67,    2, 0x08,    9 /* Private */,
-       9,    0,   70,    2, 0x08,   11 /* Private */,
+       3,    0,   69,    2, 0x08,    2 /* Private */,
+       4,    1,   70,    2, 0x08,    3 /* Private */,
+       6,    1,   73,    2, 0x08,    5 /* Private */,
+       7,    1,   76,    2, 0x08,    7 /* Private */,
+       8,    1,   79,    2, 0x08,    9 /* Private */,
+       9,    1,   82,    2, 0x08,   11 /* Private */,
+      11,    1,   85,    2, 0x08,   13 /* Private */,
+      12,    0,   88,    2, 0x08,   15 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
@@ -85,6 +92,8 @@ static const uint qt_meta_data_Settings_widget[] = {
     QMetaType::Void, QMetaType::Int,    5,
     QMetaType::Void, QMetaType::Int,    5,
     QMetaType::Void, QMetaType::Int,    5,
+    QMetaType::Void, QMetaType::Int,   10,
+    QMetaType::Void, QMetaType::Int,   10,
     QMetaType::Void,
 
        0        // eod
@@ -102,7 +111,9 @@ void Settings_widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 3: _t->max_iterations_check_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 4: _t->tolerance_check_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 5: _t->regularization_check_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 6: _t->calculate_button_clicked(); break;
+        case 6: _t->regularization_from_check((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 7: _t->regularization_to_check((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 8: _t->calculate_button_clicked(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -125,7 +136,7 @@ const QMetaObject Settings_widget::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_Settings_widget_t
 , QtPrivate::TypeAndForceComplete<Settings_widget, std::true_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
 
 
 >,
@@ -152,13 +163,13 @@ int Settings_widget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 9;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 9)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 7;
+        _id -= 9;
     }
     return _id;
 }

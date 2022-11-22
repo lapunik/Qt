@@ -44,3 +44,42 @@ QString Model_settings::algorithm_to_string(algorithm al)
     }
 
 }
+
+int Model_settings::algorithm_to_index(algorithm al)
+{
+    return al;
+}
+
+int Model_settings::regularization_to_index(regularization reg)
+{
+    return reg;
+}
+
+
+Model_settings::regularization Model_settings::string_to_regularization(QString al)
+{
+
+    if(al == QString("lasso"))
+    {
+        return lasso;
+    }
+    else
+    {
+        return nothing;
+    }
+
+}
+
+QString Model_settings::regularization_to_string(regularization reg)
+{
+
+    switch (reg)
+    {
+    case lasso:
+        return "lasso";
+    default:
+        return "None";
+
+    }
+
+}

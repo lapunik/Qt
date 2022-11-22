@@ -12,6 +12,7 @@
 #include <QFileDialog>
 #include <QFile>
 #include "model_settings.h"
+#include "message_box.h"
 
 
 class Settings_widget : public QWidget
@@ -22,6 +23,9 @@ public:
     virtual ~Settings_widget();
 
     Model_settings get_settings();
+    int get_num_of_inputs();
+    bool is_input_data();
+    void load_model(Model_settings sett);
 
 private:
 
@@ -38,6 +42,7 @@ private:
     QHBoxLayout *input_data_layout = nullptr;
     QHBoxLayout *regularization_layout = nullptr;
     QHBoxLayout *regularization_setting_iterations_layout = nullptr;
+    QHBoxLayout *regularization_setting_iterations_cycles_layout = nullptr;
 
     QComboBox *algorithm_combo = nullptr;
     QCheckBox *stochastic_check = nullptr;
@@ -56,6 +61,8 @@ private:
     QSpinBox *regularization_spin_to = nullptr;
     QLabel *regularization_label_from = nullptr;
     QLabel *regularization_label_to = nullptr;
+    QLabel *regularization_label_cycles = nullptr;
+    QSpinBox *regularization_spin_cycles = nullptr;
 
     QPushButton *calculate_button = nullptr;
 
@@ -64,8 +71,10 @@ private:
     void setSpinBox(QSpinBox *spin, bool disable);
     void setDoubleSpinBox(QDoubleSpinBox *spin, bool disable);
     void setWindow();
+    void input_data_ready();
 
     Model_settings input_data;
+
 
 signals:
 
@@ -78,6 +87,8 @@ private slots:
     void max_iterations_check_clicked(int state);
     void tolerance_check_clicked(int state);
     void regularization_check_clicked(int state);
+    void regularization_from_check(int val);
+    void regularization_to_check(int val);
     void calculate_button_clicked();
 };
 

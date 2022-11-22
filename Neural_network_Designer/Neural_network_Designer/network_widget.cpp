@@ -108,7 +108,7 @@ void Network_widget::add_layer(QList<Neuron::func> *fun)
 
 void Network_widget::remove_layer()
 {
-    if(layers->count() <= 1)
+    if(layers->count() <= 0)
     {
         return;
     }
@@ -122,7 +122,7 @@ void Network_widget::remove_layer()
 
     mp_inner_layout->addWidget(output_layer);
 
-    if(layers->count() == 1)
+    if(layers->count() == 0)
     {
          mp_remove_layer_buttton->button->setIcon(QIcon(":/res/icon/minus_disabled"));
     }
@@ -184,7 +184,8 @@ void Network_widget::resize_inner_event()
 
 std::vector<std::vector<function>> Network_widget::get_net()
 {
-    net.push_back(input_layer-> get_neurons());
+
+    std::vector<std::vector<function>> net;
 
     for(int i = 0; i < layers->count();i++)
     {
@@ -192,4 +193,22 @@ std::vector<std::vector<function>> Network_widget::get_net()
     }
 
     return net;
+}
+
+int Network_widget::get_number_of_inputs()
+{
+    return input_layer->get_neurons().size();
+}
+
+void Network_widget::load_model(std::vector< QList<Neuron::func>*> f)
+{
+    for(int i = 0;i < layers->count()+1; i++)
+    {
+        remove_layer();
+    }
+
+    for(int j = 0;j < static_cast<int>(f.size()); j++)
+    {
+        add_layer(f.at(j));
+    }
 }

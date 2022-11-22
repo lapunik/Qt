@@ -54,6 +54,20 @@
         <file alias="calculate2">res/icon/calculate2.png</file>
         <file alias="calculate3">res/icon/calculate3.png</file>
         <file alias="stop">res/icon/stop_calculate.png</file>
+        <file alias="arrow3">res/icon/arrow2.png</file>
+        <file alias="arrow2">res/icon/arrow3.png</file>
+        <file alias="arrowl3">res/icon/arrowl2.png</file>
+        <file alias="arrowl2">res/icon/arrowl3.png</file>
+        <file alias="information">res/icon/information.png</file>
+        <file alias="arrow1">res/icon/arrow.png</file>
+        <file alias="arrowl1">res/icon/arrowl.png</file>
+        <file alias="danger">res/icon/danger.png</file>
+        <file alias="all">res/icon/all.png</file>
+        <file alias="best">res/icon/best.png</file>
+        <file alias="mse">res/icon/mse.png</file>
+        <file alias="NonZC">res/icon/NonZC.png</file>
+        <file alias="parret">res/icon/parret.png</file>
+        <file alias="save_as">res/icon/save_as.png</file>
     </qresource>
     <qresource prefix="/res/graphs">
         <file alias="id">res/graphs/id_e.png</file>

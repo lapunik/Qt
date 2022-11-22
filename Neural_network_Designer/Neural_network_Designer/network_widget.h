@@ -14,6 +14,8 @@ public:
     virtual ~Network_widget();
 
     std::vector<std::vector<function>> get_net();
+    int get_number_of_inputs();
+    void load_model(std::vector< QList<Neuron::func>*> f);
 
 private:
 
@@ -27,8 +29,6 @@ private:
 
     Button_roundted *mp_add_layer_buttton = nullptr;
     Button_roundted *mp_remove_layer_buttton = nullptr;
-
-    std::vector<std::vector<function>> net;
 
     void redraw();
 

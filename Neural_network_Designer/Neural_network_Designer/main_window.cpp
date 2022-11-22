@@ -12,6 +12,10 @@ Main_window::Main_window(QWidget *parent) : QMainWindow(parent)
 
     connect(network_tabs, SIGNAL(tabBarClicked(int)), this, SLOT(new_tab(int)));
     connect(new_button, SIGNAL(clicked()), this, SLOT(new_tab_left_bar()));
+    connect(save_button, SIGNAL(clicked()), this, SLOT(save_clicked()));
+    connect(save_as_button, SIGNAL(clicked()), this, SLOT(save_as_clicked()));
+    connect(load_button, SIGNAL(clicked()), this, SLOT(load_clicked()));
+    connect(search, SIGNAL(selectionChanged()), this, SLOT(load_clicked()));
     connect(network_tabs, SIGNAL(tabCloseRequested(int)), this, SLOT(remove_tab(int)));
 
     network_tabs->addTab(new QWidget(this),QIcon(":/res/icon/plus2"),"");
@@ -194,6 +198,21 @@ void Main_window::set_left_layout()
                                "}"
                                );
 
+    save_as_button = new QPushButton(this);
+    save_as_button->setFixedSize(QSize(40,25));
+    save_as_button->setIcon(QIcon(":/res/icon/save_as"));
+    save_as_button->setIconSize(QSize(20,20));
+    save_as_button->setStyleSheet("QPushButton"
+                               "{"
+                               "border: none;"
+                               "border-radius: 3px;"
+                               "}"
+                               "QPushButton:hover"
+                               "{"
+                               "background-color:rgba(200, 200, 200, 255);"
+                               "}"
+                               );
+
     load_button = new QPushButton(this);
     load_button->setFixedSize(QSize(40,25));
     load_button->setIcon(QIcon(":/res/icon/load"));
@@ -245,6 +264,7 @@ void Main_window::set_left_layout()
     layout_left_bar->setSpacing(5);
     layout_left_bar->addWidget(new_button);
     layout_left_bar->addWidget(save_button);
+    layout_left_bar->addWidget(save_as_button);
     layout_left_bar->addWidget(load_button);
     layout_left_bar->addWidget(exit_button2);
     layout_left_bar->addWidget(label);
@@ -444,9 +464,16 @@ void Main_window::remove_tab(int index)
     if(index == network_tabs->count()-1) // pokud se snažím odstranit plusko, tak udělej jen return
         return;
 
+    result_wigets->at(index)->disconnect_save();
     result_wigets->removeAt(index);
+
     network_tabs->removeTab(index);
-    //removed = true;
+
+    for(int i = 0;i < result_wigets->count();i++)
+    {
+        result_wigets->at(i)->update_ID(i);
+    }
+
 }
 
 void Main_window::new_tab(int index)
@@ -457,7 +484,13 @@ void Main_window::new_tab(int index)
 
         network_tabs->removeTab(network_tabs->count()-1); // odstranění pluska
 
-        result_wigets->append(new Result_widget(this)); // vytvoření nového widgetu
+        for(int i = 0;i < result_wigets->count();i++)
+        {
+            result_wigets->at(i)->update_ID(i);
+        }
+
+        result_wigets->append(new Result_widget(result_wigets->count(),this)); // vytvoření nového widgetu
+        connect(result_wigets->last(), SIGNAL(change_name(int, QString)), this, SLOT(change_name(int,QString)));
         network_tabs->addTab(result_wigets->at(result_wigets->count()-1),QString("Untitled*")); // jeho pojmenování a vložení do tabů
 
         network_tabs->addTab(new QWidget(this),QIcon(":/res/icon/plus2"),""); // zpátky přidání pluska
@@ -466,9 +499,52 @@ void Main_window::new_tab(int index)
     }
 }
 
+void Main_window::save_clicked()
+{
+    emit save(false, network_tabs->currentIndex());
+}
+
+void Main_window::save_as_clicked()
+{
+    emit save(true, network_tabs->currentIndex());
+}
+
+void Main_window::load_clicked()
+{
+
+    QString file_name = QFileDialog::getOpenFileName(this,"Choose model file.","",tr("Neural network file (*.nnd)"));
+
+
+    if((file_name == "")||(file_name.split('.').last() != "nnd"))
+    {
+        if(file_name != "")
+        {
+            Message_box* mess = new Message_box("\n Wrong type of file.","Error",this);
+            mess->exec();
+            if (mess != nullptr)
+            {
+                delete mess;
+            }
+        }
+        return;
+
+    }
+
+    new_tab_left_bar();
+
+    result_wigets->last()->load_model(file_name);
+
+    network_tabs->setCurrentIndex(network_tabs->count()-2);
+}
+
 void Main_window::new_tab_left_bar()
 {
     new_tab(network_tabs->count()-1);
+}
+
+void Main_window::change_name(int id, QString name)
+{
+        network_tabs->setTabText(id,name);
 }
 
 //Below two methods partially from Qt Shaped Clock example
@@ -482,6 +558,10 @@ void Main_window::mousePressEvent(QMouseEvent *event)
 
     if (event->button() == Qt::LeftButton)
     {
+
+        manual_resize = true;
+        //QApplication::setOverrideCursor(Qt::ForbiddenCursor);
+
         //Coordinates have been mapped such that the mouse position is relative to the
         //upper left of the main window
         mpos = event->globalPosition() - frameGeometry().topLeft();
@@ -501,6 +581,7 @@ void Main_window::mousePressEvent(QMouseEvent *event)
 void Main_window::mouseReleaseEvent(QMouseEvent *event)
 {
     QApplication::setOverrideCursor(Qt::ArrowCursor);
+    manual_resize = false;
 }
 
 void Main_window::mouseMoveEvent(QMouseEvent *event)

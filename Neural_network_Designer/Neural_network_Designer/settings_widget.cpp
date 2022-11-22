@@ -9,6 +9,8 @@ Settings_widget::Settings_widget(QWidget *parent) : QWidget{parent}
     connect(tolerance_check,SIGNAL(stateChanged(int)),this,SLOT(tolerance_check_clicked(int)));
     connect(max_iterations_check,SIGNAL(stateChanged(int)),this,SLOT(max_iterations_check_clicked(int)));
     connect(regularization_check,SIGNAL(stateChanged(int)),this,SLOT(regularization_check_clicked(int)));
+    connect(regularization_spin_from,SIGNAL(valueChanged(int)),this,SLOT(regularization_from_check(int)));
+    connect(regularization_spin_to,SIGNAL(valueChanged(int)),this,SLOT(regularization_to_check(int)));
 
 
 }
@@ -101,7 +103,7 @@ void Settings_widget::setWindow()
                                     );
     stochastic_label->setFixedWidth(30);
     stochastic_spin = new QDoubleSpinBox();
-    stochastic_spin->setValue(0.5);
+    stochastic_spin->setValue(0.6);
     stochastic_spin->setMaximum(1);
     stochastic_spin->setSingleStep(0.1);
     stochastic_spin->setFixedWidth(100);
@@ -114,7 +116,7 @@ void Settings_widget::setWindow()
 
     learning_coef_layout = new QHBoxLayout();
     learning_coef_spin = new QDoubleSpinBox();
-    learning_coef_spin->setValue(0.05);
+    learning_coef_spin->setValue(0.1);
     learning_coef_spin->setSingleStep(0.01);
     learning_coef_spin->setFixedWidth(100);
     setDoubleSpinBox(learning_coef_spin,false);
@@ -129,8 +131,8 @@ void Settings_widget::setWindow()
     max_iterations_check->setFixedSize(QSize(20,20));
     max_iterations_spin = new QSpinBox();
     max_iterations_spin->setMaximum(10000000);
-    max_iterations_spin->setValue(10000);
-    max_iterations_spin->setSingleStep(1000);
+    max_iterations_spin->setValue(3000);
+    max_iterations_spin->setSingleStep(100);
     max_iterations_spin->setFixedWidth(100);
     setSpinBox(max_iterations_spin,false);
     max_iterations_layout->addWidget(max_iterations_check);
@@ -145,7 +147,7 @@ void Settings_widget::setWindow()
     tolerance_spin = new QDoubleSpinBox();
     tolerance_spin->setDecimals(4);
     tolerance_spin->setSingleStep(0.0001);
-    tolerance_spin->setValue(0.001);
+    tolerance_spin->setValue(0.005);
     tolerance_spin->setFixedWidth(100);
     setDoubleSpinBox(tolerance_spin,false);
     tolerance_layout->addWidget(tolerance_check);
@@ -204,20 +206,24 @@ void Settings_widget::setWindow()
 
     regularization_setting_iterations_layout = new QHBoxLayout();
     regularization_spin_from = new QSpinBox();
-    regularization_spin_from->setValue(5);
-    regularization_spin_from->setPrefix("10^(-");
+    regularization_spin_from->setMaximum(20);
+    regularization_spin_from->setMinimum(-20);
+    regularization_spin_from->setValue(-5);
+    regularization_spin_from->setPrefix("10^(");
     regularization_spin_from->setSuffix(")");
     setSpinBox(regularization_spin_from,true);
-    regularization_spin_to = new QSpinBox();
-    regularization_spin_to->setValue(1);
-    regularization_spin_to->setPrefix("10^(-");
-    regularization_spin_to->setSuffix(")");
-    setSpinBox(regularization_spin_to,true);
     regularization_label_from = new QLabel("from: ");
     regularization_label_from->setStyleSheet("QLabel{"
                                              "color:rgb(200, 200, 200);"
                                              "}"
                                              );
+    regularization_spin_to = new QSpinBox();
+    regularization_spin_to->setMaximum(20);
+    regularization_spin_to->setMinimum(-20);
+    regularization_spin_to->setValue(-1);
+    regularization_spin_to->setPrefix("10^(");
+    regularization_spin_to->setSuffix(")");
+    setSpinBox(regularization_spin_to,true);
     regularization_label_to = new QLabel("to: ");
     regularization_label_to->setStyleSheet("QLabel{"
                                            "color:rgb(200, 200, 200);"
@@ -227,6 +233,21 @@ void Settings_widget::setWindow()
     regularization_setting_iterations_layout->addWidget(regularization_spin_from);
     regularization_setting_iterations_layout->addWidget(regularization_label_to);
     regularization_setting_iterations_layout->addWidget(regularization_spin_to);
+
+    regularization_setting_iterations_cycles_layout = new QHBoxLayout();
+    regularization_spin_cycles = new QSpinBox();
+    regularization_spin_cycles->setMaximum(100000);
+    regularization_spin_cycles->setValue(100);
+    regularization_spin_cycles->setSingleStep(10);
+    regularization_spin_cycles->setFixedWidth(100);
+    setSpinBox(regularization_spin_cycles,true);
+    regularization_label_cycles = new QLabel("Number of steps: ");
+    regularization_label_cycles->setStyleSheet("QLabel{"
+                                               "color:rgb(200, 200, 200);"
+                                               "}"
+                                               );
+    regularization_setting_iterations_cycles_layout->addWidget(regularization_label_cycles);
+    regularization_setting_iterations_cycles_layout->addWidget(regularization_spin_cycles);
 
 
     main_V_layout = new QVBoxLayout();
@@ -238,6 +259,7 @@ void Settings_widget::setWindow()
     main_V_layout->addLayout(tolerance_layout);
     main_V_layout->addLayout(regularization_layout);
     main_V_layout->addLayout(regularization_setting_iterations_layout);
+    main_V_layout->addLayout(regularization_setting_iterations_cycles_layout);
     QLabel *ll = new QLabel();
     ll->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     main_V_layout->addWidget(ll);
@@ -293,34 +315,34 @@ void Settings_widget::setComboBox(QComboBox *combo, bool disable)
                                                                                 "}"
                                                                                 "QComboBox::drop-down{"
                                                                                 "    border: none;"
-                                                                                "background-color:   " + b_color + ";"
-                                                                                                                   "    color: rgb(255, 255, 255);"
-                                                                                                                   "    padding: 0px;"
-                                                                                                                   "}"
-                                                                                                                   "QComboBox::down-arrow{"
-                                                                                                                   "image: url(:/res/icon/combo" + (disable?"_d":"") + ");"
-                                                                                                                                                                       "width: 10px;"
-                                                                                                                                                                       "height: 10px;"
-                                                                                                                                                                       "}"
-                                                                                                                                                                       "QListView{"
-                                                                                                                                                                       "    border:none;"
-                                                                                                                                                                       "    background-color:rgb(240, 240, 240);"
-                                                                                                                                                                       "color: " + color + ";"
-                                                                                                                                                                                           "    show-decoration-selected: 1;"
-                                                                                                                                                                                           "    margin-left:-10px;"
-                                                                                                                                                                                           "    padding-left:15px;"
-                                                                                                                                                                                           "}"
-                                                                                                                                                                                           "QListView::item:hover"
-                                                                                                                                                                                           "{"
-                                                                                                                                                                                           "    background-color:   " + h_color + ";"
-                                                                                                                                                                                                                                  "    border:                 none;"
-                                                                                                                                                                                                                                  "    color:rgb(0, 0, 0);"
-                                                                                                                                                                                                                                  "}"
-                                                                                                                                                                                                                                  "QComboBox:hover"
-                                                                                                                                                                                                                                  "{"
-                                                                                                                                                                                                                                  "    background-color:   " + h_color + ";"
-                                                                                                                                                                                                                                                                         "}"
-                                                                                                                                                                                                                                                                         "}"
+                                                                                "    background-color:   " + b_color + ";"
+                                                                                                                       "    color: rgb(255, 255, 255);"
+                                                                                                                       "    padding: 0px;"
+                                                                                                                       "}"
+                                                                                                                       "QComboBox::down-arrow{"
+                                                                                                                       "    image: url(:/res/icon/combo" + (disable?"_d":"") + ");"
+                                                                                                                                                                               "    width: 10px;"
+                                                                                                                                                                               "    height: 10px;"
+                                                                                                                                                                               "}"
+                                                                                                                                                                               "QListView{"
+                                                                                                                                                                               "    border:none;"
+                                                                                                                                                                               "    background-color:rgb(240, 240, 240);"
+                                                                                                                                                                               "    color: " + color + ";"
+                                                                                                                                                                                                       "    show-decoration-selected: 1;"
+                                                                                                                                                                                                       "    margin-left:-10px;"
+                                                                                                                                                                                                       "    padding-left:15px;"
+                                                                                                                                                                                                       "}"
+                                                                                                                                                                                                       "QListView::item:hover"
+                                                                                                                                                                                                       "{"
+                                                                                                                                                                                                       "    background-color:   " + h_color + ";"
+                                                                                                                                                                                                                                              "    border:                 none;"
+                                                                                                                                                                                                                                              "    color:rgb(0, 0, 0);"
+                                                                                                                                                                                                                                              "}"
+                                                                                                                                                                                                                                              "    QComboBox:hover"
+                                                                                                                                                                                                                                              "{"
+                                                                                                                                                                                                                                              "    background-color:   " + h_color + ";"
+                                                                                                                                                                                                                                                                                     "}"
+                                                                                                                                                                                                                                                                                     "}"
                          );
 }
 
@@ -329,6 +351,8 @@ void Settings_widget::setSpinBox(QSpinBox *spin, bool disable)
     QString b_color((disable)?"rgb(238, 238, 238)":"rgb(220, 220, 220)");
     QString h_color((disable)?"rgb(238, 238, 238)":"rgb(200, 200, 200)");
     QString color((disable)?"rgb(200, 200, 200)":"rgb(0, 0, 0)");
+
+    spin->setDisabled(disable);
 
     spin->setStyleSheet("QSpinBox{"
                         "border:none;"
@@ -371,6 +395,8 @@ void Settings_widget::setDoubleSpinBox(QDoubleSpinBox *spin,bool disable)
     QString h_color((disable)?"rgb(238, 238, 238)":"rgb(200, 200, 200)");
     QString color((disable)?"rgb(200, 200, 200)":"rgb(0, 0, 0)");
 
+    spin->setDisabled(disable);
+
     spin->setStyleSheet("QDoubleSpinBox{"
                         "border:none;"
                         "background-color:   " + b_color + ";"
@@ -410,7 +436,7 @@ void Settings_widget::setDoubleSpinBox(QDoubleSpinBox *spin,bool disable)
 
 void Settings_widget::input_data_button_clicked()
 {
-    file_name = QFileDialog::getOpenFileName(this,"Choose input data file","C://Folders/School/data");
+    file_name = QFileDialog::getOpenFileName(this,"Choose input data file","");
 
     QFile file(file_name);
 
@@ -443,18 +469,63 @@ void Settings_widget::input_data_button_clicked()
 
         }
 
-        input_data_label->setText("*File uploaded");
+    input_data_ready();
+
+    file.close();
+
+
+    }
+}
+
+void Settings_widget::input_data_ready()
+{
+
+    bool fault = false;
+
+    int size = input_data.input_data.at(0).size();
+
+    for(int i = 1; i < input_data.input_data.size();i++)
+    {
+       if(input_data.input_data.at(i).size() != size)
+       {
+           fault = true;
+           break;
+       }
+    }
+
+    if(fault)
+    {
+
+        QString err_text = "";
+
+        if(input_data.input_data.size()==2)
+        {
+            err_text = ("\n The number of inputs does not match\n  the number of outputs.");
+        }
+        else
+        {
+            err_text = ("\n The number of inputs does not match\n  the number of outputs or another input.");
+        }
+
+        Message_box* mess = new Message_box(err_text,"Error",this);
+        mess->exec();
+        if (mess != nullptr)
+        {
+            delete mess;
+        }
+
+        input_data_label->setText("*No file uploaded");
         input_data_label->setStyleSheet("QLabel{"
                                         "font: italic;"
-                                        "color: rgba(13, 160, 24, 255);"
+                                        "color: rgba(255, 0, 0, 255);"
                                         "}"
                                         );
-        calculate_button->setEnabled(true);
+        calculate_button->setDisabled(true);
         calculate_button->setStyleSheet("QPushButton{"
-                                        "image: url(:/res/icon/calculate);"
+                                        "image: url(:/res/icon/calculate3);"
                                         "}"
                                         "QPushButton:hover{"
-                                        "image: url(:/res/icon/calculate2);"
+                                        "image: url(:/res/icon/calculate3);"
                                         "}"
                                         "QPushButton:pressed{"
                                         "image: url(:/res/icon/calculate3);"
@@ -462,9 +533,27 @@ void Settings_widget::input_data_button_clicked()
                                         );
 
     }
+    else
+    {
 
-    file.close();
-
+    input_data_label->setText("*File uploaded");
+    input_data_label->setStyleSheet("QLabel{"
+                                    "font: italic;"
+                                    "color: rgba(13, 160, 24, 255);"
+                                    "}"
+                                    );
+    calculate_button->setEnabled(true);
+    calculate_button->setStyleSheet("QPushButton{"
+                                    "image: url(:/res/icon/calculate);"
+                                    "}"
+                                    "QPushButton:hover{"
+                                    "image: url(:/res/icon/calculate2);"
+                                    "}"
+                                    "QPushButton:pressed{"
+                                    "image: url(:/res/icon/calculate3);"
+                                    "}"
+                                    );
+    }
 
 }
 
@@ -509,6 +598,9 @@ void Settings_widget::regularization_check_clicked(int state)
     regularization_spin_to->setDisabled(!state);
     setSpinBox(regularization_spin_to,!state);
 
+    regularization_spin_cycles->setDisabled(!state);
+    setSpinBox(regularization_spin_cycles,!state);
+
     QString color((state)?"rgb(0, 0, 0)":"rgb(200, 200, 200)");
     regularization_label_from->setStyleSheet("QLabel{"
                                              "color: " + color + ";"
@@ -518,9 +610,30 @@ void Settings_widget::regularization_check_clicked(int state)
                                            "color: " + color + ";"
                                                                "}"
                                            );
+    regularization_label_cycles->setStyleSheet("QLabel{"
+                                               "color: " + color + ";"
+                                                                   "}"
+                                               );
+
     regularization_combo->setDisabled(!state);
     setComboBox(regularization_combo,!state);
 
+}
+
+void Settings_widget::regularization_from_check(int val)
+{
+    if(val >= regularization_spin_to->value())
+    {
+        regularization_spin_from->setValue(val-1);
+    }
+}
+
+void Settings_widget::regularization_to_check(int val)
+{
+    if(val <= regularization_spin_from->value())
+    {
+        regularization_spin_to->setValue(val+1);
+    }
 }
 
 Model_settings Settings_widget::get_settings()
@@ -543,13 +656,57 @@ Model_settings Settings_widget::get_settings()
     {
         input_data.regularization_from = regularization_spin_from->value();
         input_data.regularization_to = regularization_spin_to->value();
+        input_data.regularization_cycles = regularization_spin_cycles->value();
         input_data.regularization_type = Model_settings::lasso;
     }
 
     return input_data;
 }
 
+int Settings_widget::get_num_of_inputs()
+{
+    return input_data.input_data.size()-1;
+}
+
 void Settings_widget::calculate_button_clicked()
 {
-  emit calculate();
+    emit calculate();
+}
+
+bool Settings_widget::is_input_data()
+{
+    if(input_data_label->text() == "*File uploaded")
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void Settings_widget::load_model(Model_settings sett)
+{
+    algorithm_combo->setCurrentIndex(Model_settings::algorithm_to_index(sett.algo));
+    stochastic_check->setChecked(sett.stochastic);
+    stochastic_spin->setValue(sett.stochastic_ratio);
+    learning_coef_spin->setValue(sett.learning_coeff);
+    max_iterations_check->setChecked(sett.max_cycles_bool);
+    max_iterations_spin->setValue(sett.max_cycles);
+    tolerance_check->setChecked(sett.max_tolerance_bool);
+    tolerance_spin->setValue(sett.max_tolerance);
+    regularization_check->setChecked(sett.regularization_bool);
+    if(sett.regularization_bool)
+    {
+        regularization_spin_from->setValue(sett.regularization_from);
+        regularization_spin_to->setValue(sett.regularization_to);
+        regularization_spin_cycles->setValue(sett.regularization_cycles);
+        regularization_combo->setCurrentIndex(Model_settings::regularization_to_index(sett.regularization_type));
+    }
+
+    if(sett.input_data.size())
+    {
+    input_data.input_data = sett.input_data;
+    input_data_ready();
+    }
 }

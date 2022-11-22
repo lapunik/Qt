@@ -19,6 +19,7 @@ public:
     enum regularization
     {
         lasso,
+        nothing,
     };
 
     Model_settings();
@@ -36,9 +37,14 @@ public:
     regularization regularization_type;
     int regularization_from;
     int regularization_to;
+    int regularization_cycles;
 
     static algorithm string_to_algorithm (QString al);
     static QString algorithm_to_string(algorithm al);
+    static int algorithm_to_index(algorithm al);
+    static int regularization_to_index(regularization reg);
+    static regularization string_to_regularization (QString al);
+    static QString regularization_to_string(regularization reg);
 
 
 };

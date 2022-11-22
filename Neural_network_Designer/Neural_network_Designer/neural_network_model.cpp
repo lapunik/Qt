@@ -2,7 +2,7 @@
 
 Neural_network_model::Neural_network_model(std::vector<std::vector<function>> net, Model_settings setting, QObject *parent) : QObject{parent}
 {
-    std::string name{ "regularization_" }; // TODO - ukládání systém
+    //std::string name{ "regularization_" }; // TODO - ukládání systém
 
     x.resize(setting.input_data.size()-1);
 
@@ -34,102 +34,170 @@ Neural_network_model::Neural_network_model(std::vector<std::vector<function>> ne
         N = std::numeric_limits< int >::max();
     }
 
-    std::vector<std::vector<std::vector<double>>> koef = initialize_koeficients(net,x.size(), 1.0, 0.0);
+    std::vector<std::vector<std::vector<double>>> koef;
 
     for(int i = 0; i < setting.input_data.last().size() ; i++)
     {
         y0.push_back(setting.input_data.last().at(i));
     }
 
-    std::vector<double> regularization_range(setting.regularization_from-setting.regularization_to);
-
     if(setting.regularization_bool)
     {
-        for(int i = setting.regularization_from;setting.regularization_from != setting.regularization_to-1; i--)
+        setting.regularization_from = -setting.regularization_from;
+        setting.regularization_to = -setting.regularization_to;
+
+        double temp = 0;
+        double from_to_diff = static_cast<double>(setting.regularization_from-setting.regularization_to);
+
+        for(int i = 0;i < setting.regularization_cycles; i++)
         {
-            regularization_range.push_back(pow(10,(-1*i)));
+            temp = static_cast<double>(setting.regularization_from) - (static_cast<double>(i)*(from_to_diff/(static_cast<double>(setting.regularization_cycles-1))));
+
+            regularization_range.push_back(pow(10,(-temp)));
         }
-    }
-
-    Y.push_back(y0);
-
-    if(setting.regularization_bool)
-    {
-        for (int i = 0; i < static_cast<int>(regularization_range.size()); i++)
-        {
-            if(setting.algo == Model_settings::ADAM)
-            {
-                koef = ADAM(y0, x, net, initialize_koeficients(net, x.size(), 1.0, 1.0), setting.learning_coeff, tau, N,regularization_range.at(i));
-            }
-            else if(setting.algo == Model_settings::moment)
-            {
-                // TODO Moment
-                koef = ADAM(y0, x, net, initialize_koeficients(net, x.size(), 1.0, 1.0), setting.learning_coeff, tau, N,regularization_range.at(i));
-            }
-            else if(setting.algo == Model_settings::none)
-            {
-                // TODO None
-                koef = ADAM(y0, x, net, initialize_koeficients(net, x.size(), 1.0, 1.0), setting.learning_coeff, tau, N,regularization_range.at(i));
-            }
-            else
-            {
-                koef = ADAM(y0, x, net, initialize_koeficients(net, x.size(), 1.0, 1.0), setting.learning_coeff, tau, N,regularization_range.at(i));
-            }
-
-            y = calculate(x, net, koef); // vypočítej y podle současného modelu
-            Y.push_back(y);
-            MSE.push_back(mse(y0, y)); // výpočet pro vytvoření grafu vývoje chyby
-
-            ///// TODO: Vykreslnení grafů? Vypsání koeficientů?
-            export_graph(x.at(0), { y,y0 }, 1000, 750, name + std::to_string(regularization_range.at(i)) + ".png");
-
-            // Tisk času
-            //            auto start = std::chrono::high_resolution_clock::now();
-            //            auto stop = std::chrono::high_resolution_clock::now();
-            //std::cout << "\n\nIt took " << std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count() << " ms.\n\n";
-        }
-
-        // Převod na logaritmickou osu
-        std::transform(regularization_range.begin(), regularization_range.end(), regularization_range.begin(), [](double& c) { return std::log10(c); });
-        export_graph(regularization_range, MSE, 1000, 750, "MSE_to_lambda.png");
-
-        // dodělat mBGD
-
     }
     else
     {
+        regularization_range.push_back(0);
+    }
+
+    for (int i = 0; i < static_cast<int>(regularization_range.size()); i++)
+    {
+        koef = initialize_koeficients(net, x.size(), 1.0, 1.0);
 
         if(setting.algo == Model_settings::ADAM)
         {
-            koef = ADAM(y0, x, net, initialize_koeficients(net, x.size(), 1.0, 1.0), setting.learning_coeff, tau, N);
+            koef = ADAM(y0, x, net, koef, setting.learning_coeff, tau, N,regularization_range.at(i));
         }
         else if(setting.algo == Model_settings::moment)
         {
             // TODO Moment
-            koef = ADAM(y0, x, net, initialize_koeficients(net, x.size(), 1.0, 1.0), setting.learning_coeff, tau, N);
+            koef = ADAM(y0, x, net, koef, setting.learning_coeff, tau, N,regularization_range.at(i));
         }
         else if(setting.algo == Model_settings::none)
         {
             // TODO None
-            koef = ADAM(y0, x, net, initialize_koeficients(net, x.size(), 1.0, 1.0), setting.learning_coeff, tau, N);
+            koef = ADAM(y0, x, net, koef, setting.learning_coeff, tau, N,regularization_range.at(i));
         }
         else
         {
-            koef = ADAM(y0, x, net, initialize_koeficients(net, x.size(), 1.0, 1.0), setting.learning_coeff, tau, N);
+            koef = ADAM(y0, x, net, koef, setting.learning_coeff, tau, N,regularization_range.at(i));
+        }
+
+        for(int i = 0;i<static_cast<int>(koef.size());i++)
+        {
+            for(int j = 0;j<static_cast<int>(koef.at(i).size());j++)
+            {
+                for(int k = 0;k<static_cast<int>(koef.at(i).at(j).size());k++)
+                {
+                    if(koef.at(i).at(j).at(k) <= 0.0001 && koef.at(i).at(j).at(k) >= -0.0001)
+                    {
+                        koef.at(i).at(j).at(k) = 0.0;
+                    }
+                }
+            }
         }
 
         y = calculate(x, net, koef); // vypočítej y podle současného modelu
-        Y.push_back(y);
 
-        ///// TODO: Vykreslnení grafů? Vypsání koeficientů?
+        fill_properties(koef);
 
-        // Tisk času
-        //            auto start = std::chrono::high_resolution_clock::now();
-        //            auto stop = std::chrono::high_resolution_clock::now();
-        //std::cout << "\n\nIt took " << std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count() << " ms.\n\n";
     }
 
+    std::transform(regularization_range.begin(), regularization_range.end(), regularization_range.begin(), [](double& c) { return std::log10(c); });
+
+
+    // dodělat mBGD a Moment
+
+    // dodělat stochastic!
+
+    //export_graph(x.at(0), { y,y0 }, 1000, 750, name + std::to_string(regularization_range.at(i)) + ".png");
+
+    // Tisk času
+    //            auto start = std::chrono::high_resolution_clock::now();
+    //            auto stop = std::chrono::high_resolution_clock::now();
+    //std::cout << "\n\nIt took " << std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count() << " ms.\n\n";
+
+    // Převod na logaritmickou osu
+    //std::transform(regularization_range.begin(), regularization_range.end(), regularization_range.begin(), [](double& c) { return std::log10(c); });
+    //export_graph(regularization_range, MSE, 1000, 750, "MSE_to_lambda.png");
+
     // dodělat mBGD
+
+    ///// TODO: Vykreslnení grafů? Vypsání koeficientů?
+}
+
+Neural_network_model::Neural_network_model(std::vector<std::vector<function>> net, Model_settings setting, std::vector<std::vector<std::vector<std::vector<double>>>> koef_m , QObject *parent) : QObject{parent}
+{
+    x.resize(setting.input_data.size()-1);
+
+    for(int j = 0; j < static_cast<int>(x.size()); j++)
+    {
+        for(int i = 0; i < setting.input_data.at(j).size(); i++)
+        {
+            x.at(j).push_back(setting.input_data.at(j).at(i));
+        }
+    }
+
+    std::vector<std::vector<std::vector<double>>> koef;
+
+    for(int i = 0; i < setting.input_data.last().size() ; i++)
+    {
+        y0.push_back(setting.input_data.last().at(i));
+    }
+
+    if(setting.regularization_bool)
+    {
+        setting.regularization_from = -setting.regularization_from;
+        setting.regularization_to = -setting.regularization_to;
+
+        double temp = 0;
+        double from_to_diff = static_cast<double>(setting.regularization_from-setting.regularization_to);
+
+        for(int i = 0;i < setting.regularization_cycles; i++)
+        {
+            temp = static_cast<double>(setting.regularization_from) - (static_cast<double>(i)*(from_to_diff/(static_cast<double>(setting.regularization_cycles-1))));
+
+            regularization_range.push_back(pow(10,(-temp)));
+        }
+    }
+    else
+    {
+        regularization_range.push_back(0);
+    }
+
+    for (int i = 0; i < static_cast<int>(regularization_range.size()); i++)
+    {
+
+        koef = koef_m.at(i);
+
+        y = calculate(x, net, koef); // vypočítej y podle současného modelu
+
+        fill_properties(koef);
+
+    }
+
+    std::transform(regularization_range.begin(), regularization_range.end(), regularization_range.begin(), [](double& c) { return std::log10(c); });
+
+
+    // dodělat mBGD a Moment
+
+    // dodělat stochastic!
+
+    //export_graph(x.at(0), { y,y0 }, 1000, 750, name + std::to_string(regularization_range.at(i)) + ".png");
+
+    // Tisk času
+    //            auto start = std::chrono::high_resolution_clock::now();
+    //            auto stop = std::chrono::high_resolution_clock::now();
+    //std::cout << "\n\nIt took " << std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count() << " ms.\n\n";
+
+    // Převod na logaritmickou osu
+    //std::transform(regularization_range.begin(), regularization_range.end(), regularization_range.begin(), [](double& c) { return std::log10(c); });
+    //export_graph(regularization_range, MSE, 1000, 750, "MSE_to_lambda.png");
+
+    // dodělat mBGD
+
+    ///// TODO: Vykreslnení grafů? Vypsání koeficientů?
 }
 
 Neural_network_model::~Neural_network_model()
@@ -270,6 +338,7 @@ double Neural_network_model::mse(std::vector<double> y0, std::vector<double> y1)
 
     return std::accumulate(E.begin(), E.end(), 0.0) / E.size();
 }
+
 std::vector<std::vector<std::vector<double>>> Neural_network_model::initialize_koeficients(std::vector<std::vector<function>> net, int inputs , double w_val, double b_val)
 {
     std::vector<std::vector<double>> w(net.size());
@@ -698,13 +767,13 @@ double Neural_network_model::derivate_mse(std::vector<double> y0, std::vector<st
         }
     }
 
-    double e = mse(y0, calculate(x, net, koef)) + lambda * koef_sum;
+    double e = mse(y0, calculate(x, net, koef)) + (lambda * koef_sum);
 
     double h = 0.0000000000001;
 
     koef.at(t).at(l).at(n) = koef.at(t).at(l).at(n) + h;
 
-    double e_h = mse(y0, calculate(x, net, koef)) + lambda * (koef_sum + h);
+    double e_h = mse(y0, calculate(x, net, koef)) + (lambda * (koef_sum + h));
 
     return ((e_h - e) / h);
 }
@@ -735,11 +804,11 @@ std::vector<std::vector<std::vector<double>>> Neural_network_model::ADAM(std::ve
     {
         max_d_koef = 0;
 
-        for (int wb = 0; wb < koef.size(); wb++)
+        for (int wb = 0; wb < static_cast<int>(koef.size()); wb++)
         {
-            for (int l = 0; l < koef.at(wb).size(); l++)
+            for (int l = 0; l < static_cast<int>(koef.at(wb).size()); l++)
             {
-                for (int n = 0; n < koef.at(wb).at(l).size(); n++) // projed celou naslednou verstvu
+                for (int n = 0; n < static_cast<int>(koef.at(wb).at(l).size()); n++) // projed celou naslednou verstvu
                 {
                     d_koef = derivate_mse(y0, x, net, koef, wb, l, n, lambda);
 
@@ -759,16 +828,20 @@ std::vector<std::vector<std::vector<double>>> Neural_network_model::ADAM(std::ve
 
         if (std::abs(max_d_koef) < tau)
         {
+            err.push_back(std::abs(max_d_koef));
+            itt.push_back(i);
             break;
         }
 
     }
 
+    if (std::abs(max_d_koef) > tau)
+    {
+        err.push_back(std::abs(max_d_koef));
+        itt.push_back(N);
+    }
+
     return koef;
-}
-std::vector<std::vector<std::vector<double>>> Neural_network_model::ADAM(std::vector<double> y0, std::vector<std::vector<double>> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N)
-{
-    return ADAM(y0, x, net, koef, alpha, tau, N, 0.0);
 }
 std::vector<std::vector<std::vector<double>>> Neural_network_model::ADAM(std::vector<double> y0, std::vector<double> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N, double lambda)
 {
@@ -854,6 +927,12 @@ void Neural_network_model::export_graph(std::vector<double> x, std::vector<doubl
 
     WriteToFile(ConvertToPNG(imageReference->image), name);
     DeleteImage(imageReference->image);
+
+    if(errorMessage != nullptr)
+    {
+        delete errorMessage;
+        errorMessage = nullptr;
+    }
 }
 void Neural_network_model::export_graph(std::vector<double> x, std::vector<std::vector<double>> y, int size_x, int size_y, std::string name)
 {
@@ -898,6 +977,12 @@ void Neural_network_model::export_graph(std::vector<double> x, std::vector<std::
     WriteToFile(ConvertToPNG(imageReference->image), name);
     DeleteImage(imageReference->image);
 
+    if(errorMessage != nullptr)
+    {
+        delete errorMessage;
+        errorMessage = nullptr;
+    }
+
 }
 std::vector<int> Neural_network_model::change_color(std::vector<int> color)
 {
@@ -907,28 +992,192 @@ std::vector<int> Neural_network_model::change_color(std::vector<int> color)
 
     return color;
 }
+void Neural_network_model::fill_properties(std::vector<std::vector<std::vector<double>>> koef)
+{
+    Y.push_back(y);
+    MSE.push_back(mse(y0, y)); // výpočet pro vytvoření grafu vývoje chyby
 
-//std::vector<std::vector<double>> Neural_network_model::get_x()
-//{
-//    return x;
-//}
-//std::vector<double> Neural_network_model::get_y0()
-//{
-//    return y0;
-//}
-//std::vector<double> Neural_network_model::get_y()
-//{
-//    return y;
-//}
-//std::vector<std::vector<double>> Neural_network_model::get_Y()
-//{
-//    return Y;
-//}
+    int NonZC_temp = 0;
 
+    for(int i = 0;i<static_cast<int>(koef.size());i++)
+    {
+        for(int j = 0;j<static_cast<int>(koef.at(i).size());j++)
+        {
+            for(int k = 0;k<static_cast<int>(koef.at(i).at(j).size());k++)
+            {
+                if(koef.at(i).at(j).at(k) != 0.0)
+                {
+                    NonZC_temp++;
+                }
+            }
+        }
+    }
 
+    KOEF.push_back(koef);
+    NonZC.push_back(static_cast<double>(NonZC_temp));
+}
 
+std::string Neural_network_model::function_to_string(function f)
+{
 
+    if(f == id)
+    {
+        return "id";
+    }
+    else if(f == pow2)
+    {
+        return "pow2";
+    }
+    else if(f == pow3)
+    {
+        return "pow3";
+    }
+    else if(f == pow4)
+    {
+        return "pow4";
+    }
+    else if(f == times)
+    {
+        return "tim";
+    }
+    else if(f == divide)
+    {
+        return "div";
+    }
+    else if(f == sin)
+    {
+        return "sin";
+    }
+    else if(f == cos)
+    {
+        return "cos";
+    }
+    else if(f == sigmoid)
+    {
+        return "sig";
+    }
+    else if(f == n_sigmoid)
+    {
+        return "n_sig";
+    }
+    else if(f == tanh)
+    {
+        return "tanh";
+    }
+    else if(f == f_sigmoid)
+    {
+        return "f_sig";
+    }
+    else if(f == heaviside)
+    {
+        return "hea";
+    }
+    else if(f == signum)
+    {
+        return "sign";
+    }
+    else if(f == p_id)
+    {
+        return "p_id";
+    }
+    else if(f == sat)
+    {
+        return "sat";
+    }
+    else if(f == p_sat)
+    {
+        return "p_sat";
+    }
+    else if(f == rad)
+    {
+        return "rad";
+    }
+    else
+    {
+        return "error";
+    }
+}
 
+function Neural_network_model::string_to_function(std::string f)
+{
+
+    if(f == "id")
+    {
+        return id;
+    }
+    else if(f == "pow2")
+    {
+        return pow2;
+    }
+    else if(f == "pow3")
+    {
+        return pow3;
+    }
+    else if(f == "pow4")
+    {
+        return pow4;
+    }
+    else if(f == "tim")
+    {
+        return times;
+    }
+    else if(f == "div")
+    {
+        return divide;
+    }
+    else if(f == "sin")
+    {
+        return sin;
+    }
+    else if(f == "cos")
+    {
+        return cos;
+    }
+    else if(f == "sig")
+    {
+        return sigmoid;
+    }
+    else if(f == "n_sig")
+    {
+        return n_sigmoid;
+    }
+    else if(f == "tanh")
+    {
+        return tanh;
+    }
+    else if(f == "f_sig")
+    {
+        return f_sigmoid;
+    }
+    else if(f == "hea")
+    {
+        return heaviside;
+    }
+    else if(f == "sign")
+    {
+        return signum;
+    }
+    else if(f == "p_id")
+    {
+        return p_id;
+    }
+    else if(f == "sat")
+    {
+        return sat;
+    }
+    else if(f == "p_sat")
+    {
+        return p_sat;
+    }
+    else if(f == "rad")
+    {
+        return rad;
+    }
+    else
+    {
+        return id;
+    }
+}
 
 
 

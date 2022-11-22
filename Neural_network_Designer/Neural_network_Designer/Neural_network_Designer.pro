@@ -10,9 +10,11 @@ CONFIG += c++11
 
 SOURCES += \
     button_roundted.cpp \
+    information_window.cpp \
     layer_widget.cpp \
     main.cpp \
     main_window.cpp \
+    message_box.cpp \
     model_settings.cpp \
     my_button.cpp \
     network_widget.cpp \
@@ -27,8 +29,10 @@ SOURCES += \
 
 HEADERS += \
     button_roundted.h \
+    information_window.h \
     layer_widget.h \
     main_window.h \
+    message_box.h \
     model_settings.h \
     my_button.h \
     network_widget.h \

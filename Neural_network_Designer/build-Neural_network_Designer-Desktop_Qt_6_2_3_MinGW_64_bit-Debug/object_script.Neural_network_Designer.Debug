@@ -1,7 +1,9 @@
 debug/button_roundted.o
+debug/information_window.o
 debug/layer_widget.o
 debug/main.o
 debug/main_window.o
+debug/message_box.o
 debug/model_settings.o
 debug/my_button.o
 debug/network_widget.o
@@ -15,8 +17,10 @@ debug/settings_widget.o
 debug/supportLib.o
 debug/qrc_Resources.o
 debug/moc_button_roundted.o
+debug/moc_information_window.o
 debug/moc_layer_widget.o
 debug/moc_main_window.o
+debug/moc_message_box.o
 debug/moc_my_button.o
 debug/moc_network_widget.o
 debug/moc_neural_network_model.o

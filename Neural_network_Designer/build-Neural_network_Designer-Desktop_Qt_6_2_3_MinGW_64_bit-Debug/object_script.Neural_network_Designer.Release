@@ -1,7 +1,9 @@
 release/button_roundted.o
+release/information_window.o
 release/layer_widget.o
 release/main.o
 release/main_window.o
+release/message_box.o
 release/model_settings.o
 release/my_button.o
 release/network_widget.o
@@ -15,8 +17,10 @@ release/settings_widget.o
 release/supportLib.o
 release/qrc_Resources.o
 release/moc_button_roundted.o
+release/moc_information_window.o
 release/moc_layer_widget.o
 release/moc_main_window.o
+release/moc_message_box.o
 release/moc_my_button.o
 release/moc_network_widget.o
 release/moc_neural_network_model.o

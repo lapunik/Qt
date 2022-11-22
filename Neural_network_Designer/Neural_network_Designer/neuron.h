@@ -63,7 +63,7 @@ public:
     func get_function();
     QString get_name();
     QIcon get_ic();
-
+    static func string_to_func(QString str);
 
 signals:
 

@@ -102,19 +102,12 @@ void Layer_widget::add_widget(Neuron::func fun)
     if(input_layer)
     {
         fun = Neuron::input_e;
-        mp_remove_neuron_buttton->button->setIcon(QIcon(":/res/icon/minus_disabled"));
-        mp_add_neuron_buttton->button->setIcon(QIcon(":/res/icon/plus_disabled"));
-        if(neurons->count() > 0)
-        {
-            return;
-        }
     }
 
     neurons->push_back(new Neuron(fun));
 
     if(!input_layer && !output_layer)
         connect(neurons->last(), SIGNAL(double_clicked_signal(Neuron*)), this, SLOT(choose_function(Neuron*)));
-
 
     mp_inner_layout->addWidget(neurons->last());
 
@@ -176,7 +169,6 @@ void Layer_widget::remove_widget()
 
 void Layer_widget::choose_function(Neuron *n)
 {
-
     Neuron_settings_window * win = new Neuron_settings_window(n);
 
     win->exec();
@@ -284,3 +276,6 @@ function Layer_widget::neuron_to_function(Neuron *n)
     }
 
 }
+
+
+

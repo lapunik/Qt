@@ -12,6 +12,7 @@
 #include <QAction>
 #include <QVector>
 #include <QToolButton>
+#include <QStringList>
 
 
 #include "neural_network_model.h"
@@ -25,6 +26,13 @@ class Main_window : public QMainWindow
 public:
     Main_window(QWidget *parent = nullptr);
     ~Main_window();
+
+
+    bool manual_resize = false;
+
+signals:
+
+    void save(bool b, int index);
 
 private:
     const QString APP_TITLE = tr("Neural network designer");
@@ -49,6 +57,7 @@ private:
     QPushButton *exit_button2 = nullptr;
     QPushButton *new_button = nullptr;
     QPushButton *save_button = nullptr;
+    QPushButton *save_as_button = nullptr;
     QPushButton *load_button = nullptr;
     QPushButton *about_button = nullptr;
     QPushButton *settings_button = nullptr;
@@ -76,9 +85,17 @@ private slots:
 
     void maximize();
     void minimize();
+    void save_clicked();
+    void load_clicked();
+    void save_as_clicked();
     void new_tab(int index);
     void new_tab_left_bar();
+    void change_name(int id, QString name);
     void remove_tab(int index);
+
+
+
+
 
 };
 

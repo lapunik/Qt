@@ -4,6 +4,7 @@
 #define _USE_MATH_DEFINES
 
 #include <QObject>
+#include <QTextStream>
 #include <iostream>
 #include <vector>
 #include <random>
@@ -25,6 +26,7 @@ class Neural_network_model : public QObject
 public:
 
     explicit Neural_network_model(std::vector<std::vector<function>> net, Model_settings setting,QObject *parent = nullptr);
+    explicit Neural_network_model(std::vector<std::vector<function>> net, Model_settings setting, std::vector<std::vector<std::vector<std::vector<double>>>> koef_m, QObject *parent = nullptr);
     virtual ~Neural_network_model();
 
     static double id(double x, double x2 = 0);
@@ -46,26 +48,22 @@ public:
     static double p_sat(double x, double x2 = 0);
     static double rad(double x, double x2 = 0);
 
-//    std::vector<std::vector<double>> get_x();
-//    std::vector<double> get_y0();
-//    std::vector<double> get_y();
-//    std::vector<std::vector<double>> get_Y();
-
     std::vector<std::vector<double>> x;
     std::vector<std::vector<double>> Y;
+    std::vector<double> y0;
+    std::vector<double> regularization_range;
+    std::vector<double> MSE;
+    std::vector<double> NonZC;
+    std::vector<std::vector<std::vector<std::vector<double>>>> KOEF;
+    std::vector<double> err;
+    std::vector<int> itt;
 
+    static std::string function_to_string(function f);
+    static function string_to_function(std::string);
 
 private:
 
-    double alpha;
-    double tau;
-    int N;
     std::vector<double>  y;
-    std::vector<double> y0;
-    std::vector<std::vector<function>> net;
-    std::vector<std::vector<std::vector<double>>> koef;
-    std::vector<double> regularization_range;
-    std::vector<double> MSE;
 
     double mse(std::vector<double> y0, std::vector<double> y1);
     std::vector<std::vector<std::vector<double>>> initialize_koeficients(std::vector<std::vector<function>> net, int inputs , double w_val, double b_val);
@@ -89,8 +87,7 @@ private:
     double derivate_mse(std::vector<double> y0, std::vector<std::vector<double>> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, int t, int l, int n, double lambda);
     double derivate_mse(std::vector<double> y0, std::vector<double> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, int t, int l, int n);
     double derivate_mse(std::vector<double> y0, std::vector<double> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, int t, int l, int n, double lambda);
-    std::vector<std::vector<std::vector<double>>> ADAM(std::vector<double> y0, std::vector<std::vector<double>> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N, double lambda);
-    std::vector<std::vector<std::vector<double>>> ADAM(std::vector<double> y0, std::vector<std::vector<double>> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N);
+    std::vector<std::vector<std::vector<double>>> ADAM(std::vector<double> y0, std::vector<std::vector<double>> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N, double lambda = 0);
     std::vector<std::vector<std::vector<double>>> ADAM(std::vector<double> y0, std::vector<double> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N, double lambda);
     std::vector<std::vector<std::vector<double>>> ADAM(std::vector<double> y0, std::vector<double> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N);
     std::vector<std::vector<std::vector<double>>> stochastic_ADAM(std::vector<double> y0, std::vector<std::vector<double>> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N, double ratio, double lambda);
@@ -102,6 +99,7 @@ private:
     void export_graph(std::vector<double> x, std::vector<double> y, int size_x, int size_y, std::string name);
     void export_graph(std::vector<double> x, std::vector<std::vector<double>> y, int size_x, int size_y, std::string name);
     std::vector<int> change_color(std::vector<int> color);
+    void fill_properties(std::vector<std::vector<std::vector<double>>> koef);
 
 };
 

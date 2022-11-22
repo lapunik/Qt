@@ -134,3 +134,85 @@ void Neuron::double_clicked_slot()
     if(reconfigurable)
         emit double_clicked_signal(this);
 }
+
+Neuron::func Neuron::string_to_func(QString str)
+{
+    if(str == "id")
+    {
+        return Neuron::id_e;
+    }
+    else if(str == "pow2")
+    {
+        return Neuron::pow2_e;
+    }
+    else if(str == "pow3")
+    {
+        return Neuron::pow3_e;
+    }
+    else if(str == "pow4")
+    {
+        return Neuron::pow4_e;
+    }
+    else if(str == "tim")
+    {
+        return Neuron::times_e;
+    }
+    else if(str == "div")
+    {
+        return Neuron::divide_e;
+    }
+    else if(str == "sin")
+    {
+        return Neuron::sin_e;
+    }
+    else if(str == "cos")
+    {
+        return Neuron::cos_e;
+    }
+    else if(str == "sig")
+    {
+        return Neuron::sigmoid_e;
+    }
+    else if(str == "n_sig")
+    {
+        return Neuron::n_sigmoid_e;
+    }
+    else if(str == "tanh")
+    {
+        return Neuron::tanh_e;
+    }
+    else if(str == "f_sig")
+    {
+        return Neuron::f_sigmoid_e;
+    }
+    else if(str == "hea")
+    {
+        return Neuron::heaviside_e;
+    }
+    else if(str == "sign")
+    {
+        return Neuron::signum_e;
+    }
+    else if(str == "p_id")
+    {
+        return Neuron::p_id_e;
+    }
+    else if(str == "sat")
+    {
+        return Neuron::sat_e;
+    }
+    else if(str == "p_sat")
+    {
+        return Neuron::p_sat_e;
+    }
+    else if(str == "rad")
+    {
+        return Neuron::rad_e;
+    }
+    else
+    {
+        return Neuron::id_e;
+    }
+
+}
+
