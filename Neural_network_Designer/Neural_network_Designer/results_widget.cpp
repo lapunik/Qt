@@ -152,13 +152,24 @@ void Results_widget::set_window()
                                        ));
 
     graph_V_layout = new QVBoxLayout();
+    graph_l_layout = new QHBoxLayout();
 
     graph_l = new QLabel();
     graph_l->setAlignment(Qt::AlignCenter);
     graph_l->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    graph_y_label = new QLabel90();
+    graph_y_label->setText("y");
+    graph_y_label->setFixedWidth(15);
+    graph_y_label->setStyleSheet(QString("QLabel{"
+                                         "font-size: 16px;"
+                                         "}"
+                                         ));
+
+    graph_l_layout->addWidget(graph_y_label);
+    graph_l_layout->addWidget(graph_l);
 
     control_input_layout = new QHBoxLayout();
-    counter_input = new QLabel("  x1");
+    counter_input = new QLabel("   x1");
     counter_input->setFixedWidth(30);
     left_input = new QPushButton();
     left_input->setFixedSize(QSize(40,40));
@@ -168,14 +179,36 @@ void Results_widget::set_window()
     right_input->setFixedSize(QSize(40,40));
     set_arrows(false,right_input);
     connect(right_input,SIGNAL(clicked()),this,SLOT(arrow_input_clicked()));
+    QLabel *lll = new QLabel();
+    lll->setFixedWidth(70);
+    QLabel *ll = new QLabel();
+    ll->setFixedWidth(20);
+    control_input_layout->addWidget(lll);
     control_input_layout->addWidget(left_input);
     control_input_layout->addWidget(new QLabel());
     control_input_layout->addWidget(counter_input);
     control_input_layout->addWidget(new QLabel());
     control_input_layout->addWidget(right_input);
-
-    graph_V_layout->addWidget(graph_l);
+    control_input_layout->addWidget(ll);
+    graph_title = new QLabel();
+    graph_title->setText("Title");
+    graph_title->setAlignment(Qt::AlignCenter);
+    graph_title->setStyleSheet(QString("QLabel{"
+                                       "font-size: 22px;"
+                                       "}"
+                                       ));
+    graph_x_label = new QLabel0();
+    graph_x_label->setText("x");
+    graph_x_label->setFixedHeight(15);
+    graph_x_label->setStyleSheet(QString("QLabel{"
+                                         "font-size: 16px;"
+                                         "}"
+                                         ));
+    graph_V_layout->addWidget(graph_title);
+    graph_V_layout->addLayout(graph_l_layout);
+    graph_V_layout->addWidget(graph_x_label);
     graph_V_layout->addLayout(control_input_layout);
+    graph_V_layout->setSpacing(0);
 
     main_H_layout = new QHBoxLayout();
     main_H_layout->addWidget(main_widget);
@@ -216,6 +249,18 @@ void Results_widget::load_model(Neural_network_model *nn_model)
 
 void Results_widget::redraw()
 {
+
+    if(size_change_blockator)
+    {
+        graph_l->setPixmap(*new QPixmap());
+        return;
+    }
+
+    if(graph_settings == nullptr) // ještě není graf
+    {
+        return;
+    }
+
     StringReference* errorMessage = new StringReference();
     RGBABitmapImageReference* imageReference = CreateRGBABitmapImageReference();
 
@@ -305,7 +350,7 @@ void Results_widget::best_clicked()
         set_arrows(true,left_input);
     }
 
-    counter_input->setText(QString("  x%1").arg(current_input+1));
+    counter_input->setText(QString("   x%1").arg(current_input+1));
 
     std::vector<ScatterPlotSeries*> series ;
 
@@ -374,9 +419,26 @@ void Results_widget::best_clicked()
     }
 
     graph_settings->autoPadding = true;
-    graph_settings->title = toVector(L"");
-    graph_settings->xLabel = toVector(L"");
-    graph_settings->yLabel = toVector(L"");
+
+    QString text;
+    text.append("Model (regularization 10^");
+    QString d_text = QString::number(model->regularization_range.at(current_index),'f',3);
+    text.append(d_text);
+    //text.append(d_text.substr(0,d_text.find(".")+4));
+    text.append(")");
+    if(current_index == best_index)
+    {
+        text.append(" - best ");
+    }
+    //    std::wstring w_text = std::wstring(text.begin(), text.end());
+    //    const wchar_t* result = w_text.c_str();
+    //    text = "Individual model";
+    //    graph_settings->title = toVector(result);
+    graph_title->setText(text);
+    //    graph_settings->xLabel = toVector(L"");
+    graph_x_label->setText("x");
+    //    graph_settings->yLabel = toVector(L"");
+    graph_y_label->setText("y");
 
     if(model != nullptr)
     {
@@ -406,28 +468,28 @@ void Results_widget::all_clicked()
     if(model != nullptr)
     {
 
-    if(model->x.size() == 1)
-    {
-        set_arrows(false,left_input);
-        set_arrows(false,right_input);
-    }
-    else if(current_input == 0)
-    {
-        set_arrows(false,left_input);
-        set_arrows(true,right_input);
-    }
-    else if(current_input == static_cast<int>(model->x.size()-1))
-    {
-        set_arrows(false,right_input);
-        set_arrows(true,left_input);
-    }
-    else
-    {
-        set_arrows(true,right_input);
-        set_arrows(true,left_input);
-    }
+        if(model->x.size() == 1)
+        {
+            set_arrows(false,left_input);
+            set_arrows(false,right_input);
+        }
+        else if(current_input == 0)
+        {
+            set_arrows(false,left_input);
+            set_arrows(true,right_input);
+        }
+        else if(current_input == static_cast<int>(model->x.size()-1))
+        {
+            set_arrows(false,right_input);
+            set_arrows(true,left_input);
+        }
+        else
+        {
+            set_arrows(true,right_input);
+            set_arrows(true,left_input);
+        }
 
-    counter_input->setText(QString("  x%1").arg(current_input+1));
+        counter_input->setText(QString("  x%1").arg(current_input+1));
 
         series.push_back(GetDefaultScatterPlotSeriesSettings());
         series.at(0)->xs = &(model->x.at(current_input));
@@ -489,9 +551,26 @@ void Results_widget::all_clicked()
     }
 
     graph_settings->autoPadding = true;
-    graph_settings->title = toVector(L"");
-    graph_settings->xLabel = toVector(L"");
-    graph_settings->yLabel = toVector(L"");
+    if(model != nullptr)
+    {
+        //    graph_settings->title = toVector(L"All models");
+        if(model->regularization_range.size() == 1)
+        {
+            graph_title->setText("Calculated model");
+        }
+        else
+        {
+            graph_title->setText("All models");
+        }
+    }
+    else
+    {
+        graph_title->setText("All models");
+    }
+    //    graph_settings->xLabel = toVector(L"");
+    graph_x_label->setText("x");
+    //    graph_settings->yLabel = toVector(L"");
+    graph_y_label->setText("y");
 
     if(model != nullptr)
     {
@@ -572,9 +651,11 @@ void Results_widget::parret_clicked()
     graph_settings->height = graph_l->height()-20;
     graph_settings->autoBoundaries = false;
     graph_settings->autoPadding = true;
-    graph_settings->title = toVector(L"");
-    graph_settings->xLabel = toVector(L"");
-    graph_settings->yLabel = toVector(L"");
+    graph_title->setText("Pareto chart");
+    //    graph_settings->xLabel = toVector(L"");
+    graph_x_label->setText("MSE");
+    //    graph_settings->yLabel = toVector(L"");
+    graph_y_label->setText("number of non-zero coefficients");
     if(model != nullptr)
         graph_settings->scatterPlotSeries->push_back(series);
 
@@ -611,9 +692,12 @@ void Results_widget::reg_mse_clicked()
     graph_settings->height = graph_l->height()-20;
     graph_settings->autoBoundaries = true;
     graph_settings->autoPadding = true;
-    graph_settings->title = toVector(L"");
-    graph_settings->xLabel = toVector(L"");
-    graph_settings->yLabel = toVector(L"");
+    //    graph_settings->title = toVector(L"");
+    graph_title->setText("MSE dependent on regularization");
+    //    graph_settings->xLabel = toVector(L"");
+    graph_x_label->setText("regularization rate");
+    //    graph_settings->yLabel = toVector(L"");
+    graph_y_label->setText("MSE");
 
     if(model != nullptr)
     {
@@ -696,9 +780,12 @@ void Results_widget::reg_NonZC_clicked()
     graph_settings->height = graph_l->height()-20;
     graph_settings->autoBoundaries = true;
     graph_settings->autoPadding = true;
-    graph_settings->title = toVector(L"");
-    graph_settings->xLabel = toVector(L"");
-    graph_settings->yLabel = toVector(L"");
+    //    graph_settings->title = toVector(L"");
+    graph_title->setText("Coefficients dependent on regularization");
+    //    graph_settings->xLabel = toVector(L"");
+    graph_x_label->setText("regularization rate");
+    //    graph_settings->yLabel = toVector(L"");
+    graph_y_label->setText("value of coefficients");
 
     if(model != nullptr)
     {
@@ -818,31 +905,31 @@ void Results_widget::set_arrows(bool enable, QPushButton* arrow)
     arrow->setStyleSheet("QPushButton"
                          "{"
                          "background-color:rgba( " + str3 + " , " + str3 + " , " + str3 + " , 255);"
-                         "image: url(:/res/icon/" + str2 + str + ");"
-                         "}"
-                         "QPushButton:hover{"
-                         "background-color:rgba( " + str3 + " , " + str3 + " , " + str3 + " , 255);"
-                         "image: url(:/res/icon/" + str2 + "2);"
-                         "}"
-                         "QPushButton:pressed{"
-                         "background-color:rgba( " + str3 + " , " + str3 + " , " + str3 + " , 255);"
-                         "image: url(:/res/icon/" + str2 + "3);"
-                         "}"
+                                                                                          "image: url(:/res/icon/" + str2 + str + ");"
+                                                                                                                                  "}"
+                                                                                                                                  "QPushButton:hover{"
+                                                                                                                                  "background-color:rgba( " + str3 + " , " + str3 + " , " + str3 + " , 255);"
+                                                                                                                                                                                                   "image: url(:/res/icon/" + str2 + "2);"
+                                                                                                                                                                                                                                     "}"
+                                                                                                                                                                                                                                     "QPushButton:pressed{"
+                                                                                                                                                                                                                                     "background-color:rgba( " + str3 + " , " + str3 + " , " + str3 + " , 255);"
+                                                                                                                                                                                                                                                                                                      "image: url(:/res/icon/" + str2 + "3);"
+                                                                                                                                                                                                                                                                                                                                        "}"
                          );
 
 
 
     if(enable)
     {
-            (((arrow == left_input) || (arrow == right_input))?counter_input:counter)->setStyleSheet("QLabel{"
-                               "color: rgba(0, 0, 0, 255);"
-                               "}");
+        (((arrow == left_input) || (arrow == right_input))?counter_input:counter)->setStyleSheet("QLabel{"
+                                                                                                 "color: rgba(0, 0, 0, 255);"
+                                                                                                 "}");
     }
     else
     {
-       (((arrow == left_input) || (arrow == right_input))?counter_input:counter)->setStyleSheet("QLabel{"
-                               "color: rgba(100, 100, 100, 255);"
-                               "}");
+        (((arrow == left_input) || (arrow == right_input))?counter_input:counter)->setStyleSheet("QLabel{"
+                                                                                                 "color: rgba(100, 100, 100, 255);"
+                                                                                                 "}");
     }
 
 }
@@ -972,3 +1059,11 @@ void Results_widget::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
 }
 
+void Results_widget::change_blockator(bool state)
+{
+    size_change_blockator = state;
+    if(!state)
+    {
+        redraw();
+    }
+}

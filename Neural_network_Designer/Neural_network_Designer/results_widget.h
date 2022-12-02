@@ -6,6 +6,8 @@
 #include <QLabel>
 #include <QPushButton>
 #include "pbPlots.h"
+#include "qlabel90.h"
+#include "qlabel0.h"
 #include "supportLib.h"
 #include "neural_network_model.h"
 
@@ -35,6 +37,7 @@ private:
     QVBoxLayout *graph_chosing = nullptr;
     QHBoxLayout *best_layout = nullptr;
     QVBoxLayout *graph_V_layout = nullptr;
+    QHBoxLayout *graph_l_layout = nullptr;
 
     QPushButton *all = nullptr;
     QPushButton *best = nullptr;
@@ -52,12 +55,17 @@ private:
     QPushButton *right_input = nullptr;
     QLabel *counter_input = nullptr;
     QLabel *graph_l = nullptr;
+    QLabel *graph_title = nullptr;
+    QLabel0 *graph_x_label = nullptr;
+    QLabel90 *graph_y_label = nullptr;
 
     ScatterPlotSettings* graph_settings;
     QPixmap graph;
     int best_index = 0;
     int current_index = 0;
     int current_input = 0;
+
+    bool size_change_blockator = false;
 
     graph_function current_g = g_all;
 
@@ -93,8 +101,9 @@ private slots:
     void best_button_clicked();
 
 public slots:
-    //void load_img_ref(RGBABitmapImageReference ref);
+
     void load_model(Neural_network_model *nn_model);
+    void change_blockator(bool state);
 };
 
 #endif // RESULTS_WIDGET_H

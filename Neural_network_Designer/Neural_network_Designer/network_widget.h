@@ -32,12 +32,18 @@ private:
 
     void redraw();
 
+    bool size_change_blockator = false;
+
 private slots:
 
     void add_layer();
     void add_layer(QList<Neuron::func> *fun);
     void remove_layer();
     void resize_inner_event();
+
+public slots:
+
+    void change_blockator(bool state);
 
 protected:
     void resizeEvent(QResizeEvent *event);

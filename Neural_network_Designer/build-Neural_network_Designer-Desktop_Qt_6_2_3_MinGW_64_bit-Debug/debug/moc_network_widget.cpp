@@ -24,8 +24,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Network_widget_t {
-    const uint offsetsAndSize[14];
-    char stringdata0[83];
+    const uint offsetsAndSize[18];
+    char stringdata0[106];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_Network_widget_t, stringdata0) + ofs), len 
@@ -37,12 +37,15 @@ QT_MOC_LITERAL(25, 0), // ""
 QT_MOC_LITERAL(26, 20), // "QList<Neuron::func>*"
 QT_MOC_LITERAL(47, 3), // "fun"
 QT_MOC_LITERAL(51, 12), // "remove_layer"
-QT_MOC_LITERAL(64, 18) // "resize_inner_event"
+QT_MOC_LITERAL(64, 18), // "resize_inner_event"
+QT_MOC_LITERAL(83, 16), // "change_blockator"
+QT_MOC_LITERAL(100, 5) // "state"
 
     },
     "Network_widget\0add_layer\0\0"
     "QList<Neuron::func>*\0fun\0remove_layer\0"
-    "resize_inner_event"
+    "resize_inner_event\0change_blockator\0"
+    "state"
 };
 #undef QT_MOC_LITERAL
 
@@ -52,7 +55,7 @@ static const uint qt_meta_data_Network_widget[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -60,16 +63,18 @@ static const uint qt_meta_data_Network_widget[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   38,    2, 0x08,    1 /* Private */,
-       1,    1,   39,    2, 0x08,    2 /* Private */,
-       5,    0,   42,    2, 0x08,    4 /* Private */,
-       6,    0,   43,    2, 0x08,    5 /* Private */,
+       1,    0,   44,    2, 0x08,    1 /* Private */,
+       1,    1,   45,    2, 0x08,    2 /* Private */,
+       5,    0,   48,    2, 0x08,    4 /* Private */,
+       6,    0,   49,    2, 0x08,    5 /* Private */,
+       7,    1,   50,    2, 0x0a,    6 /* Public */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 3,    4,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Bool,    8,
 
        0        // eod
 };
@@ -84,6 +89,7 @@ void Network_widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 1: _t->add_layer((*reinterpret_cast< QList<Neuron::func>*(*)>(_a[1]))); break;
         case 2: _t->remove_layer(); break;
         case 3: _t->resize_inner_event(); break;
+        case 4: _t->change_blockator((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -97,7 +103,7 @@ const QMetaObject Network_widget::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_Network_widget_t
 , QtPrivate::TypeAndForceComplete<Network_widget, std::true_type>
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QList<Neuron::func> *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QList<Neuron::func> *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>
 
 
 >,
@@ -124,13 +130,13 @@ int Network_widget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 5)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 4;
+        _id -= 5;
     }
     return _id;
 }

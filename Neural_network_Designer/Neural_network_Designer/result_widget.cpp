@@ -23,10 +23,12 @@ Result_widget::Result_widget(int id, QWidget *parent) : QWidget{parent}
     //                          );
 
     structure = new Network_widget();
+    connect(this,SIGNAL(change_block_state(bool)),structure,SLOT(change_blockator(bool)));
     settings = new Settings_widget(this);
     connect(settings,SIGNAL(calculate()),this,SLOT(calculate()));
-    results = new Results_widget(this);
-    connect(results,SIGNAL(save()),this,SLOT(download()));
+    //results = new Results_widget(this);
+    //connect(results,SIGNAL(save()),this,SLOT(download()));
+    //connect(this,SIGNAL(change_block_state(bool)),results,SLOT(change_blockator(bool)));
 
     connect(parent,SIGNAL(save(bool,int)),this,SLOT(save_process(bool,int)));
 
@@ -92,10 +94,16 @@ void Result_widget::calculate()
         delete win;
     }
 
-    nn_model->regularization_range.at(0) = 0;
+    if(results != nullptr)
+    {
+        disconnect(results,SIGNAL(save()),0,0);
+        delete results;
+    }
 
+    results = new Results_widget(this);
+    connect(results,SIGNAL(save()),this,SLOT(download()));
     results->load_model(nn_model);
-
+    tools->addTab(results,QIcon(":/res/icon/results"),"Results");
     tools->setCurrentIndex(2);
 
 
@@ -348,48 +356,6 @@ void Result_widget::load_model(QString f_name)
         if(list.at(0) == "true")
         {
 
-            std::vector<std::vector<std::vector<std::vector<double>>>> koef;
-            koef.resize(sett.regularization_bool?sett.regularization_cycles:1);
-            std::vector<std::vector<double>> values;
-            values.resize(2);
-
-            list = stream.readLine().split('=');
-
-            for(int j = 0;j < static_cast<int>(koef.size());j++)
-            {
-
-                while(true)
-                {
-                    list = stream.readLine().split('=');
-                    if(list.count() == 2)
-                    {
-                        if(list.at(0)[0] == 'w')
-                        {
-                            values.at(0).push_back(list.at(1).toDouble());
-                        }
-                        else if(list.at(0)[0] == 'b')
-                        {
-                            values.at(1).push_back(list.at(1).toDouble());
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-
-                koef.at(j) = fill_koeficients(structure->get_net(),neurons_count.front(),values);
-
-                values.clear();
-                values.resize(2);
-
-
-            }
-
             if(nn_model != nullptr)
             {
                 delete nn_model;
@@ -397,6 +363,49 @@ void Result_widget::load_model(QString f_name)
 
             try
             {
+
+                std::vector<std::vector<std::vector<std::vector<double>>>> koef;
+                koef.resize(sett.regularization_bool?sett.regularization_cycles:1);
+                std::vector<std::vector<double>> values;
+                values.resize(2);
+
+                list = stream.readLine().split('=');
+
+                for(int j = 0;j < static_cast<int>(koef.size());j++)
+                {
+
+                    while(true)
+                    {
+                        list = stream.readLine().split('=');
+                        if(list.count() == 2)
+                        {
+                            if(list.at(0)[0] == 'w')
+                            {
+                                values.at(0).push_back(list.at(1).toDouble());
+                            }
+                            else if(list.at(0)[0] == 'b')
+                            {
+                                values.at(1).push_back(list.at(1).toDouble());
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                    koef.at(j) = fill_koeficients(structure->get_net(),neurons_count.front(),values);
+
+                    values.clear();
+                    values.resize(2);
+
+
+                }
+
                 nn_model = new Neural_network_model(structure->get_net(),settings->get_settings(),koef);
             }
             catch (char const* str)
@@ -416,6 +425,9 @@ void Result_widget::load_model(QString f_name)
             tools->setCurrentIndex(2);
 
 
+        }else
+        {
+            tools->setCurrentIndex(1);
         }
 
     }
@@ -446,18 +458,14 @@ std::vector<std::vector<std::vector<double>>> Result_widget::fill_koeficients(st
     {
         for (int i = 0; i < inputs; i++)
         {
-            try
-            {
 
-                if(static_cast<int>(net.at(0).size()) < n)
+            if(static_cast<int>(net.at(0).size()) > n)
+            {
+                if (((net.at(0).at(n) == Neural_network_model::times) || (net.at(0).at(n) == Neural_network_model::divide))&&(i==0))
                 {
-                    if (((net.at(0).at(n) == Neural_network_model::times) || (net.at(0).at(n) == Neural_network_model::divide))&&(i==0))
-                    {
-                        net_size = net_size + 1;
-                    }
+                    net_size = net_size + 1;
                 }
             }
-            catch (...) {}
 
             if(w_count >= static_cast<int>(values.at(0).size()))
             {
@@ -474,7 +482,7 @@ std::vector<std::vector<std::vector<double>>> Result_widget::fill_koeficients(st
         for (int n = 0; n < static_cast<int>(net.at(l).size()); n++)
         {
 
-            if(w_count >= static_cast<int>(values.at(1).size()))
+            if(b_count > static_cast<int>(values.at(1).size()))
             {
                 throw(coeff_err);
             }
@@ -490,18 +498,13 @@ std::vector<std::vector<std::vector<double>>> Result_widget::fill_koeficients(st
 
             for (int n = 0; n < net_size; n++)
             {
-                try
+                if(static_cast<int>(net.at(l+1).size()) > n)
                 {
-                    if(static_cast<int>(net.at(l + 1).size()) < n)
+                    if ((net.at(l + 1).at(n) == Neural_network_model::times) || (net.at(l + 1).at(n) == Neural_network_model::divide))
                     {
-
-                        if ((net.at(l + 1).at(n) == Neural_network_model::times) || (net.at(l + 1).at(n) == Neural_network_model::divide))
-                        {
-                            net_size = net_size + net.at(l).size();
-                        }
+                        net_size = net_size + net.at(l).size();
                     }
                 }
-                catch (...) {}
 
                 if(w_count >= static_cast<int>(values.at(0).size()))
                 {
@@ -515,4 +518,9 @@ std::vector<std::vector<std::vector<double>>> Result_widget::fill_koeficients(st
     }
 
     return std::vector<std::vector<std::vector<double>>>{w,b};
+}
+
+void Result_widget::change_blockator(bool state)
+{
+    emit change_block_state(state);
 }

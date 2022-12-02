@@ -43,13 +43,13 @@ void Layer_widget::set_widget()
     mp_inner_layout->setSpacing(0);
     mp_remove_neuron_buttton = new Button_roundted();
     mp_remove_neuron_buttton->button->setIcon(QIcon(":/res/icon/minus"));
-    mp_remove_neuron_buttton->setFixedHeight(60);
+    mp_remove_neuron_buttton->setFixedHeight(100);
     mp_remove_neuron_buttton->reconfigurable = false;
     connect(mp_remove_neuron_buttton->button, SIGNAL(clicked()), this, SLOT(remove_widget()));
 
     mp_add_neuron_buttton = new Button_roundted();
     mp_add_neuron_buttton->button->setIcon(QIcon(":/res/icon/plus"));
-    mp_add_neuron_buttton->setFixedHeight(60);
+    mp_add_neuron_buttton->setFixedHeight(100);
     mp_add_neuron_buttton->reconfigurable = false;
     connect(mp_add_neuron_buttton->button, SIGNAL(clicked()), this, SLOT(add_widget()));
 

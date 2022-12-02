@@ -9,13 +9,15 @@ Network_widget::Network_widget(QWidget *parent) : QWidget{parent}
     mp_remove_layer_buttton = new Button_roundted();
     mp_remove_layer_buttton->button->setIcon(QIcon(":/res/icon/minus"));
     mp_remove_layer_buttton->reconfigurable = false;
-    mp_remove_layer_buttton->setFixedWidth(60);
+    mp_remove_layer_buttton->setFixedWidth(30);
+    mp_remove_layer_buttton->button->setIconSize(QSize(28,28));
     connect(mp_remove_layer_buttton->button, SIGNAL(clicked()), this, SLOT(remove_layer()));
 
     mp_add_layer_buttton = new Button_roundted();
     mp_add_layer_buttton->button->setIcon(QIcon(":/res/icon/plus"));
     mp_add_layer_buttton->reconfigurable = false;
-    mp_add_layer_buttton->setFixedWidth(60);
+    mp_add_layer_buttton->setFixedWidth(30);
+    mp_remove_layer_buttton->button->setIconSize(QSize(28,28));
     connect(mp_add_layer_buttton->button, SIGNAL(clicked()), this, SLOT(add_layer()));
 
     input_layer = new Layer_widget(true, false, this);
@@ -87,15 +89,15 @@ void Network_widget::add_layer(QList<Neuron::func> *fun)
 
     connect(layers->last(), SIGNAL(redraw()), this, SLOT(resize_inner_event()));
 
-     mp_inner_layout->addWidget(layers->last());
+    mp_inner_layout->addWidget(layers->last());
 
-     output_layer = new Layer_widget(false, true, this);
+    output_layer = new Layer_widget(false, true, this);
 
-     mp_inner_layout->addWidget(output_layer);
+    mp_inner_layout->addWidget(output_layer);
 
     if(layers->count() == 1)
     {
-         mp_remove_layer_buttton->button->setIcon(QIcon(":/res/icon/minus_disabled"));
+        mp_remove_layer_buttton->button->setIcon(QIcon(":/res/icon/minus_disabled"));
     }
     else
     {
@@ -124,7 +126,7 @@ void Network_widget::remove_layer()
 
     if(layers->count() == 0)
     {
-         mp_remove_layer_buttton->button->setIcon(QIcon(":/res/icon/minus_disabled"));
+        mp_remove_layer_buttton->button->setIcon(QIcon(":/res/icon/minus_disabled"));
     }
     else
     {
@@ -138,32 +140,65 @@ void Network_widget::remove_layer()
 void Network_widget::redraw()
 {
 
-    int min_diameter = input_layer->neurons->at(0)->get_redraw();
+    if(size_change_blockator)
+    {
+        return;
+        ////////////////////////////// Doplnit skrytí neurnů dokud nereleasnu myš  !!!!  }
+    }
 
+    //    int min_diameter = input_layer->neurons->at(0)->get_redraw();
+
+    //    int size = 0;
+
+    //    for(auto i : *layers)
+    //    {
+    //        size = i->neurons->at(0)->get_redraw();
+
+    //        if(size < min_diameter)
+    //        {
+    //            min_diameter = size;
+    //        }
+    //    }
+
+    int diameter =0 ;
+    int max_count = input_layer->neurons->size();
     int size = 0;
 
     for(auto i : *layers)
     {
-        size = i->neurons->at(0)->get_redraw();
+        size = i->neurons->size();
 
-        if(size < min_diameter)
+        if(size > max_count)
         {
-            min_diameter = size;
+            max_count = size;
         }
     }
 
-    output_layer->neurons->at(0)->set_redraw(min_diameter);
+    if((height()/max_count) > (width()/(layers->size()+2)))
+    {
+        diameter = (width()/(layers->size()+2));
+    }
+    else
+    {
+        diameter = (height()/max_count);
+    }
+
+    diameter -= 60;
+
+    output_layer->neurons->at(0)->set_redraw(diameter);
 
     for(auto i : *input_layer->neurons)
     {
-       i->set_redraw(min_diameter);
+        i->set_redraw(diameter);
     }
+
+
 
     for(auto i : *layers)
     {
         for(auto j : *i->neurons)
         {
-           j->set_redraw(min_diameter);
+            j->set_redraw(diameter);
         }
     }
 }
@@ -176,10 +211,7 @@ void Network_widget::resizeEvent(QResizeEvent *event)
 
 void Network_widget::resize_inner_event()
 {
-    qApp->processEvents();
     redraw();
-    qApp->processEvents();
-    //redraw();
 }
 
 std::vector<std::vector<function>> Network_widget::get_net()
@@ -210,5 +242,14 @@ void Network_widget::load_model(std::vector< QList<Neuron::func>*> f)
     for(int j = 0;j < static_cast<int>(f.size()); j++)
     {
         add_layer(f.at(j));
+    }
+}
+
+void Network_widget::change_blockator(bool state)
+{
+    size_change_blockator = state;
+    if(!state)
+    {
+        redraw();
     }
 }

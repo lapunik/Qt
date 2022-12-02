@@ -491,6 +491,7 @@ void Main_window::new_tab(int index)
 
         result_wigets->append(new Result_widget(result_wigets->count(),this)); // vytvoření nového widgetu
         connect(result_wigets->last(), SIGNAL(change_name(int, QString)), this, SLOT(change_name(int,QString)));
+        connect(this, SIGNAL(change_block_state(bool)), result_wigets->last(), SLOT(change_blockator(bool)));
         network_tabs->addTab(result_wigets->at(result_wigets->count()-1),QString("Untitled*")); // jeho pojmenování a vložení do tabů
 
         network_tabs->addTab(new QWidget(this),QIcon(":/res/icon/plus2"),""); // zpátky přidání pluska
@@ -540,6 +541,7 @@ void Main_window::load_clicked()
 void Main_window::new_tab_left_bar()
 {
     new_tab(network_tabs->count()-1);
+    network_tabs->setCurrentIndex(network_tabs->count()-2);
 }
 
 void Main_window::change_name(int id, QString name)
@@ -550,11 +552,6 @@ void Main_window::change_name(int id, QString name)
 //Below two methods partially from Qt Shaped Clock example
 void Main_window::mousePressEvent(QMouseEvent *event)
 {
-    //From Qt Documentation:
-    //Reason why pos() wasn't working is because the global
-    //position at time of event may be very different
-    //This is why the mpos = event->pos(); line before was
-    //possibly causing jumping behavior
 
     if (event->button() == Qt::LeftButton)
     {
@@ -582,6 +579,10 @@ void Main_window::mouseReleaseEvent(QMouseEvent *event)
 {
     QApplication::setOverrideCursor(Qt::ArrowCursor);
     manual_resize = false;
+    if(blocker)
+    {
+        emit change_block_state(false);
+    }
 }
 
 void Main_window::mouseMoveEvent(QMouseEvent *event)
@@ -706,6 +707,9 @@ void Main_window::mouseMoveEvent(QMouseEvent *event)
             }
 
             if (event->buttons()==Qt::LeftButton ){
+
+                blocker = true;
+                emit change_block_state(true);
 
                 //Calculation of displacement. adjXfac=1 means normal displacement
                 //adjXfac=-1 means flip over axis

@@ -27,13 +27,13 @@ signals:
 private:
     QGridLayout *mp_layout = nullptr;
 
-protected:
-    void resizeEvent(QResizeEvent *event);
+//protected:
+//    void resizeEvent(QResizeEvent *event);
 
 public slots:
 
-    int get_redraw();
-    void redraw();
+//    int get_redraw();
+//    void redraw();
     void set_redraw(int diameter);
 
     //void double_clicked_slot();

@@ -22,6 +22,8 @@ SOURCES += \
     neuron.cpp \
     neuron_settings_window.cpp \
     pbPlots.cpp \
+    qlabel0.cpp \
+    qlabel90.cpp \
     result_widget.cpp \
     results_widget.cpp \
     settings_widget.cpp \
@@ -40,6 +42,8 @@ HEADERS += \
     neuron.h \
     neuron_settings_window.h \
     pbPlots.h \
+    qlabel0.h \
+    qlabel90.h \
     result_widget.h \
     results_widget.h \
     settings_widget.h \

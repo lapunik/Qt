@@ -11,6 +11,8 @@ release/neural_network_model.o
 release/neuron.o
 release/neuron_settings_window.o
 release/pbPlots.o
+release/qlabel0.o
+release/qlabel90.o
 release/result_widget.o
 release/results_widget.o
 release/settings_widget.o
@@ -26,6 +28,8 @@ release/moc_network_widget.o
 release/moc_neural_network_model.o
 release/moc_neuron.o
 release/moc_neuron_settings_window.o
+release/moc_qlabel0.o
+release/moc_qlabel90.o
 release/moc_result_widget.o
 release/moc_results_widget.o
 release/moc_settings_widget.o

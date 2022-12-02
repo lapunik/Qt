@@ -15,9 +15,9 @@ Button_roundted::Button_roundted(QWidget *parent) : QWidget{parent}
     mp_layout->addWidget(button);
     setLayout(mp_layout);
 
-    resize(100,100);
+    resize(50,50);
 
-    redraw();
+    //redraw();
 }
 
 Button_roundted::~Button_roundted()
@@ -32,33 +32,26 @@ Button_roundted::~Button_roundted()
     }
 }
 
-void Button_roundted::resizeEvent(QResizeEvent *event)
-{
-    redraw();
-    QWidget::resizeEvent(event);
-}
+//void Button_roundted::resizeEvent(QResizeEvent *event)
+//{
+//    redraw();
+//    QWidget::resizeEvent(event);
+//}
 
-int Button_roundted::get_redraw()
-{
-    return (qMin(height(), width()));
-}
+//int Button_roundted::get_redraw()
+//{
+//    return (qMin(height(), width()));
+//}
 
 void Button_roundted::set_redraw(int diameter)
 {
-    button->setIconSize(QSize(diameter-20,diameter-20));
+    button->setIconSize(QSize(diameter,diameter));
 }
 
-void Button_roundted::redraw()
-{
+//void Button_roundted::redraw()
+//{
 
-    set_redraw(get_redraw());
+//    set_redraw(get_redraw());
 
-}
+//}
 
-/*
-void Button_roundted::double_clicked_slot()
-{
-
-    if(reconfigurable)
-        emit double_clicked_signal();
-}*/

@@ -11,6 +11,8 @@ debug/neural_network_model.o
 debug/neuron.o
 debug/neuron_settings_window.o
 debug/pbPlots.o
+debug/qlabel0.o
+debug/qlabel90.o
 debug/result_widget.o
 debug/results_widget.o
 debug/settings_widget.o
@@ -26,6 +28,8 @@ debug/moc_network_widget.o
 debug/moc_neural_network_model.o
 debug/moc_neuron.o
 debug/moc_neuron_settings_window.o
+debug/moc_qlabel0.o
+debug/moc_qlabel90.o
 debug/moc_result_widget.o
 debug/moc_results_widget.o
 debug/moc_settings_widget.o

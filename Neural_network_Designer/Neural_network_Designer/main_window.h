@@ -33,6 +33,7 @@ public:
 signals:
 
     void save(bool b, int index);
+    void change_block_state(bool state);
 
 private:
     const QString APP_TITLE = tr("Neural network designer");
@@ -71,6 +72,8 @@ private:
     void set_title_layout();
     void set_left_layout();
     void set_menubar_layout();
+
+    bool blocker = false;
 
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);

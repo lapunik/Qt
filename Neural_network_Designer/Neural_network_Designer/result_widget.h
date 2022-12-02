@@ -45,11 +45,17 @@ private:
 signals:
 
     void change_name(int id, QString name);
+    void redraw();
+    void change_block_state(bool state);
 
 private slots:
 
     void calculate();
     void save_process(bool as, int index);
+
+public slots:
+
+    void change_blockator(bool state);
 
 };
 
