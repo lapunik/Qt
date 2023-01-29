@@ -2,8 +2,6 @@
 
 Neural_network_model::Neural_network_model(std::vector<std::vector<function>> net, Model_settings setting, QObject *parent) : QObject{parent}
 {
-    //std::string name{ "regularization_" }; // TODO - ukládání systém
-
     x.resize(setting.input_data.size()-1);
 
     for(int j = 0; j < static_cast<int>(x.size()); j++)
@@ -41,7 +39,7 @@ Neural_network_model::Neural_network_model(std::vector<std::vector<function>> ne
         y0.push_back(setting.input_data.last().at(i));
     }
 
-    if(setting.regularization_bool)
+    if(setting.regularization_bool && (setting.regularization_cycles > 0))
     {
         setting.regularization_from = -setting.regularization_from;
         setting.regularization_to = -setting.regularization_to;
@@ -49,11 +47,19 @@ Neural_network_model::Neural_network_model(std::vector<std::vector<function>> ne
         double temp = 0;
         double from_to_diff = static_cast<double>(setting.regularization_from-setting.regularization_to);
 
-        for(int i = 0;i < setting.regularization_cycles; i++)
+        if(setting.regularization_cycles == 1)
         {
-            temp = static_cast<double>(setting.regularization_from) - (static_cast<double>(i)*(from_to_diff/(static_cast<double>(setting.regularization_cycles-1))));
+            regularization_range.push_back(pow(10,(-setting.regularization_from)));
+        }
+        else
+        {
+            for(int i = 0;i < setting.regularization_cycles; i++)
+            {
+                temp = static_cast<double>(setting.regularization_from) - (static_cast<double>(i)*(from_to_diff/(static_cast<double>(setting.regularization_cycles-1))));
 
-            regularization_range.push_back(pow(10,(-temp)));
+                regularization_range.push_back(pow(10,(-temp)));
+
+            }
         }
     }
     else
@@ -90,7 +96,7 @@ Neural_network_model::Neural_network_model(std::vector<std::vector<function>> ne
             {
                 for(int k = 0;k<static_cast<int>(koef.at(i).at(j).size());k++)
                 {
-                    if(koef.at(i).at(j).at(k) <= 0.0001 && koef.at(i).at(j).at(k) >= -0.0001)
+                    if(koef.at(i).at(j).at(k) <= 0.01 && koef.at(i).at(j).at(k) >= -0.01)
                     {
                         koef.at(i).at(j).at(k) = 0.0;
                     }
@@ -336,9 +342,8 @@ double Neural_network_model::mse(std::vector<double> y0, std::vector<double> y1)
 
     std::transform(y0.begin(), y0.end(), y1.begin(), E.begin(), [](double& a, double& b) { return std::pow(a - b, 2); });
 
-    return std::accumulate(E.begin(), E.end(), 0.0) / E.size();
+    return (std::accumulate(E.begin(), E.end(), 0.0) / E.size())/y0.size();
 }
-
 std::vector<std::vector<std::vector<double>>> Neural_network_model::initialize_koeficients(std::vector<std::vector<function>> net, int inputs , double w_val, double b_val)
 {
     std::vector<std::vector<double>> w(net.size());
@@ -756,11 +761,11 @@ double Neural_network_model::derivate_mse(std::vector<double> y0, std::vector<st
 {
     double koef_sum = 0;
 
-    for (int k = 0; k < koef.size(); k++)
+    for (int k = 0; k < static_cast<int>(koef.size()); k++)
     {
-        for (int j = 0; j < koef.at(k).size(); j++)
+        for (int j = 0; j < static_cast<int>(koef.at(k).size()); j++)
         {
-            for (int i = 0; i < koef.at(k).at(j).size(); i++)
+            for (int i = 0; i < static_cast<int>(koef.at(k).at(j).size()); i++)
             {
                 koef_sum += abs(koef.at(k).at(j).at(i));
             }
@@ -769,7 +774,7 @@ double Neural_network_model::derivate_mse(std::vector<double> y0, std::vector<st
 
     double e = mse(y0, calculate(x, net, koef)) + (lambda * koef_sum);
 
-    double h = 0.0000000000001;
+    double h = 0.000000000001;
 
     koef.at(t).at(l).at(n) = koef.at(t).at(l).at(n) + h;
 
@@ -813,7 +818,7 @@ std::vector<std::vector<std::vector<double>>> Neural_network_model::ADAM(std::ve
                     d_koef = derivate_mse(y0, x, net, koef, wb, l, n, lambda);
 
                     m.at(wb).at(l).at(n) = (beta1 * m.at(wb).at(l).at(n)) + (beta1_1)*d_koef;
-                    v.at(wb).at(l).at(n) = (beta2 * v.at(wb).at(l).at(n)) + ((beta2_1)*Neural_network_model::pow2(d_koef, 0));
+                    v.at(wb).at(l).at(n) = (beta2 * v.at(wb).at(l).at(n)) + ((beta2_1)*(Neural_network_model::pow2(d_koef, 0)));
 
                     koef.at(wb).at(l).at(n) = koef.at(wb).at(l).at(n) - ((alpha * m.at(wb).at(l).at(n) / (1 - pow(beta1, i + 1))) / (std::sqrt(v.at(wb).at(l).at(n) / (1 - pow(beta2, i + 1))) + epsilon));
 

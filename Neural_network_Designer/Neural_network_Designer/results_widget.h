@@ -2,14 +2,22 @@
 #define RESULTS_WIDGET_H
 
 #include <QWidget>
+#include <QComboBox>
 #include <QBoxLayout>
 #include <QLabel>
 #include <QPushButton>
+#include <QStringList>
+#include <QStringListModel>
+#include <QScrollBar>
+#include <QFileDialog>
+#include <QListView>
 #include "pbPlots.h"
 #include "qlabel90.h"
 #include "qlabel0.h"
 #include "supportLib.h"
 #include "neural_network_model.h"
+#include "message_box.h"
+
 
 class Results_widget : public QWidget
 {
@@ -31,11 +39,11 @@ private:
 
     QHBoxLayout *main_H_layout = nullptr;
     QVBoxLayout *main_V_layout = nullptr;
-    QHBoxLayout *output_layout = nullptr;
+    QHBoxLayout *download_all_layout = nullptr;
+    QHBoxLayout *download_layout = nullptr;
     QHBoxLayout *control_layout = nullptr;
     QHBoxLayout *control_input_layout = nullptr;
     QVBoxLayout *graph_chosing = nullptr;
-    QHBoxLayout *best_layout = nullptr;
     QVBoxLayout *graph_V_layout = nullptr;
     QHBoxLayout *graph_l_layout = nullptr;
 
@@ -45,7 +53,9 @@ private:
     QPushButton *reg_mse = nullptr;
     QPushButton *reg_NonZC = nullptr;
 
+
     QPushButton *download = nullptr;
+    QPushButton *download_all = nullptr;
     QPushButton *best_button = nullptr;
     QLabel *best_label = nullptr;
     QPushButton *left = nullptr;
@@ -58,6 +68,10 @@ private:
     QLabel *graph_title = nullptr;
     QLabel0 *graph_x_label = nullptr;
     QLabel90 *graph_y_label = nullptr;
+
+    QComboBox *mp_model_combo = nullptr;
+    QListView *mp_coefficients = nullptr;
+    void setComboBox(QComboBox *combo, bool disable);
 
     ScatterPlotSettings* graph_settings;
     QPixmap graph;
@@ -74,31 +88,38 @@ private:
     void redraw();
     void set_window();
     void set_arrows(bool enable, QPushButton* arrow);
+    void set_buttons_size(int h, int w);
+    void set_coef_widget();
 
+    void set_button_disable(QPushButton* b,bool disable);
     int search_best();
+    void download_func(bool all);
+    void set_download(std::string name);
 
     std::vector<int> change_color(std::vector<int> color);
 
 signals:
 
-    void save();
+    //void save();
 
 protected:
     void resizeEvent(QResizeEvent *event);
 
 private slots:
-    void download_clicked();
-
-    void all_clicked();
-    void best_clicked();
-    void parret_clicked();
-    void reg_mse_clicked();
-    void reg_NonZC_clicked();
+    void all_clicked(bool draw= true);
+    void best_clicked(bool draw= true);
+    void parret_clicked(bool draw= true,bool particular = true);
+    void reg_mse_clicked(bool draw= true);
+    void reg_NonZC_clicked(bool draw= true);
+    void reg_NonZC_clicked2(bool draw= true);
     void arrow_clicked();
     void arrowl_clicked();
     void arrow_input_clicked();
     void arrowl_input_clicked();
     void best_button_clicked();
+    void download_clicked();
+    void download_all_clicked();
+    void comboBox_item_changed(int index);
 
 public slots:
 

@@ -8,14 +8,12 @@ Button_roundted::Button_roundted(QWidget *parent) : QWidget{parent}
 
     button = new My_button();
     button->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    button->setIcon(QIcon(":/res/icon/id"));
+    //button->setIcon(QIcon(":/res/icon/id"));
 
     //connect(button, SIGNAL(double_clicked()), this, SLOT(double_clicked_slot()));
 
     mp_layout->addWidget(button);
     setLayout(mp_layout);
-
-    resize(50,50);
 
     //redraw();
 }
@@ -32,26 +30,9 @@ Button_roundted::~Button_roundted()
     }
 }
 
-//void Button_roundted::resizeEvent(QResizeEvent *event)
-//{
-//    redraw();
-//    QWidget::resizeEvent(event);
-//}
-
-//int Button_roundted::get_redraw()
-//{
-//    return (qMin(height(), width()));
-//}
-
 void Button_roundted::set_redraw(int diameter)
 {
-    button->setIconSize(QSize(diameter,diameter));
+    button->setFixedSize(diameter,diameter);
+    button->setIconSize(QSize(diameter-2,diameter-2));
 }
-
-//void Button_roundted::redraw()
-//{
-
-//    set_redraw(get_redraw());
-
-//}
 

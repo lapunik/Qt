@@ -27,38 +27,7 @@ Main_window::Main_window(QWidget *parent) : QMainWindow(parent)
                                 "}"
                                 );
 
-    //    network_tabs->tabBar()->setTabButton(0,QTabBar::ButtonPosition::LeftSide,this);
-
-    //    QTabBar *tabBar = network_tabs->tabBar();
-    //    tabBar->setTabButton(0,
-    //    static_castQTabBar::ButtonPosition(tabBar
-    //    ->style()
-    //    ->styleHint(QStyle::SH_TabBar_CloseButtonPosition, 0, tabBar)),
-    //    0);
-
     layout_main_vertical->addWidget(network_tabs);
-
-
-    //    QComboBox *c = new QComboBox(this);
-    //    c->addItem("Ahoj");
-    //    c->addItem("Ahoj2");
-    //    c->addItem("Ahoj3");
-
-    //    c->setStyleSheet("QComboBox"
-    //                     "{"
-    //                     "border: 1px solid gray;"
-    //                     "border-radius: 3px;"
-    //                     "padding: 1px 18px 1px 3px;"
-    //                     "min-width: 6em;"
-    //                     "}"
-    //                     );
-
-    //    c->setFixedSize(150,40);
-
-    //    layout_main_vertical->addWidget(c);
-
-
-
 
 }
 
@@ -369,7 +338,7 @@ void Main_window::set_title_layout()
 
 void Main_window::set_window()
 {
-    resize(900,600);
+    resize(1100,600);
     setWindowIcon(QIcon(":/res/icon/main_icon"));
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
@@ -433,7 +402,7 @@ void Main_window::maximize()
         maximize_button->setIcon(QIcon(":/res/icon/maximize"));
         maximize_button->setIconSize(QSize(10,10));
         window->setStyleSheet("QWidget{"
-                              "background-color: rgba(240, 240, 240, 240);"
+                              "background-color: rgba(240, 240, 240, 255);"
                               "border: none;"
                               "border-radius: 10px;"
                               "}");
@@ -445,7 +414,7 @@ void Main_window::maximize()
         maximize_button->setIcon(QIcon(":/res/icon/maximize_2"));
         maximize_button->setIconSize(QSize(12,12));
         window->setStyleSheet("QWidget{"
-                              "background-color: rgba(240, 240, 240, 240);"
+                              "background-color: rgba(240, 240, 240, 255);"
                               "border: none;"
                               "border-radius: 0px;"
                               "}");
@@ -492,7 +461,7 @@ void Main_window::new_tab(int index)
         result_wigets->append(new Result_widget(result_wigets->count(),this)); // vytvoření nového widgetu
         connect(result_wigets->last(), SIGNAL(change_name(int, QString)), this, SLOT(change_name(int,QString)));
         connect(this, SIGNAL(change_block_state(bool)), result_wigets->last(), SLOT(change_blockator(bool)));
-        network_tabs->addTab(result_wigets->at(result_wigets->count()-1),QString("Untitled*")); // jeho pojmenování a vložení do tabů
+        network_tabs->addTab(result_wigets->at(result_wigets->count()-1),QString("untitled*")); // jeho pojmenování a vložení do tabů
 
         network_tabs->addTab(new QWidget(this),QIcon(":/res/icon/plus2"),""); // zpátky přidání pluska
         network_tabs->setIconSize(QSize(10,10)); // nastavení velikosti pro plusko

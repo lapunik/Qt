@@ -236,14 +236,17 @@ release/qrc_Resources.cpp: ../Neural_network_Designer/Resources.qrc \
 		../Neural_network_Designer/res/icon/r_calculate.png \
 		../Neural_network_Designer/res/icon/arrow2.png \
 		../Neural_network_Designer/res/icon/danger.png \
+		../Neural_network_Designer/res/icon/minus_clicked.png \
 		../Neural_network_Designer/res/icon/file.png \
 		../Neural_network_Designer/res/icon/calculate.png \
 		../Neural_network_Designer/res/icon/arrow3.png \
 		../Neural_network_Designer/res/icon/f_sigmoid.png \
 		../Neural_network_Designer/res/icon/parret.png \
 		../Neural_network_Designer/res/icon/cos.png \
+		../Neural_network_Designer/res/icon/minus_disabled2.png \
 		../Neural_network_Designer/res/icon/p_sat.png \
 		../Neural_network_Designer/res/icon/information.png \
+		../Neural_network_Designer/res/icon/plus_clicked.png \
 		../Neural_network_Designer/res/icon/id.png \
 		../Neural_network_Designer/res/icon/combo.png \
 		../Neural_network_Designer/res/icon/combo2_d.png \
@@ -277,6 +280,7 @@ release/qrc_Resources.cpp: ../Neural_network_Designer/Resources.qrc \
 		../Neural_network_Designer/res/icon/save_as.png \
 		../Neural_network_Designer/res/icon/maximize.png \
 		../Neural_network_Designer/res/icon/sigmoid.png \
+		../Neural_network_Designer/res/icon/plus_disabled2.png \
 		../Neural_network_Designer/res/icon/plus.png \
 		../Neural_network_Designer/res/icon/minus_diasbled.png \
 		../Neural_network_Designer/res/icon/all.png \
@@ -1137,16 +1141,16 @@ release/moc_main_window.cpp: ../Neural_network_Designer/main_window.h \
 		C:/Qt/6.2.3/mingw_64/include/QtCore/QFile \
 		../Neural_network_Designer/message_box.h \
 		../Neural_network_Designer/results_widget.h \
-		../Neural_network_Designer/qlabel90.h \
-		C:/Qt/6.2.3/mingw_64/include/QtGui/QPainter \
-		C:/Qt/6.2.3/mingw_64/include/QtGui/qpainter.h \
-		../Neural_network_Designer/qlabel0.h \
-		../Neural_network_Designer/information_window.h \
 		C:/Qt/6.2.3/mingw_64/include/QtCore/QStringListModel \
 		C:/Qt/6.2.3/mingw_64/include/QtCore/qstringlistmodel.h \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QScrollBar \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qscrollbar.h \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QListView \
+		../Neural_network_Designer/qlabel90.h \
+		C:/Qt/6.2.3/mingw_64/include/QtGui/QPainter \
+		C:/Qt/6.2.3/mingw_64/include/QtGui/qpainter.h \
+		../Neural_network_Designer/qlabel0.h \
+		../Neural_network_Designer/information_window.h \
 		release/moc_predefs.h \
 		C:/Qt/6.2.3/mingw_64/bin/moc.exe
 	C:\Qt\6.2.3\mingw_64\bin\moc.exe $(DEFINES) --include C:/Folders/School/Qt/Neural_network_Designer/build-Neural_network_Designer-Desktop_Qt_6_2_3_MinGW_64_bit-Debug/release/moc_predefs.h -IC:/Qt/6.2.3/mingw_64/mkspecs/win32-g++ -IC:/Folders/School/Qt/Neural_network_Designer/Neural_network_Designer -IC:/Qt/6.2.3/mingw_64/include -IC:/Qt/6.2.3/mingw_64/include/QtWidgets -IC:/Qt/6.2.3/mingw_64/include/QtGui -IC:/Qt/6.2.3/mingw_64/include/QtCore -I. -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IC:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\Neural_network_Designer\main_window.h -o release\moc_main_window.cpp
@@ -2627,6 +2631,12 @@ release/moc_result_widget.cpp: ../Neural_network_Designer/result_widget.h \
 		C:/Qt/6.2.3/mingw_64/include/QtCore/QFile \
 		../Neural_network_Designer/message_box.h \
 		../Neural_network_Designer/results_widget.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/QStringList \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/QStringListModel \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qstringlistmodel.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QScrollBar \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qscrollbar.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QListView \
 		../Neural_network_Designer/qlabel90.h \
 		C:/Qt/6.2.3/mingw_64/include/QtGui/QPainter \
 		C:/Qt/6.2.3/mingw_64/include/QtGui/qpainter.h \
@@ -2634,12 +2644,6 @@ release/moc_result_widget.cpp: ../Neural_network_Designer/result_widget.h \
 		C:/Qt/6.2.3/mingw_64/include/QtGui/qpen.h \
 		../Neural_network_Designer/qlabel0.h \
 		../Neural_network_Designer/information_window.h \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/QStringList \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/QStringListModel \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/qstringlistmodel.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QScrollBar \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qscrollbar.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QListView \
 		release/moc_predefs.h \
 		C:/Qt/6.2.3/mingw_64/bin/moc.exe
 	C:\Qt\6.2.3\mingw_64\bin\moc.exe $(DEFINES) --include C:/Folders/School/Qt/Neural_network_Designer/build-Neural_network_Designer-Desktop_Qt_6_2_3_MinGW_64_bit-Debug/release/moc_predefs.h -IC:/Qt/6.2.3/mingw_64/mkspecs/win32-g++ -IC:/Folders/School/Qt/Neural_network_Designer/Neural_network_Designer -IC:/Qt/6.2.3/mingw_64/include -IC:/Qt/6.2.3/mingw_64/include/QtWidgets -IC:/Qt/6.2.3/mingw_64/include/QtGui -IC:/Qt/6.2.3/mingw_64/include/QtCore -I. -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IC:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\Neural_network_Designer\result_widget.h -o release\moc_result_widget.cpp
@@ -2771,6 +2775,23 @@ release/moc_results_widget.cpp: ../Neural_network_Designer/results_widget.h \
 		C:/Qt/6.2.3/mingw_64/include/QtCore/QSizeF \
 		C:/Qt/6.2.3/mingw_64/include/QtGui/QTransform \
 		C:/Qt/6.2.3/mingw_64/include/QtCore/qnativeinterface.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QComboBox \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qcombobox.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qstyleoption.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qlocale.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qabstractspinbox.h \
+		C:/Qt/6.2.3/mingw_64/include/QtGui/qvalidator.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qregularexpression.h \
+		C:/Qt/6.2.3/mingw_64/include/QtGui/qicon.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qslider.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qabstractslider.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qstyle.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qtabbar.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qtabwidget.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qrubberband.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qframe.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qabstractitemmodel.h \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QBoxLayout \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qboxlayout.h \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qlayout.h \
@@ -2778,13 +2799,30 @@ release/moc_results_widget.cpp: ../Neural_network_Designer/results_widget.h \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qgridlayout.h \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QLabel \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qlabel.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qframe.h \
 		C:/Qt/6.2.3/mingw_64/include/QtGui/qpicture.h \
 		C:/Qt/6.2.3/mingw_64/include/QtGui/qtextdocument.h \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QPushButton \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qpushbutton.h \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qabstractbutton.h \
-		C:/Qt/6.2.3/mingw_64/include/QtGui/qicon.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/QStringList \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/QStringListModel \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qstringlistmodel.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QScrollBar \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qscrollbar.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QFileDialog \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qfiledialog.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qdir.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfile.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfiledevice.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfileinfo.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qdialog.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QListView \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qlistview.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qabstractitemview.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qitemselectionmodel.h \
 		../Neural_network_Designer/pbPlots.h \
 		../Neural_network_Designer/qlabel90.h \
 		C:/Qt/6.2.3/mingw_64/include/QtGui/QPainter \
@@ -2799,6 +2837,29 @@ release/moc_results_widget.cpp: ../Neural_network_Designer/results_widget.h \
 		C:/Qt/6.2.3/mingw_64/include/QtCore/QVector \
 		C:/Qt/6.2.3/mingw_64/include/QtCore/qvector.h \
 		C:/Qt/6.2.3/mingw_64/include/QtCore/QString \
+		../Neural_network_Designer/message_box.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QDialog \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QHBoxLayout \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QVBoxLayout \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QApplication \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qapplication.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qcoreapplication.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qeventloop.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qcoreapplication_platform.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfuture.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfutureinterface.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qmutex.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qresultstore.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfuture_impl.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qthreadpool.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qthread.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qdeadlinetimer.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qelapsedtimer.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qrunnable.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qexception.h \
+		C:/Qt/6.2.3/mingw_64/include/QtGui/qguiapplication.h \
+		C:/Qt/6.2.3/mingw_64/include/QtGui/qinputmethod.h \
+		C:/Qt/6.2.3/mingw_64/include/QtGui/qguiapplication_platform.h \
 		release/moc_predefs.h \
 		C:/Qt/6.2.3/mingw_64/bin/moc.exe
 	C:\Qt\6.2.3\mingw_64\bin\moc.exe $(DEFINES) --include C:/Folders/School/Qt/Neural_network_Designer/build-Neural_network_Designer-Desktop_Qt_6_2_3_MinGW_64_bit-Debug/release/moc_predefs.h -IC:/Qt/6.2.3/mingw_64/mkspecs/win32-g++ -IC:/Folders/School/Qt/Neural_network_Designer/Neural_network_Designer -IC:/Qt/6.2.3/mingw_64/include -IC:/Qt/6.2.3/mingw_64/include/QtWidgets -IC:/Qt/6.2.3/mingw_64/include/QtGui -IC:/Qt/6.2.3/mingw_64/include/QtCore -I. -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IC:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\Neural_network_Designer\results_widget.h -o release\moc_results_widget.cpp
@@ -3839,16 +3900,16 @@ release/main.o: ../Neural_network_Designer/main.cpp ../Neural_network_Designer/m
 		C:/Qt/6.2.3/mingw_64/include/QtCore/QFile \
 		../Neural_network_Designer/message_box.h \
 		../Neural_network_Designer/results_widget.h \
-		../Neural_network_Designer/qlabel90.h \
-		C:/Qt/6.2.3/mingw_64/include/QtGui/QPainter \
-		C:/Qt/6.2.3/mingw_64/include/QtGui/qpainter.h \
-		../Neural_network_Designer/qlabel0.h \
-		../Neural_network_Designer/information_window.h \
 		C:/Qt/6.2.3/mingw_64/include/QtCore/QStringListModel \
 		C:/Qt/6.2.3/mingw_64/include/QtCore/qstringlistmodel.h \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QScrollBar \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qscrollbar.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QListView
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QListView \
+		../Neural_network_Designer/qlabel90.h \
+		C:/Qt/6.2.3/mingw_64/include/QtGui/QPainter \
+		C:/Qt/6.2.3/mingw_64/include/QtGui/qpainter.h \
+		../Neural_network_Designer/qlabel0.h \
+		../Neural_network_Designer/information_window.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o ..\Neural_network_Designer\main.cpp
 
 release/main_window.o: ../Neural_network_Designer/main_window.cpp ../Neural_network_Designer/main_window.h \
@@ -4091,16 +4152,16 @@ release/main_window.o: ../Neural_network_Designer/main_window.cpp ../Neural_netw
 		C:/Qt/6.2.3/mingw_64/include/QtCore/QFile \
 		../Neural_network_Designer/message_box.h \
 		../Neural_network_Designer/results_widget.h \
-		../Neural_network_Designer/qlabel90.h \
-		C:/Qt/6.2.3/mingw_64/include/QtGui/QPainter \
-		C:/Qt/6.2.3/mingw_64/include/QtGui/qpainter.h \
-		../Neural_network_Designer/qlabel0.h \
-		../Neural_network_Designer/information_window.h \
 		C:/Qt/6.2.3/mingw_64/include/QtCore/QStringListModel \
 		C:/Qt/6.2.3/mingw_64/include/QtCore/qstringlistmodel.h \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QScrollBar \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qscrollbar.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QListView
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QListView \
+		../Neural_network_Designer/qlabel90.h \
+		C:/Qt/6.2.3/mingw_64/include/QtGui/QPainter \
+		C:/Qt/6.2.3/mingw_64/include/QtGui/qpainter.h \
+		../Neural_network_Designer/qlabel0.h \
+		../Neural_network_Designer/information_window.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main_window.o ..\Neural_network_Designer\main_window.cpp
 
 release/message_box.o: ../Neural_network_Designer/message_box.cpp ../Neural_network_Designer/message_box.h \
@@ -5619,19 +5680,19 @@ release/result_widget.o: ../Neural_network_Designer/result_widget.cpp ../Neural_
 		C:/Qt/6.2.3/mingw_64/include/QtCore/QFile \
 		../Neural_network_Designer/message_box.h \
 		../Neural_network_Designer/results_widget.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/QStringList \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/QStringListModel \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qstringlistmodel.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QScrollBar \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qscrollbar.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QListView \
 		../Neural_network_Designer/qlabel90.h \
 		C:/Qt/6.2.3/mingw_64/include/QtGui/QPainter \
 		C:/Qt/6.2.3/mingw_64/include/QtGui/qpainter.h \
 		C:/Qt/6.2.3/mingw_64/include/QtGui/qtextoption.h \
 		C:/Qt/6.2.3/mingw_64/include/QtGui/qpen.h \
 		../Neural_network_Designer/qlabel0.h \
-		../Neural_network_Designer/information_window.h \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/QStringList \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/QStringListModel \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/qstringlistmodel.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QScrollBar \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qscrollbar.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QListView
+		../Neural_network_Designer/information_window.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\result_widget.o ..\Neural_network_Designer\result_widget.cpp
 
 release/results_widget.o: ../Neural_network_Designer/results_widget.cpp ../Neural_network_Designer/results_widget.h \
@@ -5761,6 +5822,23 @@ release/results_widget.o: ../Neural_network_Designer/results_widget.cpp ../Neura
 		C:/Qt/6.2.3/mingw_64/include/QtCore/QSizeF \
 		C:/Qt/6.2.3/mingw_64/include/QtGui/QTransform \
 		C:/Qt/6.2.3/mingw_64/include/QtCore/qnativeinterface.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QComboBox \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qcombobox.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qstyleoption.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qlocale.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qabstractspinbox.h \
+		C:/Qt/6.2.3/mingw_64/include/QtGui/qvalidator.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qregularexpression.h \
+		C:/Qt/6.2.3/mingw_64/include/QtGui/qicon.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qslider.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qabstractslider.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qstyle.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qtabbar.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qtabwidget.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qrubberband.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qframe.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qabstractitemmodel.h \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QBoxLayout \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qboxlayout.h \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qlayout.h \
@@ -5768,13 +5846,30 @@ release/results_widget.o: ../Neural_network_Designer/results_widget.cpp ../Neura
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qgridlayout.h \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QLabel \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qlabel.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qframe.h \
 		C:/Qt/6.2.3/mingw_64/include/QtGui/qpicture.h \
 		C:/Qt/6.2.3/mingw_64/include/QtGui/qtextdocument.h \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QPushButton \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qpushbutton.h \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qabstractbutton.h \
-		C:/Qt/6.2.3/mingw_64/include/QtGui/qicon.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/QStringList \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/QStringListModel \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qstringlistmodel.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QScrollBar \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qscrollbar.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QFileDialog \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qfiledialog.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qdir.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfile.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfiledevice.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfileinfo.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qdialog.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QListView \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qlistview.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qabstractitemview.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qitemselectionmodel.h \
 		../Neural_network_Designer/pbPlots.h \
 		../Neural_network_Designer/qlabel90.h \
 		C:/Qt/6.2.3/mingw_64/include/QtGui/QPainter \
@@ -5788,7 +5883,30 @@ release/results_widget.o: ../Neural_network_Designer/results_widget.cpp ../Neura
 		../Neural_network_Designer/model_settings.h \
 		C:/Qt/6.2.3/mingw_64/include/QtCore/QVector \
 		C:/Qt/6.2.3/mingw_64/include/QtCore/qvector.h \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/QString
+		C:/Qt/6.2.3/mingw_64/include/QtCore/QString \
+		../Neural_network_Designer/message_box.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QDialog \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QHBoxLayout \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QVBoxLayout \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QApplication \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qapplication.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qcoreapplication.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qeventloop.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qcoreapplication_platform.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfuture.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfutureinterface.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qmutex.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qresultstore.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfuture_impl.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qthreadpool.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qthread.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qdeadlinetimer.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qelapsedtimer.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qrunnable.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qexception.h \
+		C:/Qt/6.2.3/mingw_64/include/QtGui/qguiapplication.h \
+		C:/Qt/6.2.3/mingw_64/include/QtGui/qinputmethod.h \
+		C:/Qt/6.2.3/mingw_64/include/QtGui/qguiapplication_platform.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\results_widget.o ..\Neural_network_Designer\results_widget.cpp
 
 release/settings_widget.o: ../Neural_network_Designer/settings_widget.cpp ../Neural_network_Designer/settings_widget.h \

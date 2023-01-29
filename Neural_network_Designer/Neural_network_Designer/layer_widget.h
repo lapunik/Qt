@@ -29,6 +29,10 @@ private:
     QVBoxLayout *mp_main_layout = nullptr; // přidání layoutu
     QVBoxLayout *mp_inner_layout = nullptr; // přidání layoutu
     QLabel *mp_label = nullptr;
+    QLabel *l = nullptr;
+    QHBoxLayout *ad = nullptr;
+
+    QHBoxLayout *rem = nullptr;
 
     Button_roundted *mp_add_neuron_buttton = nullptr;
     Button_roundted *mp_remove_neuron_buttton = nullptr;

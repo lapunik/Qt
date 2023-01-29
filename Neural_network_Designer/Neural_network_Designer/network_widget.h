@@ -5,6 +5,7 @@
 #include <layer_widget.h>
 #include <QVector>
 #include "neuron.h"
+#include "neural_network_model.h"
 
 class Network_widget : public QWidget
 {
@@ -31,6 +32,7 @@ private:
     Button_roundted *mp_remove_layer_buttton = nullptr;
 
     void redraw();
+    void set_neurons_size(int diameter);
 
     bool size_change_blockator = false;
 

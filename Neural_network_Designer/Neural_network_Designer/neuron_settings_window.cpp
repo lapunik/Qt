@@ -125,6 +125,74 @@ Neuron_settings_window::Neuron_settings_window(Neuron *n ,QWidget *parent): QDia
 
 Neuron_settings_window::~Neuron_settings_window()
 {
+    if(neuron != nullptr)
+    {
+        delete neuron;
+    }
+    if(exit_button != nullptr)
+    {
+        delete exit_button;
+    }
+    if(title != nullptr)
+    {
+        delete title;
+    }
+    if(mp_button_cancel != nullptr)
+    {
+        delete mp_button_cancel;
+    }
+    if(mp_button_ok != nullptr)
+    {
+        delete mp_button_ok;
+    }
+    if(mp_equation != nullptr)
+    {
+        delete mp_equation;
+    }
+    if(mp_picture != nullptr)
+    {
+        delete mp_picture ;
+    }
+    if(mp_list_widget != nullptr)
+    {
+        delete mp_list_widget;
+    }
+    if(mp_button_layout != nullptr)
+    {
+        delete mp_button_layout;
+    }
+    if(mp_graph_layout != nullptr)
+    {
+        delete mp_graph_layout;
+    }
+    if(mp_sub_layout != nullptr)
+    {
+        delete mp_sub_layout;
+    }
+    if(mp_main_layout != nullptr)
+    {
+        delete mp_main_layout;
+    }
+    if(mp_main_widget != nullptr)
+    {
+        delete mp_main_widget;
+    }
+    if(icon != nullptr)
+    {
+        delete icon;
+    }
+    if(layout_title_bar != nullptr)
+    {
+        delete layout_title_bar;
+    }
+    if(title_bar_w != nullptr)
+    {
+        delete title_bar_w;
+    }
+    if(layout_main_horizontal != nullptr)
+    {
+        delete layout_main_horizontal;
+    }
 
 }
 

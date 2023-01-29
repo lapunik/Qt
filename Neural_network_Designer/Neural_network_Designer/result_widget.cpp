@@ -11,24 +11,14 @@ Result_widget::Result_widget(int id, QWidget *parent) : QWidget{parent}
 
     tools = new QTabWidget(this);
     setContentsMargins(0,0,0,0);
-    //tools->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    //    tools->setStyleSheet("QTabWidget::pane {"
-    //                         "border: 2px solid #C2C7CB;"
-    //                         "}"
-    //                         "QTabBar::tab"
-    //                         "{"
-    //                         "height: 50px;"
-    //                         "width: 150px;"
-    //                         " }"
-    //                          );
 
     structure = new Network_widget();
     connect(this,SIGNAL(change_block_state(bool)),structure,SLOT(change_blockator(bool)));
     settings = new Settings_widget(this);
     connect(settings,SIGNAL(calculate()),this,SLOT(calculate()));
-    //results = new Results_widget(this);
-    //connect(results,SIGNAL(save()),this,SLOT(download()));
-    //connect(this,SIGNAL(change_block_state(bool)),results,SLOT(change_blockator(bool)));
+    results = new Results_widget(this);
+    connect(results,SIGNAL(save()),this,SLOT(download()));
+    connect(this,SIGNAL(change_block_state(bool)),results,SLOT(change_blockator(bool)));
 
     connect(parent,SIGNAL(save(bool,int)),this,SLOT(save_process(bool,int)));
 
@@ -46,7 +36,10 @@ Result_widget::Result_widget(int id, QWidget *parent) : QWidget{parent}
 
 Result_widget::~Result_widget()
 {
-
+//    if( != nullptr)
+//    {
+//        delete ;
+//    }
 }
 
 void Result_widget::disconnect_save()
@@ -101,6 +94,7 @@ void Result_widget::calculate()
     }
 
     results = new Results_widget(this);
+    connect(this,SIGNAL(change_block_state(bool)),results,SLOT(change_blockator(bool)));
     connect(results,SIGNAL(save()),this,SLOT(download()));
     results->load_model(nn_model);
     tools->addTab(results,QIcon(":/res/icon/results"),"Results");
@@ -120,12 +114,15 @@ void Result_widget::save_process(bool as, int index)
 
     if((file_name == "" )||(as))
     {
-        file_name = QFileDialog::getSaveFileName(this, tr("Save File"),QDir::currentPath().append("/untitled.nnd"),tr("Neural network file (*.nnd)"));
 
-        if(file_name == "")
+        QString answer = QFileDialog::getSaveFileName(this, tr("Save File"),QDir::currentPath().append("/untitled.nnd"),tr("Neural network file (*.nnd)"));
+
+        if(answer == "")
         {
             return;
         }
+
+        file_name = answer;
 
         QStringList list1 = file_name.split(u'/');
         emit change_name(ID,list1.last());
@@ -150,14 +147,14 @@ bool Result_widget::write_file(QString f_name)
 
     int num_of_inputs = structure->get_number_of_inputs();
     std::string str = ("name=" + f_name.split('/').last() + "\n").toStdString();
-    str.append("layers=" + std::to_string(net.size()+1) + "\n");
+    str.append("layers=" + std::to_string(net.size()) + "\n");
     str.append("neurons=");
     str.append(std::to_string(num_of_inputs) + ",");
-    for (int i = 0; i < static_cast<int>(net.size()-1); i++)
+    for (int i = 0; i < static_cast<int>(net.size()-2); i++)
     {
         str.append(std::to_string(net.at(i).size()) + ",");
     }
-    str.append(std::to_string(net.at(net.size()-1).size()) + "\n");
+    str.append(std::to_string(net.at(net.size()-2).size()) + "\n");
     str.append("algorithm=" + sett.algorithm_to_string(sett.algo).toStdString() + "\n");
     str.append("stochastic=");
     str.append(sett.stochastic ? "true" : "false");
@@ -179,7 +176,7 @@ bool Result_widget::write_file(QString f_name)
     str.append(",");
     str.append((sett.regularization_bool?std::to_string(sett.regularization_cycles):("0")));
     str.append("\n");
-    for (int j = 0; j < static_cast<int>(net.size()); j++)
+    for (int j = 0; j < static_cast<int>(net.size()-1); j++)
     {
         str.append("l" + std::to_string(j+1) + "=");
 
@@ -348,7 +345,9 @@ void Result_widget::load_model(QString f_name)
                 vek.clear();
             }
         }
+
         structure->load_model(net);
+
         settings->load_model(sett);
 
         list = stream.readLine().split('=');
@@ -424,8 +423,8 @@ void Result_widget::load_model(QString f_name)
 
             tools->setCurrentIndex(2);
 
-
-        }else
+        }
+        else
         {
             tools->setCurrentIndex(1);
         }

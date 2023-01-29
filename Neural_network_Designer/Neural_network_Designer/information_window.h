@@ -41,6 +41,12 @@ private:
     QHBoxLayout *layout_title_bar = nullptr;
     QWidget *title_bar_w = nullptr;
     QPushButton *icon = nullptr;
+    QStringListModel *mp_string_list_model = nullptr;
+    QScrollBar *scroll_bar = nullptr;
+    QLabel *label = nullptr;
+    QLabel *space = nullptr;
+    QLabel *space2 = nullptr;
+    QLabel *space3 = nullptr;
 
     void set_window();
     void set_title_layout();

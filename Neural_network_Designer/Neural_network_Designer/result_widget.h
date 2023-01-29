@@ -37,7 +37,6 @@ private:
     QString file_name = "";
     int ID = 0;
 
-    void download();
     bool write_file(QString file_name);
     std::vector<std::vector<std::vector<double>>> fill_koeficients(std::vector<std::vector<function>> net, int inputs,std::vector<std::vector<double>> values);
 
@@ -51,6 +50,7 @@ signals:
 private slots:
 
     void calculate();
+    void download();
     void save_process(bool as, int index);
 
 public slots:

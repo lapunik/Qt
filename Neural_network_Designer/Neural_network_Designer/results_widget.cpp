@@ -6,10 +6,7 @@ Results_widget::Results_widget(QWidget *parent) : QWidget{parent}
     current_g = g_all;
 }
 
-Results_widget::~Results_widget()
-{
-
-}
+Results_widget::~Results_widget(){}
 
 void Results_widget::set_window()
 {
@@ -29,48 +26,34 @@ void Results_widget::set_window()
                                  "background-color:rgba(150, 150, 150, 255);"
                                  "}"
                                  );
-    button_widget->setFixedWidth(150);
+    button_widget->setFixedWidth(180);
     graph_chosing = new QVBoxLayout();
     all = new QPushButton();
     all->setDisabled(true);
     all->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    // all->setFixedHeight(50);
-    //all->setText("All");
     all->setIcon(QIcon(":/res/icon/all"));
-    all->setIconSize(QSize(150,70));
     connect(all,SIGNAL(clicked()),this,SLOT(all_clicked()));
     best = new QPushButton();
     best->setDisabled(true);
     best->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    //  best->setFixedHeight(50);
-    //best->setText("Individual");
     best->setIcon(QIcon(":/res/icon/best"));
-    best->setIconSize(QSize(150,70));
     connect(best,SIGNAL(clicked()),this,SLOT(best_clicked()));
     parret = new QPushButton();
     parret->setDisabled(true);
     parret->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    //  parret->setFixedHeight(50);
-    //parret->setText("Parret");
     parret->setIcon(QIcon(":/res/icon/parret"));
-    parret->setIconSize(QSize(150,70));
     connect(parret,SIGNAL(clicked()),this,SLOT(parret_clicked()));
     reg_mse = new QPushButton();
     reg_mse->setDisabled(true);
     reg_mse->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    //   reg_mse->setFixedHeight(50);
-    //reg_mse->setText("MSE");
     reg_mse->setIcon(QIcon(":/res/icon/mse"));
-    reg_mse->setIconSize(QSize(150,70));
     connect(reg_mse,SIGNAL(clicked()),this,SLOT(reg_mse_clicked()));
     reg_NonZC = new QPushButton();
     reg_NonZC->setDisabled(true);
     reg_NonZC->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    //   reg_NonZC->setFixedHeight(50);
-    //reg_NonZC->setText("NonZC");
     reg_NonZC->setIcon(QIcon(":/res/icon/NonZC"));
-    reg_NonZC->setIconSize(QSize(150,70));
     connect(reg_NonZC,SIGNAL(clicked()),this,SLOT(reg_NonZC_clicked()));
+    set_buttons_size(150,60);
     graph_chosing->addWidget(all);
     graph_chosing->addWidget(best);
     graph_chosing->addWidget(parret);
@@ -78,33 +61,69 @@ void Results_widget::set_window()
     graph_chosing->addWidget(reg_NonZC);
     button_widget->setLayout(graph_chosing);
 
-    output_layout = new QHBoxLayout();
+    download_layout = new QHBoxLayout();
     download = new QPushButton();
     download->setText("  Download");
-    download->setFixedWidth(100);
+    download->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    download->setFixedHeight(30);
     download->setIcon(QIcon(":/res/icon/download"));
     download->setIconSize(QSize(20,20));
+    set_button_disable(download,true);
 
-    output_layout->addWidget(new QLabel("Output data: "));
-    output_layout->addWidget(download);
+    download_all_layout = new QHBoxLayout();
+    download_all = new QPushButton();
+    download_all->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    download_all->setText("  Download all");
+    download_all->setFixedHeight(30);
+    download_all->setIcon(QIcon(":/res/icon/download"));
+    download_all->setIconSize(QSize(20,20));
+    set_button_disable(download_all,true);
 
     connect(download,SIGNAL(clicked()),this,SLOT(download_clicked()));
+    connect(download_all,SIGNAL(clicked()),this,SLOT(download_all_clicked()));
 
-    best_layout = new QHBoxLayout();
+    mp_model_combo = new QComboBox();
+    mp_model_combo->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
+    mp_model_combo->setFixedHeight(30);
+    setComboBox(mp_model_combo,true);
+
+    mp_coefficients = new QListView();
+    mp_coefficients->setStyleSheet(QString("QListView{"
+                                           "color: rgba(0, 0, 0, 255);"
+                                           "background-color: rgba(235, 235, 235, 235);"
+                                           "border: none;"
+                                           "border-radius: 3px;"
+                                           "}"));
+    mp_coefficients->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    QScrollBar *s_b = new QScrollBar();
+    s_b->setStyleSheet("QScrollBar:vertical {"
+                       "    border: none;"
+                       "    background-color: rgba(0, 0, 0, 255);"
+                       "}"
+                       "QScrollBar::handle:vertical {"
+                       "    background: rgba(100, 100, 100, 255);" // jezdec
+                       "  border: 1px black;"
+                       "  border-radius: 3px;"
+                       "}"
+
+                       );
+    mp_coefficients->setVerticalScrollBar(s_b);
+
+    mp_coefficients->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding); /////////////////////////// Nejsem si jistý
+
     best_button = new QPushButton();
     best_button->setText("Best");
-    best_button->setFixedWidth(100);
-    best_button->setFixedHeight(20);
+    best_button->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
+    set_button_disable(best_button,true);
 
-    best_layout->addWidget(new QLabel(""));
-    best_layout->addWidget(best_button);
-    best_layout->addWidget(new QLabel(""));
+    best_button->setFixedHeight(30);
 
     connect(best_button,SIGNAL(clicked()),this,SLOT(best_button_clicked()));
 
     control_layout = new QHBoxLayout();
     counter = new QLabel("  0/0");
-    counter->setFixedWidth(30);
+    counter->setFixedWidth(60);
+    counter->setAlignment(Qt::AlignCenter);
     left = new QPushButton();
     left->setFixedSize(QSize(40,40));
     set_arrows(false, left);
@@ -119,13 +138,20 @@ void Results_widget::set_window()
     control_layout->addWidget(new QLabel());
     control_layout->addWidget(right);
 
+    download_layout->addWidget(download);
+    download_all_layout->addWidget(download_all);
+
     main_V_layout = new QVBoxLayout();
-    main_V_layout->addLayout(output_layout);
-    QLabel *l = new QLabel();
-    l->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    main_V_layout->addWidget(l);
-    main_V_layout->addLayout(best_layout);
+    main_V_layout->addWidget(new QLabel("Model: "));
+    main_V_layout->addWidget(new QLabel("    regularization: "));
+    main_V_layout->addWidget(mp_model_combo);
     main_V_layout->addLayout(control_layout);
+    main_V_layout->addWidget(best_button);
+    main_V_layout->addWidget(new QLabel("Coefficients: "));
+    main_V_layout->addWidget(mp_coefficients);
+    main_V_layout->addWidget(new QLabel("Output data: "));
+    main_V_layout->addLayout(download_layout);
+    main_V_layout->addLayout(download_all_layout);
 
     QWidget *main_widget = new QWidget();
     main_widget->setFixedWidth(200);
@@ -215,36 +241,57 @@ void Results_widget::set_window()
     main_H_layout->addWidget(button_widget);
     main_H_layout->addLayout(graph_V_layout);
     setLayout(main_H_layout);
-
 }
 
 void Results_widget::load_model(Neural_network_model *nn_model)
 {
+
     model = nn_model;
     all->setDisabled(false);
+    set_button_disable(download,false);
+    set_button_disable(download_all,false);
     if(nn_model->regularization_range.size() > 1)
     {
         best->setDisabled(false);
         parret->setDisabled(false);
         reg_mse->setDisabled(false);
         reg_NonZC->setDisabled(false);
-
+        setComboBox(mp_model_combo,false);
+        QString text;
+        QString d_text;
+        for(int i = 0; i < static_cast<int>(model->regularization_range.size());i++)
+        {
+            text = "1e";
+            d_text = QString::number(model->regularization_range.at(i),'f',2);
+            text.append(d_text);
+            mp_model_combo->addItem(tr("%1").arg(text));
+        }
+        mp_model_combo->setCurrentIndex(current_index);
+        connect(mp_model_combo, SIGNAL(currentIndexChanged(int)),this,SLOT(comboBox_item_changed(int)));
     }
 
     counter->setText(QString("  %1/%2").arg(current_index+1).arg(model->Y.size()));
 
+    set_coef_widget();
+
     if(model->regularization_range.size() == 1)
     {
-        best_button->setDisabled(true);
+        set_button_disable(best_button,true);
     }
     else
     {
-        best_button->setEnabled(true);
+        set_button_disable(best_button,false);
         best_index = search_best();
     }
+}
 
-
-    all_clicked();
+void Results_widget::set_buttons_size(int h, int w)
+{
+    all->setIconSize(QSize(h,w));
+    best->setIconSize(QSize(h,w));
+    parret->setIconSize(QSize(h,w));
+    reg_mse->setIconSize(QSize(h,w));
+    reg_NonZC->setIconSize(QSize(h,w));
 }
 
 void Results_widget::redraw()
@@ -253,6 +300,7 @@ void Results_widget::redraw()
     if(size_change_blockator)
     {
         graph_l->setPixmap(*new QPixmap());
+        set_buttons_size(1,1);
         return;
     }
 
@@ -260,6 +308,9 @@ void Results_widget::redraw()
     {
         return;
     }
+
+
+    set_buttons_size(150,60);
 
     StringReference* errorMessage = new StringReference();
     RGBABitmapImageReference* imageReference = CreateRGBABitmapImageReference();
@@ -281,6 +332,7 @@ void Results_widget::redraw()
     }
     graph = QPixmap::fromImage(*img);
     graph_l->setPixmap(graph);
+
 }
 
 std::vector<int> Results_widget::change_color(std::vector<int> color)
@@ -298,59 +350,223 @@ std::vector<int> Results_widget::change_color(std::vector<int> color)
 
 void Results_widget::download_clicked()
 {
-    emit save();
+
+    download_func(false);
 }
 
-void Results_widget::best_clicked()
+void Results_widget::download_all_clicked()
+{
+    download_func(true);
+}
+
+void Results_widget::set_download(std::string name)
+{
+    StringReference* errorMessage = new StringReference();
+    RGBABitmapImageReference* imageReference = CreateRGBABitmapImageReference();
+
+    DrawScatterPlotFromSettings(imageReference, graph_settings, errorMessage);
+
+    WriteToFile(ConvertToPNG(imageReference->image), name);
+    DeleteImage(imageReference->image);
+}
+
+void Results_widget::download_func(bool all)
 {
 
-    current_g = g_best;
+    QString answer = QFileDialog::getExistingDirectory(this, tr("Save File"),QDir::currentPath());
 
-    if(model->regularization_range.size() == 1)
+    if(answer == "")
     {
-        set_arrows(false,left);
-        set_arrows(false,right);
+        return;
     }
-    else if(current_index == 0)
+
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    std::string path = answer.toStdString();
+
+    if(all)
     {
-        set_arrows(false,left);
-        set_arrows(true,right);
-    }
-    else if(current_index == static_cast<int>(model->regularization_range.size()-1))
-    {
-        set_arrows(false,right);
-        set_arrows(true,left);
+        int orig_index = current_index;
+        int orig_input = current_input;
+        std::string name = "";
+
+        for(int i = 0; i < static_cast<int>(model->x.size());i++)
+        {
+            current_input = i;
+            all_clicked(false);
+
+            if(model->regularization_range.size() > 1)
+            {
+                if(model->x.size() > 1)
+                {
+                    name = (std::string(path + std::string("/all_models_x") + std::to_string(i+1) + std::string(".png")));
+                }
+                else
+                {
+                    name = (path + std::string("/all_models.png"));
+                }
+            }
+            else
+            {
+                if(model->x.size() > 1)
+                {
+                    name = (std::string(path + std::string("/model_x") + std::to_string(i+1) + std::string(".png")));
+                }
+                else
+                {
+                    name = (path + std::string("/model.png"));
+                }
+            }
+
+            set_download(name);
+
+        }
+
+
+        if(model->regularization_range.size() > 1)
+        {
+
+            for(int j = 0; j < static_cast<int>(model->x.size());j++)
+            {
+                current_input = j;
+                for(int i = 0; i < static_cast<int>(model->regularization_range.size()); i++)
+                {
+                    current_index = i;
+                    best_clicked(false);
+                    set_download(std::string(path + std::string("/model_")) + std::to_string(i) + ((model->x.size()>1)?(std::string("_x") + std::to_string(j)):"") + std::string(".png"));
+                }
+            }
+            parret_clicked(false,false);
+            set_download(path + std::string("/parret.png"));
+            reg_mse_clicked(false);
+            set_download(path + std::string("/reg_to_mse.png"));
+            reg_NonZC_clicked(false);
+            set_download(path + std::string("/reg_to_value_of_coefficients.png"));
+
+            std::string str;
+
+            int temp_cnt = 1;
+
+            for (int l = 0; l < static_cast<int>(model->KOEF.size()); l++)
+            {
+                str = "";
+
+                for (int k = 0; k < static_cast<int>(model->KOEF.at(l).size()); k++)
+                {
+                    for (int j = 0; j < static_cast<int>(model->KOEF.at(l).at(k).size()); j++)
+                    {
+                        for (int i = 0; i < static_cast<int>(model->KOEF.at(l).at(k).at(j).size()); i++)
+                        {
+                            str.append((k==0?"w":"b"));
+                            str.append(std::to_string(temp_cnt));
+                            temp_cnt++;
+                            str.append("=");
+                            str.append(std::to_string(model->KOEF.at(l).at(k).at(j).at(i)));
+                            str.append("\n");
+                        }
+                    }
+
+                    temp_cnt = 1;
+                }
+
+                std::fstream file;
+                file.open(path + std::string("/model_") + std::to_string(l) + std::string("_coefficients.txt"), std::ios::out);
+                file << str;
+                file.close();
+            }
+
+            current_index = orig_index;
+            current_input = orig_input;
+
+            switch(current_g)
+            {
+            case g_all:
+                all_clicked();
+                break;
+            case g_best:
+                best_clicked();
+                break;
+            case g_parret:
+                parret_clicked();
+                break;
+            case g_mse:
+                reg_mse_clicked();
+                break;
+            case g_NonZC:
+                reg_NonZC_clicked();
+                break;
+            }
+
+        }
+
     }
     else
     {
-        set_arrows(true,right);
-        set_arrows(true,left);
+        std::string name;
+
+        switch(current_g)
+        {
+        case g_all:
+            name = path + ((model->regularization_range.size()>1)?(std::string("/all.png")):(std::string("/model1.png")));
+            break;
+        case g_best:
+            name = std::string(path + std::string("/model_")) + std::to_string(current_index) +  std::string(".png");
+            break;
+        case g_parret:
+            name = path + std::string("/parret.png");
+            break;
+        case g_mse:
+            name = path + std::string("/reg_to_mse.png");
+            break;
+        case g_NonZC:
+            name = path + std::string("/reg_to_value_of_coefficients.png");
+            break;
+        }
+
+        set_download(name);
+
+        std::string str;
+
+        int temp_cnt = 1;
+
+        str = "";
+
+        for (int k = 0; k < static_cast<int>(model->KOEF.at(current_index).size()); k++)
+        {
+            for (int j = 0; j < static_cast<int>(model->KOEF.at(current_index).at(k).size()); j++)
+            {
+                for (int i = 0; i < static_cast<int>(model->KOEF.at(current_index).at(k).at(j).size()); i++)
+                {
+                    str.append((k==0?"w":"b"));
+                    str.append(std::to_string(temp_cnt));
+                    temp_cnt++;
+                    str.append("=");
+                    str.append(std::to_string(model->KOEF.at(current_index).at(k).at(j).at(i)));
+                    str.append("\n");
+                }
+            }
+
+            temp_cnt = 1;
+        }
+
+        std::fstream file;
+        file.open(path + std::string("/coefficients.txt"), std::ios::out);
+        file << str;
+        file.close();
     }
 
-    counter->setText(QString("  %1/%2").arg(current_index+1).arg(model->Y.size()));
+    QApplication::setOverrideCursor(Qt::ArrowCursor);
 
-    if(model->x.size() == 1)
+    Message_box* mess = new Message_box("\n Output data have been saved.","Information",this);
+    mess->exec();
+    if (mess != nullptr)
     {
-        set_arrows(false,left_input);
-        set_arrows(false,right_input);
+        delete mess;
     }
-    else if(current_input == 0)
-    {
-        set_arrows(false,left_input);
-        set_arrows(true,right_input);
-    }
-    else if(current_input == static_cast<int>(model->x.size()-1))
-    {
-        set_arrows(false,right_input);
-        set_arrows(true,left_input);
-    }
-    else
-    {
-        set_arrows(true,right_input);
-        set_arrows(true,left_input);
-    }
+}
 
-    counter_input->setText(QString("   x%1").arg(current_input+1));
+void Results_widget::best_clicked(bool draw)
+{
 
     std::vector<ScatterPlotSeries*> series ;
 
@@ -375,7 +591,8 @@ void Results_widget::best_clicked()
         series.at(1)->ys = &(model->Y.at(current_index));
         series.at(1)->linearInterpolation = true;
         series.at(1)->pointType = toVector(L"dots");
-        series.at(1)->lineThickness = 2;
+        //        series.at(1)->lineThickness = 1;
+        series.at(1)->lineThickness = (std::ceil((graph_l->width()-20)/1000)+2);
         series.at(1)->color = CreateRGBColor(colors.at(0), colors.at(1), colors.at(2));
 
 
@@ -421,23 +638,16 @@ void Results_widget::best_clicked()
     graph_settings->autoPadding = true;
 
     QString text;
-    text.append("Model (regularization 10^");
+    text.append("Model (regularization 1e");
     QString d_text = QString::number(model->regularization_range.at(current_index),'f',3);
     text.append(d_text);
-    //text.append(d_text.substr(0,d_text.find(".")+4));
     text.append(")");
     if(current_index == best_index)
     {
         text.append(" - best ");
     }
-    //    std::wstring w_text = std::wstring(text.begin(), text.end());
-    //    const wchar_t* result = w_text.c_str();
-    //    text = "Individual model";
-    //    graph_settings->title = toVector(result);
     graph_title->setText(text);
-    //    graph_settings->xLabel = toVector(L"");
     graph_x_label->setText("x");
-    //    graph_settings->yLabel = toVector(L"");
     graph_y_label->setText("y");
 
     if(model != nullptr)
@@ -448,25 +658,33 @@ void Results_widget::best_clicked()
         }
     }
 
-    redraw();
-
-}
-
-void Results_widget::all_clicked()
-{
-    current_g = g_all;
-
-    set_arrows(false,right);
-    set_arrows(false,left);
-    set_arrows(false,left_input);
-    set_arrows(false,right_input);
-
-    std::vector<ScatterPlotSeries*> series ;
-
-    std::vector<int> colors{ 0,0,0 };
-
-    if(model != nullptr)
+    if(draw)
     {
+
+        current_g = g_best;
+
+        if(model->regularization_range.size() == 1)
+        {
+            set_arrows(false,left);
+            set_arrows(false,right);
+        }
+        else if(current_index == 0)
+        {
+            set_arrows(false,left);
+            set_arrows(true,right);
+        }
+        else if(current_index == static_cast<int>(model->regularization_range.size()-1))
+        {
+            set_arrows(false,right);
+            set_arrows(true,left);
+        }
+        else
+        {
+            set_arrows(true,right);
+            set_arrows(true,left);
+        }
+
+        counter->setText(QString("  %1/%2").arg(current_index+1).arg(model->Y.size()));
 
         if(model->x.size() == 1)
         {
@@ -489,7 +707,23 @@ void Results_widget::all_clicked()
             set_arrows(true,left_input);
         }
 
-        counter_input->setText(QString("  x%1").arg(current_input+1));
+        counter_input->setText(QString("   x%1").arg(current_input+1));
+
+        redraw();
+
+    }
+
+}
+
+void Results_widget::all_clicked(bool draw)
+{
+
+    std::vector<ScatterPlotSeries*> series ;
+
+    std::vector<int> colors{ 0,0,0 };
+
+    if(model != nullptr)
+    {
 
         series.push_back(GetDefaultScatterPlotSeriesSettings());
         series.at(0)->xs = &(model->x.at(current_input));
@@ -507,7 +741,7 @@ void Results_widget::all_clicked()
             series.at(i+1)->ys = &(model->Y.at(i));
             series.at(i+1)->linearInterpolation = true;
             series.at(i+1)->pointType = toVector(L"dots");
-            series.at(i+1)->lineThickness = 2;
+            series.at(i+1)->lineThickness = (std::ceil((graph_l->width()-20)/1000)+2);
             series.at(i+1)->color = CreateRGBColor(colors.at(0), colors.at(1), colors.at(2));
             colors = change_color(colors);
 
@@ -551,26 +785,6 @@ void Results_widget::all_clicked()
     }
 
     graph_settings->autoPadding = true;
-    if(model != nullptr)
-    {
-        //    graph_settings->title = toVector(L"All models");
-        if(model->regularization_range.size() == 1)
-        {
-            graph_title->setText("Calculated model");
-        }
-        else
-        {
-            graph_title->setText("All models");
-        }
-    }
-    else
-    {
-        graph_title->setText("All models");
-    }
-    //    graph_settings->xLabel = toVector(L"");
-    graph_x_label->setText("x");
-    //    graph_settings->yLabel = toVector(L"");
-    graph_y_label->setText("y");
 
     if(model != nullptr)
     {
@@ -578,31 +792,91 @@ void Results_widget::all_clicked()
         {
             graph_settings->scatterPlotSeries->push_back(series.at(i));
         }
-    }
 
-    redraw();
+
+    if(draw)
+    {
+        current_g = g_all;
+
+        set_arrows(false,right);
+        set_arrows(false,left);
+
+        if(model->x.size() == 1)
+        {
+            set_arrows(false,left_input);
+            set_arrows(false,right_input);
+        }
+        else if(current_input == 0)
+        {
+            set_arrows(false,left_input);
+            set_arrows(true,right_input);
+        }
+        else if(current_input == static_cast<int>(model->x.size()-1))
+        {
+            set_arrows(false,right_input);
+            set_arrows(true,left_input);
+        }
+        else
+        {
+            set_arrows(true,right_input);
+            set_arrows(true,left_input);
+        }
+
+        counter_input->setText(QString("  x%1").arg(current_input+1));
+
+        if(model != nullptr)
+        {
+            if(model->regularization_range.size() == 1)
+            {
+                graph_title->setText("Calculated model");
+            }
+            else
+            {
+                graph_title->setText("All models");
+            }
+        }
+        else
+        {
+            graph_title->setText("All models");
+        }
+        graph_x_label->setText("x");
+        graph_y_label->setText("y");
+
+        redraw();
+    }
+    }
 }
 
-void Results_widget::parret_clicked()
+void Results_widget::parret_clicked(bool draw, bool particular)
 {
-    current_g = g_parret;
 
-    set_arrows(false,right);
-    set_arrows(false,left);
+    std::vector<ScatterPlotSeries*> series ;
 
-    set_arrows(false,right_input);
-    set_arrows(false,left_input);
-
-    ScatterPlotSeries* series;
+    std::vector<double> choose_one_mse;
+    std::vector<double> choose_one_nonzc;
 
     if(model != nullptr)
     {
-        series = GetDefaultScatterPlotSeriesSettings();
-        series->xs = &(model->MSE);
-        series->ys = &(model->NonZC);
-        series->linearInterpolation = false;
-        series->pointType = toVector(L"dots");
-        series->color = CreateRGBColor(0, 0, 1);
+
+        series.push_back(GetDefaultScatterPlotSeriesSettings());
+        series.at(0)->xs = &(model->MSE);
+        series.at(0)->ys = &(model->NonZC);
+        series.at(0)->linearInterpolation = false;
+        series.at(0)->pointType = toVector(L"dots");
+        series.at(0)->color = CreateRGBColor(0, 0, 1);
+
+        if(particular)
+        {
+            choose_one_mse.push_back(model->MSE.at(current_index));
+            choose_one_nonzc.push_back(model->NonZC.at(current_index));
+
+            series.push_back(GetDefaultScatterPlotSeriesSettings());
+            series.at(1)->xs = &choose_one_mse;
+            series.at(1)->ys = &choose_one_nonzc;
+            series.at(1)->linearInterpolation = false;
+            series.at(1)->pointType = toVector(L"dots");
+            series.at(1)->color = CreateRGBColor(1, 0, 0);
+        }
 
         graph_settings = GetDefaultScatterPlotSettings();
 
@@ -651,27 +925,53 @@ void Results_widget::parret_clicked()
     graph_settings->height = graph_l->height()-20;
     graph_settings->autoBoundaries = false;
     graph_settings->autoPadding = true;
-    graph_title->setText("Pareto chart");
-    //    graph_settings->xLabel = toVector(L"");
-    graph_x_label->setText("MSE");
-    //    graph_settings->yLabel = toVector(L"");
-    graph_y_label->setText("number of non-zero coefficients");
     if(model != nullptr)
-        graph_settings->scatterPlotSeries->push_back(series);
+    {   graph_settings->scatterPlotSeries->push_back(series.at(0));
+        if(series.size()>1)
+        {
+            graph_settings->scatterPlotSeries->push_back(series.at(1));
+        }
+    }
+    if(draw){
 
+        current_g = g_parret;
 
-    redraw();
+        graph_title->setText("Pareto chart");
+        graph_x_label->setText("mse");
+        graph_y_label->setText("number of non-zero coefficients");
+
+        if(model->regularization_range.size() == 1)
+        {
+            set_arrows(false,left);
+            set_arrows(false,right);
+        }
+        else if(current_index == 0)
+        {
+            set_arrows(false,left);
+            set_arrows(true,right);
+        }
+        else if(current_index == static_cast<int>(model->regularization_range.size()-1))
+        {
+            set_arrows(false,right);
+            set_arrows(true,left);
+        }
+        else
+        {
+            set_arrows(true,right);
+            set_arrows(true,left);
+        }
+
+        counter->setText(QString("  %1/%2").arg(current_index+1).arg(model->Y.size()));
+
+        set_arrows(false,right_input);
+        set_arrows(false,left_input);
+
+        redraw();
+    }
 }
 
-void Results_widget::reg_mse_clicked()
+void Results_widget::reg_mse_clicked(bool draw)
 {
-    current_g = g_mse;
-
-    set_arrows(false,right);
-    set_arrows(false,left);
-
-    set_arrows(false,right_input);
-    set_arrows(false,left_input);
 
     ScatterPlotSeries* series;
 
@@ -682,7 +982,7 @@ void Results_widget::reg_mse_clicked()
         series->xs = &(model->regularization_range);
         series->linearInterpolation = true;
         series->pointType = toVector(L"dots");
-        series->lineThickness = 2;
+        series->lineThickness = (std::ceil((graph_l->width()-20)/1000)+2);
         series->color = GetBlack();
 
     }
@@ -692,38 +992,125 @@ void Results_widget::reg_mse_clicked()
     graph_settings->height = graph_l->height()-20;
     graph_settings->autoBoundaries = true;
     graph_settings->autoPadding = true;
-    //    graph_settings->title = toVector(L"");
     graph_title->setText("MSE dependent on regularization");
-    //    graph_settings->xLabel = toVector(L"");
     graph_x_label->setText("regularization rate");
-    //    graph_settings->yLabel = toVector(L"");
-    graph_y_label->setText("MSE");
+    graph_y_label->setText("mse");
 
     if(model != nullptr)
     {
-
         graph_settings->scatterPlotSeries->push_back(series);
-
     }
 
-    redraw();
+    if(draw){
 
+        current_g = g_mse;
+
+        set_arrows(false,right);
+        set_arrows(false,left);
+
+        set_arrows(false,right_input);
+        set_arrows(false,left_input);
+
+        redraw();
+    }
 }
 
-void Results_widget::reg_NonZC_clicked()
+void Results_widget::reg_NonZC_clicked(bool draw)
 {
-    current_g = g_NonZC;
-
-    set_arrows(false,right);
-    set_arrows(false,left);
-
-    set_arrows(false,right_input);
-    set_arrows(false,left_input);
 
     std::vector<ScatterPlotSeries*> series ;
 
     std::vector<std::vector<double>> koefs;
-    //koefs.resize(model->KOEF.size());
+
+    std::vector<int> colors{ 0,0,0 };
+
+    int num_of_coeff = 0;
+
+    if(model != nullptr)
+    {
+        for (int j = 0; j < static_cast<int>(model->KOEF.at(0).size()); j++)
+        {
+            for (int k = 0; k < static_cast<int>(model->KOEF.at(0).at(j).size()); k++)
+            {
+                for (int l = 0; l < static_cast<int>(model->KOEF.at(0).at(j).at(k).size()); l++)
+                {
+                    num_of_coeff++;
+                }
+            }
+        }
+
+        koefs.resize(num_of_coeff);
+
+        int coeff_counter = 0;
+
+        for (int i = 0; i < static_cast<int>(model->KOEF.size()); i++)
+        {
+            for (int j = 0; j < static_cast<int>(model->KOEF.at(i).size()); j++)
+            {
+                for (int k = 0; k < static_cast<int>(model->KOEF.at(i).at(j).size()); k++)
+                {
+                    for (int l = 0; l < static_cast<int>(model->KOEF.at(i).at(j).at(k).size()); l++)
+                    {
+                        // koefs.at(coeff_counter).push_back(model->KOEF.at(/*model_reg*/).at(/*w/b*/).at(/*vrstvy*/).at(/*koeficienty*/));
+                        koefs.at(coeff_counter).push_back(model->KOEF.at(i).at(j).at(k).at(l));
+                        coeff_counter++;
+                    }
+                }
+            }
+            coeff_counter = 0;
+        }
+    }
+
+    for (int i = 0; i < static_cast<int>(koefs.size()); i++)
+    {
+        series.push_back(GetDefaultScatterPlotSeriesSettings());
+        series.at(i)->xs = &(model->regularization_range);
+        series.at(i)->ys = &(koefs.at(i));
+        series.at(i)->linearInterpolation = true;
+        series.at(i)->pointType = toVector(L"dots");
+        //series.at(i)->lineThickness = (std::ceil((graph_l->width()-20)/1000)+2);
+        series.at(i)->color = CreateRGBColor(colors.at(0), colors.at(1), colors.at(2));
+
+        colors = change_color(colors);
+    }
+
+    graph_settings = GetDefaultScatterPlotSettings();
+    graph_settings->width = graph_l->width()-20;
+    graph_settings->height = graph_l->height()-20;
+    graph_settings->autoBoundaries = true;
+    graph_settings->autoPadding = true;
+    graph_title->setText("Coefficients dependent on regularization");
+    graph_x_label->setText("regularization rate");
+    graph_y_label->setText("value of coefficients");
+
+    if(model != nullptr)
+    {
+        for (int i = 0; i < static_cast<int>(series.size()); i++)
+        {
+            graph_settings->scatterPlotSeries->push_back(series.at(i));
+        }
+    }
+
+    if(draw)
+    {
+        current_g = g_NonZC;
+
+        set_arrows(false,right);
+        set_arrows(false,left);
+
+        set_arrows(false,right_input);
+        set_arrows(false,left_input);
+
+        redraw();
+    }
+}
+
+void Results_widget::reg_NonZC_clicked2(bool draw)
+{
+
+    std::vector<ScatterPlotSeries*> series ;
+
+    std::vector<std::vector<double>> koefs;
 
     std::vector<int> colors{ 0,0,0 };
 
@@ -741,24 +1128,19 @@ void Results_widget::reg_NonZC_clicked()
                 }
             }
         }
-
-        koefs.resize(koef_counter);
-
-        for (int i = 0; i < static_cast<int>(model->KOEF.size()); i++)
+        for (int j = 0; j < static_cast<int>(model->KOEF.at(0).size()); j++)
         {
-            koef_counter = 0;
-
-            for (int j = 0; j < static_cast<int>(model->KOEF.at(i).size()); j++)
+            for (int k = 0; k < static_cast<int>(model->KOEF.at(0).at(j).size()); k++)
             {
-                for (int k = 0; k < static_cast<int>(model->KOEF.at(i).at(j).size()); k++)
+                for (int l = 0; l < static_cast<int>(model->KOEF.at(0).at(j).at(k).size()); l++)
                 {
-                    for (int l = 0; l < static_cast<int>(model->KOEF.at(i).at(j).at(k).size()); l++)
+                    for(int i = 0;i < static_cast<int>(model->KOEF.size());i++)
                     {
                         koefs.at(koef_counter).push_back(model->KOEF.at(i).at(j).at(k).at(l));
-                        koef_counter++;
                     }
                 }
             }
+
         }
     }
 
@@ -769,7 +1151,7 @@ void Results_widget::reg_NonZC_clicked()
         series.at(i)->ys = &(koefs.at(i));
         series.at(i)->linearInterpolation = true;
         series.at(i)->pointType = toVector(L"dots");
-        //series.at(i)->lineThickness = 2;
+        //series.at(i)->lineThickness = (std::ceil((graph_l->width()-20)/1000)+2);
         series.at(i)->color = CreateRGBColor(colors.at(0), colors.at(1), colors.at(2));
 
         colors = change_color(colors);
@@ -780,11 +1162,8 @@ void Results_widget::reg_NonZC_clicked()
     graph_settings->height = graph_l->height()-20;
     graph_settings->autoBoundaries = true;
     graph_settings->autoPadding = true;
-    //    graph_settings->title = toVector(L"");
     graph_title->setText("Coefficients dependent on regularization");
-    //    graph_settings->xLabel = toVector(L"");
     graph_x_label->setText("regularization rate");
-    //    graph_settings->yLabel = toVector(L"");
     graph_y_label->setText("value of coefficients");
 
     if(model != nullptr)
@@ -795,7 +1174,18 @@ void Results_widget::reg_NonZC_clicked()
         }
     }
 
-    redraw();
+    if(draw)
+    {
+        current_g = g_NonZC;
+
+        set_arrows(false,right);
+        set_arrows(false,left);
+
+        set_arrows(false,right_input);
+        set_arrows(false,left_input);
+
+        redraw();
+    }
 }
 
 void Results_widget::arrowl_clicked()
@@ -816,7 +1206,7 @@ void Results_widget::arrowl_clicked()
         set_arrows(true,right);
     }
 
-    best_clicked();
+    mp_model_combo->setCurrentIndex(current_index);
 
 }
 
@@ -837,7 +1227,7 @@ void Results_widget::arrow_clicked()
         set_arrows(true,left);
     }
 
-    best_clicked();
+    mp_model_combo->setCurrentIndex(current_index);
 }
 
 void Results_widget::arrow_input_clicked()
@@ -888,7 +1278,8 @@ void Results_widget::arrowl_input_clicked()
     if (current_g == g_all)
     {
         all_clicked();
-    } else
+    }
+    else
     {
         best_clicked();
     }
@@ -934,6 +1325,38 @@ void Results_widget::set_arrows(bool enable, QPushButton* arrow)
 
 }
 
+void Results_widget::set_coef_widget()
+{
+    int temp_cnt = 1;
+
+    QString text_temp = "";
+    QStringList text;
+
+    for (int k = 0; k < static_cast<int>(model->KOEF.at(current_index).size()); k++)
+    {
+        for (int j = 0; j < static_cast<int>(model->KOEF.at(current_index).at(k).size()); j++)
+        {
+            for (int i = 0; i < static_cast<int>(model->KOEF.at(current_index).at(k).at(j).size()); i++)
+            {
+                text_temp.append((k==0?"w":"b"));
+                text_temp.append(QString::number(temp_cnt));
+                temp_cnt++;
+                text_temp.append(":\t");
+                text_temp.append(QString::number(model->KOEF.at(current_index).at(k).at(j).at(i)));
+                //text_temp.append("\n");
+                text.append(text_temp);
+                text_temp = "";
+            }
+        }
+
+        temp_cnt = 1;
+    }
+
+
+    mp_coefficients->setModel(new QStringListModel(text));
+
+}
+
 int Results_widget::search_best()
 {
     std::vector<std::vector<double>> data;
@@ -946,6 +1369,7 @@ int Results_widget::search_best()
     double mse_min = data.at(1).at(0);
     double mse_max = data.at(1).at(0);
 
+    // hledání minimální a maximální chyby a minimálního a maximálního počtu koeficietů
     for(int i = 0;i < static_cast<int>(data.at(0).size());i++)
     {
         if(data.at(0).at(i) < NonZC_min)
@@ -966,7 +1390,7 @@ int Results_widget::search_best()
         }
     }
 
-    for(int i = 0;i < static_cast<int>(data.at(0).size());i++)
+    for(int i = 0;i < static_cast<int>(data.at(0).size());i++) // odstranění modelů s chybou větší než desetinásobek nejmenší chyby
     {
         if(data.at(1).at(i) > (10*mse_min))
         {
@@ -981,7 +1405,7 @@ int Results_widget::search_best()
     mse_min = data.at(1).at(0);
     mse_max = data.at(1).at(0);
 
-    for(int i = 0;i < static_cast<int>(data.at(0).size());i++)
+    for(int i = 0;i < static_cast<int>(data.at(0).size());i++) // jelikož jsem nějaké modely mohl odstranit, tak tady znovu zjistím minimum a maximum
     {
         if(data.at(0).at(i) < NonZC_min)
         {
@@ -1001,9 +1425,15 @@ int Results_widget::search_best()
         }
     }
 
-    for(int i = 0;i < static_cast<int>(data.at(0).size());i++)
+    double NonZC_score = 0;
+    double mse_score = 0;
+
+    for(int i = 0;i < static_cast<int>(data.at(0).size());i++) // vypočtení "skore daneho modelu"
     {
-        data.at(2).push_back((((data.at(0).at(i)-NonZC_min)*10)/(NonZC_max-NonZC_min))+(((data.at(1).at(i)-mse_min)*15)/(mse_max-mse_min)));
+        NonZC_score = (((NonZC_max-NonZC_min) != 0)?((((data.at(0).at(i)-NonZC_min)*10)/(NonZC_max-NonZC_min))): 0);
+        mse_score = (((mse_max-mse_min) != 0)?(((data.at(1).at(i)-mse_min)*15)/(mse_max-mse_min)):0);
+
+        data.at(2).push_back(NonZC_score+mse_score);
     }
 
     int index = 0;
@@ -1013,6 +1443,7 @@ int Results_widget::search_best()
     {
         if(data.at(2).at(i) < min_val)
         {
+            min_val = data.at(2).at(i);
             index = i;
         }
     }
@@ -1030,8 +1461,26 @@ int Results_widget::search_best()
 
 void Results_widget::best_button_clicked()
 {
-    current_index = best_index;
-    best_clicked();
+    mp_model_combo->setCurrentIndex(best_index);
+    comboBox_item_changed(best_index);
+
+}
+
+void Results_widget::comboBox_item_changed(int index)
+{
+    if(model != nullptr)
+    {
+        current_index = index;
+        if(current_g == g_parret)
+        {
+            parret_clicked();
+        }
+        else
+        {
+            best_clicked();
+        }
+        set_coef_widget();
+    }
 }
 
 void Results_widget::resizeEvent(QResizeEvent *event)
@@ -1055,7 +1504,6 @@ void Results_widget::resizeEvent(QResizeEvent *event)
         break;
     }
 
-    redraw();
     QWidget::resizeEvent(event);
 }
 
@@ -1064,6 +1512,82 @@ void Results_widget::change_blockator(bool state)
     size_change_blockator = state;
     if(!state)
     {
-        redraw();
+        resizeEvent(nullptr);
     }
+}
+
+void Results_widget::setComboBox(QComboBox *combo, bool disable)
+{
+
+    QString b_color((disable)?"rgb(238, 238, 238)":"rgb(220, 220, 220)");
+    QString h_color((disable)?"rgb(238, 238, 238)":"rgb(200, 200, 200)");
+    QString color((disable)?"rgb(200, 200, 200)":"rgb(0, 0, 0)");
+
+    combo->setDisabled(disable);
+    combo->setStyleSheet("QComboBox"
+                         "{"
+                         "border:none;"
+                         "background-color:   " + b_color + ";"
+                                                            "color: " + color + ";"
+                                                                                "padding:5px;"
+                                                                                "}"
+                                                                                "QComboBox::drop-down"
+                                                                                "{"
+                                                                                "    border: none;"
+                                                                                "    background-color:   " + b_color + ";"
+                                                                                                                       "  color: " + color + ";"
+                                                                                                                                             "    padding: 0px;"
+                                                                                                                                             "}"
+                                                                                                                                             "QComboBox::down-arrow"
+                                                                                                                                             "{"
+                                                                                                                                             "    image: url(:/res/icon/combo" + (disable?"_d":"") + ");"
+                                                                                                                                                                                                     "    width: 10px;"
+                                                                                                                                                                                                     "    height: 10px;"
+                                                                                                                                                                                                     "}"
+                                                                                                                                                                                                     "QListView{"
+                         //                         "    border:none;"
+                         "    background-color:rgb(238, 238, 238);"
+                         //                         "    color: " + color + ";"
+                         //                         "    show-decoration-selected: 1;"
+                         //                         "    margin-left:-10px;"
+                         //                         "    padding-left:15px;"
+                         "}"
+                         "QListView::item:hover"
+                         "{"
+                         "    background-color:rgb(200, 200, 200);"
+                         "    border:                 none;"
+                         "    color:rgb(0, 0, 0);"
+                         "}"
+                         "QComboBox:hover"
+                         "{"
+                         "    background-color:   " + h_color + ";"
+                                                                "}"
+                                                                "}"
+                         );
+
+}
+
+void Results_widget::set_button_disable(QPushButton *b,bool disable)
+{
+    QString b_color((disable)?"rgb(238, 238, 238)":"rgb(220, 220, 220)");
+    QString h_color((disable)?"rgb(238, 238, 238)":"rgb(200, 200, 200)");
+    QString color((disable)?"rgb(200, 200, 200)":"rgb(0, 0, 0)");
+
+    b->setDisabled(disable);
+    b->setStyleSheet("QPushButton{"
+                     "background-color: " + b_color + ";"
+                                                      "color: " + color + ";"
+                                                                          "border: 1px;"
+                                                                          "border-radius: 3px;"
+                                                                          "border-color: rgba(255, 255, 255, 255);"
+                                                                          "}"
+                                                                          "QPushButton:hover"
+                                                                          "{"
+                                                                          "background-color: " + h_color + ";"
+                                                                                                           "}"
+                                                                                                           "QPushButton:pressed"
+                                                                                                           "{"
+                                                                                                           "background-color:rgba(150, 150, 150, 255);"
+                                                                                                           "}"
+                     );
 }

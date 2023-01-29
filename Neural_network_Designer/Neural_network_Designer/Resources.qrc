@@ -36,7 +36,6 @@
         <file alias="pow4">res/icon/pow4.png</file>
         <file alias="minus_disabled">res/icon/minus_diasbled.png</file>
         <file alias="plus_disabled">res/icon/plus_disabled.png</file>
-        <file alias="input">res/icon/input.png</file>
         <file alias="output">res/icon/output.png</file>
         <file alias="divide">res/icon/divide.png</file>
         <file alias="times">res/icon/times.png</file>
@@ -68,6 +67,11 @@
         <file alias="NonZC">res/icon/NonZC.png</file>
         <file alias="parret">res/icon/parret.png</file>
         <file alias="save_as">res/icon/save_as.png</file>
+        <file alias="input">res/icon/input.png</file>
+        <file alias="plus_disabled2">res/icon/plus_disabled2.png</file>
+        <file alias="minus_disabled2">res/icon/minus_disabled2.png</file>
+        <file alias="plus_clicked">res/icon/plus_clicked.png</file>
+        <file alias="minus_clicked">res/icon/minus_clicked.png</file>
     </qresource>
     <qresource prefix="/res/graphs">
         <file alias="id">res/graphs/id_e.png</file>

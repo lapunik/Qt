@@ -114,7 +114,7 @@ void Neuron::set_function(func fu)
         name = QString("Radial");
         break;
     case input_e:
-        ic = QIcon(":/res/icon/times");
+        ic = QIcon(":/res/icon/input");
         name = QString("Input");
         break;
     case output_e:

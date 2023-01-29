@@ -67,6 +67,50 @@ Message_box::Message_box(QString text, QString title_txt, QWidget *parent): QDia
 
 Message_box::~Message_box()
 {
+    if(icon != nullptr)
+    {
+        delete icon;
+    }
+    if(title != nullptr)
+    {
+        delete title;
+    }
+    if(mp_button_ok != nullptr)
+    {
+        delete  mp_button_ok;
+    }
+    if(mp_text != nullptr)
+    {
+        delete mp_text;
+    }
+    if(exit_button != nullptr)
+    {
+        delete exit_button;
+    }
+    if(layout_title_bar != nullptr)
+    {
+        delete  layout_title_bar;
+    }
+    if(layout_main_horizontal != nullptr)
+    {
+        delete layout_main_horizontal;
+    }
+    if(title_bar_w != nullptr)
+    {
+        delete title_bar_w;
+    }
+    if(mp_button_layout != nullptr)
+    {
+        delete mp_button_layout;
+    }
+    if(mp_main_layout != nullptr)
+    {
+        delete mp_main_layout;
+    }
+    if(mp_main_widget != nullptr)
+    {
+        delete mp_main_widget;
+    }
 
 }
 

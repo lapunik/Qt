@@ -38,29 +38,65 @@ void Layer_widget::set_widget()
 {
     mp_main_layout = new QVBoxLayout(this);
     mp_main_layout->setSpacing(0);
+    mp_main_layout->setContentsMargins(0,0,0,0);
 
     mp_inner_layout = new QVBoxLayout(this);
     mp_inner_layout->setSpacing(0);
+    mp_inner_layout->setContentsMargins(0,0,0,0);
+
     mp_remove_neuron_buttton = new Button_roundted();
-    mp_remove_neuron_buttton->button->setIcon(QIcon(":/res/icon/minus"));
-    mp_remove_neuron_buttton->setFixedHeight(100);
+    mp_remove_neuron_buttton->button->setStyleSheet("QPushButton{"
+                                                    "    image: url(:/res/icon/minus);"
+                                                    "}"
+                                                    "QPushButton:hover"
+                                                    "{"
+                                                    "    image: url(:/res/icon/minus_clicked);"
+                                                    "}"
+                                                    "QPushButton:pressed"
+                                                    "{"
+                                                    "    image: url(:/res/icon/minus_disabled2);"
+                                                    "}"
+                                                    );
+    mp_remove_neuron_buttton->setFixedSize(QSize(30,30));
+    //mp_remove_neuron_buttton->button->setIconSize(QSize(28,28));
     mp_remove_neuron_buttton->reconfigurable = false;
     connect(mp_remove_neuron_buttton->button, SIGNAL(clicked()), this, SLOT(remove_widget()));
+    rem = new QHBoxLayout();
+    l = new QLabel();
+    rem->addWidget(l);
+    rem->addWidget(mp_remove_neuron_buttton);
+    rem->addWidget(l);
 
     mp_add_neuron_buttton = new Button_roundted();
-    mp_add_neuron_buttton->button->setIcon(QIcon(":/res/icon/plus"));
-    mp_add_neuron_buttton->setFixedHeight(100);
+    mp_add_neuron_buttton->button->setStyleSheet("QPushButton{"
+                                                 "    image: url(:/res/icon/plus);"
+                                                 "}"
+                                                 "QPushButton:hover"
+                                                 "{"
+                                                 "    image: url(:/res/icon/plus_clicked);"
+                                                 "}"
+                                                 "QPushButton:pressed"
+                                                 "{"
+                                                 "    image: url(:/res/icon/plus_disabled2);"
+                                                 "}"
+                                                 );
+    mp_add_neuron_buttton->setFixedSize(QSize(30,30));
+    //mp_add_neuron_buttton->button->setIconSize(QSize(28,28));
     mp_add_neuron_buttton->reconfigurable = false;
     connect(mp_add_neuron_buttton->button, SIGNAL(clicked()), this, SLOT(add_widget()));
+    ad = new QHBoxLayout();
+    ad->addWidget(new QLabel());
+    ad->addWidget(mp_add_neuron_buttton);
+    ad->addWidget(new QLabel());
 
     if(!output_layer)
     {
-        mp_main_layout->addWidget(mp_remove_neuron_buttton);
+        mp_main_layout->addLayout(rem);
     }
     mp_main_layout->addLayout(mp_inner_layout);
     if(!output_layer)
     {
-        mp_main_layout->addWidget(mp_add_neuron_buttton);
+        mp_main_layout->addLayout(ad);
     }
 
     neurons = new QList<Neuron*>();
@@ -73,13 +109,40 @@ void Layer_widget::set_widget()
 
     setStyleSheet("background-color: rgba(240, 240, 240, 255)");
 
+    //connect(this, SIGNAL(redraw()), parent(), SLOT(resize_inner_event()));
+
 }
 
 Layer_widget::~Layer_widget()
 {
+
     if(mp_label != nullptr)
     {
         delete mp_label;
+    }
+    if(rem != nullptr)
+    {
+        delete rem;
+    }
+    if(ad != nullptr)
+    {
+        delete ad;
+    }
+    if(neurons != nullptr)
+    {
+        for(int i = 0; i < neurons->size();i++)
+        {
+                if (neurons->at(i) != nullptr)
+                {
+                    delete neurons->at(i);
+                }
+        }
+
+        delete neurons;
+    }
+    if(l != nullptr)
+    {
+        delete l;
     }
     if(mp_inner_layout != nullptr)
     {
@@ -89,6 +152,15 @@ Layer_widget::~Layer_widget()
     {
         delete mp_main_layout;
     }
+    if(mp_remove_neuron_buttton != nullptr)
+    {
+        delete mp_remove_neuron_buttton;
+    }
+    if( mp_add_neuron_buttton != nullptr)
+    {
+        delete  mp_add_neuron_buttton;
+    }
+
 }
 
 void Layer_widget::add_widget()
@@ -113,11 +185,33 @@ void Layer_widget::add_widget(Neuron::func fun)
 
     if(neurons->count() == 1)
     {
-        mp_remove_neuron_buttton->button->setIcon(QIcon(":/res/icon/minus_disabled"));
+        mp_remove_neuron_buttton->button->setStyleSheet("QPushButton{"
+                                                        "    image: url(:/res/icon/minus_disabled);"
+                                                        "}"
+                                                        "QPushButton:hover"
+                                                        "{"
+                                                        "    image: url(:/res/icon/minus_disabled);"
+                                                        "}"
+                                                        "QPushButton:pressed"
+                                                        "{"
+                                                        "    image: url(:/res/icon/minus_disabled);"
+                                                        "}"
+                                                        );
     }
     else
     {
-        mp_remove_neuron_buttton->button->setIcon(QIcon(":/res/icon/minus"));
+        mp_remove_neuron_buttton->button->setStyleSheet("QPushButton{"
+                                                        "    image: url(:/res/icon/minus);"
+                                                        "}"
+                                                        "QPushButton:hover"
+                                                        "{"
+                                                        "    image: url(:/res/icon/minus_clicked);"
+                                                        "}"
+                                                        "QPushButton:pressed"
+                                                        "{"
+                                                        "    image: url(:/res/icon/minus_disabled2);"
+                                                        "}"
+                                                        );
     }
 
     emit redraw();
@@ -160,7 +254,18 @@ void Layer_widget::remove_widget()
 
     if(neurons->count() == 1)
     {
-        mp_remove_neuron_buttton->button->setIcon(QIcon(":/res/icon/minus_disabled"));
+        mp_remove_neuron_buttton->button->setStyleSheet("QPushButton{"
+                                                        "    image: url(:/res/icon/minus_disabled);"
+                                                        "}"
+                                                        "QPushButton:hover"
+                                                        "{"
+                                                        "    image: url(:/res/icon/minus_disabled);"
+                                                        "}"
+                                                        "QPushButton:pressed"
+                                                        "{"
+                                                        "    image: url(:/res/icon/minus_disabled);"
+                                                        "}"
+                                                        );
     }
 
     emit redraw();

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.24">
-<info created="D:20221020142102" modified="D:20221020142925"/>
+<info created="D:20221020142102" modified="D:20221213171210"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -312,110 +312,71 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<path layer="alpha" stroke="black" pen="heavier" rarrow="normal/normal">
-320 704 m
-320 512 l
+<path layer="alpha" matrix="0.875 0 0 0.558037 96 192.428" stroke="black" pen="heavier" arrow="normal/normal">
+320 544 m
+320 672 l
 </path>
-<path stroke="black" pen="ultrafat">
-192 608 m
-256 480
-320 608
-384 736
-448 608 c
+<path matrix="0 -0.469926 0.875 0 -156 681.263" stroke="black" pen="heavier" arrow="normal/normal">
+320 544 m
+320 672 l
 </path>
-<path stroke="black" pen="heavier" arrow="normal/normal">
-176 608 m
-464 608 l
+<path matrix="0.875 0 0 0.469926 40 305.323" stroke="black" pen="fat">
+320 480 m
+352 384
+384 480
+416 576
+448 480
+448 480 c
 </path>
-<path stroke="black" pen="ultrafat">
-192 608 m
-256 496
-320 608
-384 720
-448 608 c
+<path matrix="0.875 0 0 0.469926 40 305.323" stroke="black" pen="fat">
+320 480 m
+352 400
+384 480
+416 576
+448 480 c
 </path>
-<path stroke="black" pen="ultrafat">
-192 608 m
-256 512
-320 608
-384 704
-448 608 c
+<path matrix="0.875 0 0 0.469926 40 305.323" stroke="black" pen="fat">
+320 480 m
+368 384
+400 480
+416 572
+448 532 c
 </path>
-<path stroke="black" pen="heavier">
-4 0 0 4 192 608 e
-</path>
-<path stroke="black" pen="heavier">
-4 0 0 4 208 588 e
-</path>
-<path stroke="black" pen="heavier">
-4 0 0 4 216 564 e
-</path>
-<path stroke="black" pen="heavier">
-4 0 0 4 232 548 e
-</path>
-<path matrix="1 0 0 1 4 0" stroke="black" pen="heavier">
-4 0 0 4 244 536 e
-</path>
-<path matrix="1 0 0 1 8 0" stroke="black" pen="heavier">
+<path matrix="1 0 0 1 64 -8" stroke="black" pen="heavier">
 4 0 0 4 256 540 e
 </path>
-<path matrix="1 0 0 1 24 0" stroke="black" pen="heavier">
+<path matrix="1 0 0 1 72 -20" stroke="black" pen="heavier">
 4 0 0 4 256 540 e
 </path>
-<path matrix="1 0 0 1 36 20" stroke="black" pen="heavier">
+<path matrix="1 0 0 1 88 -24" stroke="black" pen="heavier">
 4 0 0 4 256 540 e
 </path>
-<path matrix="1 0 0 1 52 40" stroke="black" pen="heavier">
+<path matrix="1 0 0 1 92 -36" stroke="black" pen="heavier">
 4 0 0 4 256 540 e
 </path>
-<path matrix="1 0 0 1 60 60" stroke="black" pen="heavier">
+<path matrix="1 0 0 1 104 -28" stroke="black" pen="heavier">
 4 0 0 4 256 540 e
 </path>
-<path matrix="1 0 0 1 68 76" stroke="black" pen="heavier">
+<path matrix="1 0 0 1 116 -16" stroke="black" pen="heavier">
 4 0 0 4 256 540 e
 </path>
-<path matrix="1 0 0 1 80 88" stroke="black" pen="heavier">
+<path matrix="1 0 0 1 128 4" stroke="black" pen="heavier">
 4 0 0 4 256 540 e
 </path>
-<path matrix="1 0 0 1 80 108" stroke="black" pen="heavier">
+<path matrix="1 0 0 1 124 -8" stroke="black" pen="heavier">
 4 0 0 4 256 540 e
 </path>
-<path matrix="1 0 0 1 88 128" stroke="black" pen="heavier">
+<path matrix="1 0 0 1 140 8" stroke="black" pen="heavier">
 4 0 0 4 256 540 e
 </path>
-<path matrix="1 0 0 1 104 124" stroke="black" pen="heavier">
+<path matrix="1 0 0 1 168 4" stroke="black" pen="heavier">
 4 0 0 4 256 540 e
 </path>
-<path matrix="1 0 0 1 112 144" stroke="black" pen="heavier">
+<path matrix="1 0 0 1 148 20" stroke="black" pen="heavier">
 4 0 0 4 256 540 e
 </path>
-<path matrix="1 0 0 1 128 144" stroke="black" pen="heavier">
+<path matrix="1 0 0 1 160 16" stroke="black" pen="heavier">
 4 0 0 4 256 540 e
-</path>
-<path matrix="1 0 0 1 144 132" stroke="black" pen="heavier">
-4 0 0 4 256 540 e
-</path>
-<path matrix="1 0 0 1 156 124" stroke="black" pen="heavier">
-4 0 0 4 256 540 e
-</path>
-<path matrix="1 0 0 1 168 108" stroke="black" pen="heavier">
-4 0 0 4 256 540 e
-</path>
-<path matrix="1 0 0 1 172 92" stroke="black" pen="heavier">
-4 0 0 4 256 540 e
-</path>
-<path matrix="1 0 0 1 188 84" stroke="black" pen="heavier">
-4 0 0 4 256 540 e
-</path>
-<path matrix="1 0 0 1 192 68" stroke="black" pen="heavier">
-4 0 0 4 256 540 e
-</path>
-<path stroke="black" pen="ultrafat">
-192 608 m
-256 464
-320 608
-384 752
-448 608 c
 </path>
 </page>
 </ipe>

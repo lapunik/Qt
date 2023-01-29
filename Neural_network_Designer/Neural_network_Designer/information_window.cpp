@@ -16,15 +16,16 @@ Information_window::Information_window(std::vector<double> e,std::vector<int> N,
     }
 
     mp_text = new QListView();
-    mp_text->setModel(new QStringListModel(text));
+    mp_string_list_model = new QStringListModel(text);
+    mp_text->setModel(mp_string_list_model);
     mp_text->setStyleSheet(QString("QListView{"
                                    "color: rgba(0, 0, 0, 255);"
                                    "background-color: rgba(255, 255, 255, 255);"
                                    "border: none;"
                                    "border-radius: 3px;"
                                    "}"));
-    QScrollBar *s_b = new QScrollBar();
-    s_b->setStyleSheet("QScrollBar:vertical {"
+    scroll_bar = new QScrollBar();
+    scroll_bar->setStyleSheet("QScrollBar:vertical {"
                        "    border: none;"
                        "    background-color: rgba(200, 200, 200, 255);"
                        "}"
@@ -39,7 +40,7 @@ Information_window::Information_window(std::vector<double> e,std::vector<int> N,
                        "    height: 10px;"
                        "}"
                        );
-    mp_text->setVerticalScrollBar(s_b);
+    mp_text->setVerticalScrollBar(scroll_bar);
 
     mp_text->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
@@ -60,9 +61,9 @@ Information_window::Information_window(std::vector<double> e,std::vector<int> N,
 
     connect(mp_button_ok, SIGNAL(clicked()), this, SLOT(ok_button_clicked()));
 
-    QLabel *l = new QLabel();
-    l->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    mp_button_layout->addWidget(l);
+    label = new QLabel();
+    label->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    mp_button_layout->addWidget(label);
     mp_button_layout->addWidget(mp_button_ok);
 
     mp_main_layout->addWidget(mp_text);
@@ -88,6 +89,77 @@ Information_window::Information_window(std::vector<double> e,std::vector<int> N,
 
 Information_window::~Information_window()
 {
+    if(mp_main_layout != nullptr)
+    {
+        delete mp_main_layout;
+    }
+    if( mp_button_layout != nullptr)
+    {
+        delete  mp_button_layout;
+    }
+    if(mp_text != nullptr)
+    {
+        delete mp_text ;
+    }
+    if(mp_string_list_model != nullptr)
+    {
+        delete mp_string_list_model;
+    }
+    if( mp_button_ok != nullptr)
+    {
+        delete  mp_button_ok;
+    }
+    if(scroll_bar != nullptr)
+    {
+        delete scroll_bar;
+    }
+    if(mp_main_widget != nullptr)
+    {
+        delete mp_main_widget;
+    }
+    if(label != nullptr)
+    {
+        delete label;
+    }
+    if( exit_button != nullptr)
+    {
+        delete  exit_button;
+    }
+    if(title != nullptr)
+    {
+        delete title;
+    }
+    if(icon != nullptr)
+    {
+        delete icon;
+    }
+    if(space != nullptr)
+    {
+        delete space;
+    }
+    if(space2 != nullptr)
+    {
+        delete space2;
+    }
+    if(space3 != nullptr)
+    {
+        delete space3;
+    }
+    if(layout_main_horizontal != nullptr)
+    {
+        delete layout_main_horizontal;
+    }
+    if(layout_title_bar != nullptr)
+    {
+        delete layout_title_bar;
+    }
+    if(title_bar_w != nullptr)
+    {
+        delete title_bar_w;
+    }
+
+
+
 
 }
 
@@ -120,11 +192,11 @@ void Information_window::set_title_layout()
     icon->setIconSize(QSize(30,30));
 
 
-    QLabel *space = new QLabel("");
+    space = new QLabel("");
     space->setFixedSize(3,1);
-    QLabel *space2 = new QLabel("");
+    space2 = new QLabel("");
     space2->setFixedSize(3,1);
-    QLabel *space3 = new QLabel("");
+    space3 = new QLabel("");
     space3->setFixedSize(10,1);
 
 
