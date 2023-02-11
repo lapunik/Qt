@@ -22,7 +22,7 @@ public:
         nothing,
     };
 
-    Model_settings();
+    explicit Model_settings();
 
     QVector<QVector<double>> input_data;
     algorithm algo;

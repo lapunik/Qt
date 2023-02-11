@@ -5,6 +5,7 @@ Model_settings::Model_settings()
 
 }
 
+
 Model_settings::algorithm Model_settings::string_to_algorithm(QString al)
 {
 
@@ -54,7 +55,6 @@ int Model_settings::regularization_to_index(regularization reg)
 {
     return reg;
 }
-
 
 Model_settings::regularization Model_settings::string_to_regularization(QString al)
 {
