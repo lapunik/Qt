@@ -36,10 +36,31 @@ Result_widget::Result_widget(int id, QWidget *parent) : QWidget{parent}
 
 Result_widget::~Result_widget()
 {
-//    if( != nullptr)
-//    {
-//        delete ;
-//    }
+
+    if(settings != nullptr)
+    {
+        delete settings;
+    }
+    if(results != nullptr)
+    {
+        delete results;
+    }
+    if(structure != nullptr)
+    {
+        delete structure;
+    }
+    if(tools != nullptr)
+    {
+        delete tools;
+    }
+    if(layout != nullptr)
+    {
+        delete layout;
+    }
+    if(nn_model != nullptr)
+    {
+        delete nn_model;
+    }
 }
 
 void Result_widget::disconnect_save()

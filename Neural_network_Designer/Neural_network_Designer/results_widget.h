@@ -73,7 +73,7 @@ private:
     QListView *mp_coefficients = nullptr;
     void setComboBox(QComboBox *combo, bool disable);
 
-    ScatterPlotSettings* graph_settings;
+    ScatterPlotSettings* graph_settings = nullptr;
     QPixmap graph;
     int best_index = 0;
     int current_index = 0;

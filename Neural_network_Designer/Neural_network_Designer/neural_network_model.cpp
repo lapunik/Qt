@@ -117,16 +117,13 @@ Neural_network_model::Neural_network_model(std::vector<std::vector<function>> ne
 
     // dodělat stochastic!
 
-    //export_graph(x.at(0), { y,y0 }, 1000, 750, name + std::to_string(regularization_range.at(i)) + ".png");
-
     // Tisk času
     //            auto start = std::chrono::high_resolution_clock::now();
     //            auto stop = std::chrono::high_resolution_clock::now();
     //std::cout << "\n\nIt took " << std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count() << " ms.\n\n";
 
     // Převod na logaritmickou osu
-    //std::transform(regularization_range.begin(), regularization_range.end(), regularization_range.begin(), [](double& c) { return std::log10(c); });
-    //export_graph(regularization_range, MSE, 1000, 750, "MSE_to_lambda.png");
+    //std::transform(regularization_range.begin(), regularization_range.end(), regularization_range.begin(), [](double& c) { return std::log10(c); })
 
     // dodělat mBGD
 
@@ -189,9 +186,6 @@ Neural_network_model::Neural_network_model(std::vector<std::vector<function>> ne
     // dodělat mBGD a Moment
 
     // dodělat stochastic!
-
-    //export_graph(x.at(0), { y,y0 }, 1000, 750, name + std::to_string(regularization_range.at(i)) + ".png");
-
     // Tisk času
     //            auto start = std::chrono::high_resolution_clock::now();
     //            auto stop = std::chrono::high_resolution_clock::now();
@@ -199,7 +193,6 @@ Neural_network_model::Neural_network_model(std::vector<std::vector<function>> ne
 
     // Převod na logaritmickou osu
     //std::transform(regularization_range.begin(), regularization_range.end(), regularization_range.begin(), [](double& c) { return std::log10(c); });
-    //export_graph(regularization_range, MSE, 1000, 750, "MSE_to_lambda.png");
 
     // dodělat mBGD
 
@@ -344,7 +337,7 @@ double Neural_network_model::mse(std::vector<double> y0, std::vector<double> y1)
 
     return (std::accumulate(E.begin(), E.end(), 0.0) / E.size())/y0.size();
 }
-std::vector<std::vector<std::vector<double>>> Neural_network_model::initialize_koeficients(std::vector<std::vector<function>> net, int inputs , double w_val, double b_val)
+std::vector<std::vector<std::vector<double>>> Neural_network_model::initialize_koeficients(std::vector<std::vector<function>> net, int inputs = 1 , double w_val = 1.0, double b_val = 1.0)
 {
     std::vector<std::vector<double>> w(net.size());
     std::vector<std::vector<double>> b(net.size());
@@ -400,15 +393,7 @@ std::vector<std::vector<std::vector<double>>> Neural_network_model::initialize_k
 
     return std::vector<std::vector<std::vector<double>>>{w, b};
 }
-std::vector<std::vector<std::vector<double>>> Neural_network_model::initialize_koeficients(std::vector<std::vector<function>> net, int inputs)
-{
-    return initialize_koeficients(net, inputs, 1.0, 1.0);
-}
-std::vector<std::vector<std::vector<double>>> Neural_network_model::initialize_koeficients(std::vector<std::vector<function>> net)
-{
-    return initialize_koeficients(net,1,1.0,1.0);
-}
-std::vector<std::vector<std::vector<double>>> Neural_network_model::initialize_random_koeficients(std::vector<std::vector<function>> net, int inputs, double min, double max)
+std::vector<std::vector<std::vector<double>>> Neural_network_model::initialize_random_koeficients(std::vector<std::vector<function>> net, int inputs = 1, double min = 0.0, double max = 0.1)
 {
     std::vector<std::vector<double>> w(net.size());
     std::vector<std::vector<double>> b(net.size());
@@ -435,15 +420,15 @@ std::vector<std::vector<std::vector<double>>> Neural_network_model::initialize_r
         }
     }
 
-    for (int l = 0; l < net.size(); l++)
+    for (int l = 0; l < static_cast<int>(net.size()); l++)
     {
 
-        for (int n = 0; n < net.at(l).size(); n++)
+        for (int n = 0; n < static_cast<int>(net.at(l).size()); n++)
         {
             b.at(l).push_back(random(rng));
         }
 
-        if (l != net.size() - 1)
+        if (l != static_cast<int>(net.size()) - 1)
         {
 
             net_size = net.at(l).size() * net.at(l + 1).size();
@@ -467,14 +452,6 @@ std::vector<std::vector<std::vector<double>>> Neural_network_model::initialize_r
 
     return std::vector<std::vector<std::vector<double>>>{w, b};
 }
-std::vector<std::vector<std::vector<double>>> Neural_network_model::initialize_random_koeficients(std::vector<std::vector<function>> net, int inputs)
-{
-    return initialize_random_koeficients(net,inputs,0.0,0.1);
-}
-std::vector<std::vector<std::vector<double>>> Neural_network_model::initialize_random_koeficients(std::vector<std::vector<function>> net)
-{
-    return initialize_random_koeficients(net, 1, 0.0, 0.1);
-}
 double Neural_network_model::calculate(function f, double x, double x2)
 {
     return f(x, x2);
@@ -492,7 +469,7 @@ double Neural_network_model::calculate(std::vector<function> functions, double x
 }
 std::vector<double> Neural_network_model::calculate(function f, std::vector<double> x, std::vector<double> x2)
 {
-    for (int i = 0; i < x.size(); i++)
+    for (int i = 0; i < static_cast<int>(x.size()); i++)
     {
         x.at(i) = calculate(f, x.at(i), x2.at(i));
     }
@@ -501,7 +478,7 @@ std::vector<double> Neural_network_model::calculate(function f, std::vector<doub
 }
 std::vector<double> Neural_network_model::calculate(std::vector<function> functions, std::vector<double> x, std::vector<double> x2)
 {
-    for (int i = 0; i < x.size(); i++)
+    for (int i = 0; i < static_cast<int>(x.size()); i++)
     {
         x.at(i) = calculate(functions, x.at(i), x2.at(i));
     }
@@ -530,13 +507,13 @@ std::vector<double> Neural_network_model::calculate(std::vector<double> x, std::
     //w:          koef.at(0).at(l).at((nl2 * results.at(l).size()) + nl1)
     //b:          koef.at(1).at(l).at(nl2))
 
-    for (int l = 0; l < net.size(); l++)
+    for (int l = 0; l < static_cast<int>(net.size()); l++)
     {
         results.at(l + 1).resize(net.at(l).size());
 
         koef_shift = 0;
 
-        for (int nl2 = 0; nl2 < results.at(l + 1).size(); nl2++) // projed celou naslednou vrstvu
+        for (int nl2 = 0; nl2 < static_cast<int>(results.at(l + 1).size()); nl2++) // projed celou naslednou vrstvu
         {
             results.at(l + 1).at(nl2) = results.at(l).at(0);
 
@@ -545,7 +522,7 @@ std::vector<double> Neural_network_model::calculate(std::vector<double> x, std::
             std::transform(results.at(l + 1).at(nl2).begin(), results.at(l + 1).at(nl2).end(), results.at(l + 1).at(nl2).begin(), [w](double& c) { return c * w; }); // první sčítanec
             // vynásobení koefiicentem w
 
-            for (int nl1 = 1; nl1 < results.at(l).size(); nl1++) // projet celou predchozi vrstvu
+            for (int nl1 = 1; nl1 < static_cast<int>(results.at(l).size()); nl1++) // projet celou predchozi vrstvu
             {
                 w = koef.at(0).at(l).at(((nl2 + koef_shift) * results.at(l).size()) + nl1);
 
@@ -569,7 +546,7 @@ std::vector<double> Neural_network_model::calculate(std::vector<double> x, std::
                 std::transform(two_imput_results.begin(), two_imput_results.end(), two_imput_results.begin(), [w](double& c) { return c * w; }); // první sčítanec
                 // vynásobení koefiicentem w
 
-                for (int nl1 = 1; nl1 < results.at(l).size(); nl1++) // projet celou predchozi vrstvu
+                for (int nl1 = 1; nl1 < static_cast<int>(results.at(l).size()); nl1++) // projet celou predchozi vrstvu
                 {
                     w = koef.at(0).at(l).at(((nl2 + koef_shift) * results.at(l).size()) + nl1);
 
@@ -628,13 +605,13 @@ std::vector<double> Neural_network_model::calculate(std::vector<std::vector<doub
     //w:          koef.at(0).at(l).at((nl2 * results.at(l).size()) + nl1)
     //b:          koef.at(1).at(l).at(nl2))
 
-    for (int l = 0; l < net.size(); l++)
+    for (int l = 0; l < static_cast<int>(net.size()); l++)
     {
         results.at(l + 1).resize(net.at(l).size());
 
         koef_shift = 0;
 
-        for (int nl2 = 0; nl2 < results.at(l + 1).size(); nl2++) // projed celou naslednou vrstvu
+        for (int nl2 = 0; nl2 < static_cast<int>(results.at(l + 1).size()); nl2++) // projed celou naslednou vrstvu
         {
             results.at(l + 1).at(nl2) = results.at(l).at(0);
 
@@ -643,7 +620,7 @@ std::vector<double> Neural_network_model::calculate(std::vector<std::vector<doub
             std::transform(results.at(l + 1).at(nl2).begin(), results.at(l + 1).at(nl2).end(), results.at(l + 1).at(nl2).begin(), [w](double& c) { return c * w; }); // první sčítanec
             // vynásobení koefiicentem w
 
-            for (int nl1 = 1; nl1 < results.at(l).size(); nl1++) // projet celou predchozi vrstvu
+            for (int nl1 = 1; nl1 < static_cast<int>(results.at(l).size()); nl1++) // projet celou predchozi vrstvu
             {
                 w = koef.at(0).at(l).at(((nl2 + koef_shift) * results.at(l).size()) + nl1);
 
@@ -667,7 +644,7 @@ std::vector<double> Neural_network_model::calculate(std::vector<std::vector<doub
                 std::transform(two_imput_results.begin(), two_imput_results.end(), two_imput_results.begin(), [w](double& c) { return c * w; }); // první sčítanec
                 // vynásobení koefiicentem w
 
-                for (int nl1 = 1; nl1 < results.at(l).size(); nl1++) // projet celou predchozi vrstvu
+                for (int nl1 = 1; nl1 < static_cast<int>(results.at(l).size()); nl1++) // projet celou predchozi vrstvu
                 {
                     w = koef.at(0).at(l).at(((nl2 + koef_shift) * results.at(l).size()) + nl1);
 
@@ -730,34 +707,8 @@ std::vector<double> Neural_network_model::derivate(std::vector<function> functio
 
     return x;
 }
-std::vector<double> Neural_network_model::partial_derivate(std::vector<double> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, int t, int l, int n)
-{
 
-    double h = 0.0000000000001;
-
-    std::vector<double> y = calculate(x, net, koef);
-
-    koef.at(t).at(l).at(n) = koef.at(t).at(l).at(n) + h;
-
-    std::vector<double> y_h = calculate(x, net, koef);
-
-    std::transform(y_h.begin(), y_h.end(), y.begin(), y_h.begin(), [h](double& a, double& b) { return Neural_network_model::pow2(a - b, 0) / h; });
-
-    return y_h;
-}
-double Neural_network_model::derivate_mse(std::vector<double> y0, std::vector<std::vector<double>> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, int t, int l, int n)
-{
-    double e = mse(y0, calculate(x, net, koef));
-
-    double h = 0.0000000000001;
-
-    koef.at(t).at(l).at(n) = koef.at(t).at(l).at(n) + h;
-
-    double e_h = mse(y0, calculate(x, net, koef));
-
-    return ((e_h - e) / h);
-}
-double Neural_network_model::derivate_mse(std::vector<double> y0, std::vector<std::vector<double>> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, int t, int l, int n, double lambda)
+double Neural_network_model::derivate_mse(std::vector<double> y0, std::vector<std::vector<double>> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, int t, int l, int n, double lambda = 0.0)
 {
     double koef_sum = 0;
 
@@ -782,14 +733,6 @@ double Neural_network_model::derivate_mse(std::vector<double> y0, std::vector<st
 
     return ((e_h - e) / h);
 }
-double Neural_network_model::derivate_mse(std::vector<double> y0, std::vector<double> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, int t, int l, int n)
-{
-    return derivate_mse(y0, std::vector<std::vector<double>>{ x }, net, koef, t, l, n);
-}
-double Neural_network_model::derivate_mse(std::vector<double> y0, std::vector<double> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, int t, int l, int n, double lambda)
-{
-    return derivate_mse(y0, std::vector<std::vector<double>>{ x }, net, koef, t, l, n, lambda);
-}
 std::vector<std::vector<std::vector<double>>> Neural_network_model::ADAM(std::vector<double> y0, std::vector<std::vector<double>> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N, double lambda)
 {
 
@@ -802,8 +745,8 @@ std::vector<std::vector<std::vector<double>>> Neural_network_model::ADAM(std::ve
     double beta1_1 = 1 - beta1;
     double beta2_1 = 1 - beta2;
 
-    std::vector<std::vector<std::vector<double>>>  m = initialize_koeficients(net, x.size(), 0.0, 0.0);
-    std::vector<std::vector<std::vector<double>>>  v = initialize_koeficients(net, x.size(), 0.0, 0.0);
+    std::vector<std::vector<std::vector<double>>>  m = initialize_koeficients(net, x.size(), 1.0, 1.0);
+    std::vector<std::vector<std::vector<double>>>  v = initialize_koeficients(net, x.size(), 1.0, 1.0);
 
     for (int i = 0; i < N; i++)
     {
@@ -848,15 +791,7 @@ std::vector<std::vector<std::vector<double>>> Neural_network_model::ADAM(std::ve
 
     return koef;
 }
-std::vector<std::vector<std::vector<double>>> Neural_network_model::ADAM(std::vector<double> y0, std::vector<double> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N, double lambda)
-{
-    return ADAM(y0, std::vector<std::vector<double>>{ x }, net, koef, alpha, tau, N, lambda);
-}
-std::vector<std::vector<std::vector<double>>> Neural_network_model::ADAM(std::vector<double> y0, std::vector<double> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N)
-{
-    return ADAM(y0, x, net, koef, alpha, tau, N, 0.0);
-}
-std::vector<std::vector<std::vector<double>>> Neural_network_model::stochastic_ADAM(std::vector<double> y0, std::vector<std::vector<double>> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N, double ratio, double lambda)
+std::vector<std::vector<std::vector<double>>> Neural_network_model::stochastic_ADAM(std::vector<double> y0, std::vector<std::vector<double>> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N, double ratio, double lambda = 0.0)
 {
     std::random_device dev;
     std::mt19937 rng(dev());
@@ -878,116 +813,6 @@ std::vector<std::vector<std::vector<double>>> Neural_network_model::stochastic_A
     }
 
     return ADAM(y0, x, net, koef, alpha, tau, N, lambda);
-}
-std::vector<std::vector<std::vector<double>>> Neural_network_model::stochastic_ADAM(std::vector<double> y0, std::vector<std::vector<double>> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N, double ratio)
-{
-    return stochastic_ADAM(y0, x, net, koef, alpha, tau, N,ratio,0.0);
-}
-std::vector<std::vector<std::vector<double>>> Neural_network_model::stochastic_ADAM(std::vector<double> y0, std::vector<double> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N, double ratio, double lambda)
-{
-    return stochastic_ADAM(y0, std::vector<std::vector<double>>{ x }, net, koef, alpha, tau, N, ratio, lambda);
-}
-std::vector<std::vector<std::vector<double>>> Neural_network_model::stochastic_ADAM(std::vector<double> y0, std::vector<double> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N, double ratio)
-{
-    return stochastic_ADAM(y0, x, net, koef, alpha, tau, N, ratio, 0.0);
-}
-/*std::vector<double> generate(double min, double max, int N)
-{
-    std::vector<double> x;
-    double r;
-    for (int i = 0; i <= N; i++)
-    {
-        r = (((max - min) /  static_cast<double>(N)) *  static_cast<double>(i)) + min;
-
-        x.push_back(r);
-    }
-
-    return x;
-}
-std::vector<double> noise_generate(std::vector<double> x, double sd)
-{
-    std::uniform_real_distribution<double> random(0.0, sd);
-    std::default_random_engine rng;
-
-    for (int i = 0; i < x.size(); i++)
-    {
-        if (random(rng) > sd / 2.0)
-        {
-            x.at(i) += random(rng);
-        }
-        else
-        {
-            x.at(i) -= random(rng);
-        }
-    }
-
-    return x;
-}*/
-void Neural_network_model::export_graph(std::vector<double> x, std::vector<double> y, int size_x, int size_y, std::string name)
-{
-    StringReference* errorMessage = new StringReference();
-    RGBABitmapImageReference* imageReference = CreateRGBABitmapImageReference();
-
-    DrawScatterPlot(imageReference, size_x, size_y, &x, &y, errorMessage);
-
-    WriteToFile(ConvertToPNG(imageReference->image), name);
-    DeleteImage(imageReference->image);
-
-    if(errorMessage != nullptr)
-    {
-        delete errorMessage;
-        errorMessage = nullptr;
-    }
-}
-void Neural_network_model::export_graph(std::vector<double> x, std::vector<std::vector<double>> y, int size_x, int size_y, std::string name)
-{
-    StringReference* errorMessage = new StringReference();
-    RGBABitmapImageReference* imageReference = CreateRGBABitmapImageReference();
-
-    std::vector<ScatterPlotSeries*> series;
-
-    std::vector<int> colors{ 0,0,0 };
-
-    for (int i = 0; i < static_cast<int>(y.size()); i++)
-    {
-        series.push_back(GetDefaultScatterPlotSeriesSettings());
-        series.at(i)->xs = &x;
-        series.at(i)->ys = &y.at(i);
-        series.at(i)->linearInterpolation = (i==1?false:true);
-        series.at(i)->pointType = (i == 1 ? toVector(L"circles") : toVector(L"dots"));
-        //series.at(i)->lineThickness = 2;
-
-        series.at(i)->color = CreateRGBColor(colors.at(0), colors.at(1), colors.at(2));
-
-        colors = change_color(colors);
-
-    }
-
-    ScatterPlotSettings* settings = GetDefaultScatterPlotSettings();
-    settings->width = size_x;
-    settings->height = size_y;
-    settings->autoBoundaries = true;
-    settings->autoPadding = true;
-    settings->title = toVector(L"");
-    settings->xLabel = toVector(L"");
-    settings->yLabel = toVector(L"");
-
-    for (int i = 0; i < static_cast<int>(y.size()); i++)
-    {
-        settings->scatterPlotSeries->push_back(series.at(i));
-    }
-
-    DrawScatterPlotFromSettings(imageReference, settings, errorMessage);
-
-    WriteToFile(ConvertToPNG(imageReference->image), name);
-    DeleteImage(imageReference->image);
-
-    if(errorMessage != nullptr)
-    {
-        delete errorMessage;
-        errorMessage = nullptr;
-    }
-
 }
 std::vector<int> Neural_network_model::change_color(std::vector<int> color)
 {
@@ -1102,7 +927,6 @@ std::string Neural_network_model::function_to_string(function f)
         return "error";
     }
 }
-
 function Neural_network_model::string_to_function(std::string f)
 {
 

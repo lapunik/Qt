@@ -6,7 +6,134 @@ Results_widget::Results_widget(QWidget *parent) : QWidget{parent}
     current_g = g_all;
 }
 
-Results_widget::~Results_widget(){}
+Results_widget::~Results_widget()
+{
+    if(graph_title != nullptr)
+    {
+        delete graph_title;
+    }
+    if(graph_x_label != nullptr)
+    {
+        delete graph_x_label;
+    }
+    if(graph_y_label != nullptr)
+    {
+        delete graph_y_label;
+    }
+    if(mp_model_combo != nullptr)
+    {
+        delete mp_model_combo;
+    }
+    if(mp_coefficients != nullptr)
+    {
+        delete mp_coefficients;
+    }
+    if(graph_settings != nullptr)
+    {
+        delete graph_settings;
+    }
+    if(graph_l != nullptr)
+    {
+        delete graph_l;
+    }
+    if(counter_input != nullptr)
+    {
+        delete counter_input;
+    }
+    if(right_input != nullptr)
+    {
+        delete right_input;
+    }
+    if(left_input != nullptr)
+    {
+        delete left_input;
+    }
+    if(counter != nullptr)
+    {
+        delete counter;
+    }
+    if(right != nullptr)
+    {
+        delete right;
+    }
+    if(left != nullptr)
+    {
+        delete left;
+    }
+    if(best_label != nullptr)
+    {
+        delete best_label;
+    }
+    if(best_button != nullptr)
+    {
+        delete best_button;
+    }
+    if(download_all != nullptr)
+    {
+        delete download_all;
+    }
+    if(download != nullptr)
+    {
+        delete download;
+    }
+    if(reg_NonZC != nullptr)
+    {
+        delete reg_NonZC;
+    }
+    if(reg_mse != nullptr)
+    {
+        delete reg_mse;
+    }
+    if(parret != nullptr)
+    {
+        delete parret;
+    }
+    if(best != nullptr)
+    {
+        delete best;
+    }
+    if(all != nullptr)
+    {
+        delete all;
+    }
+    if(control_input_layout != nullptr)
+    {
+        delete control_input_layout;
+    }
+    if(graph_l_layout != nullptr)
+    {
+        delete graph_l_layout;
+    }
+    if(graph_V_layout != nullptr)
+    {
+        delete graph_V_layout;
+    }
+    if(graph_chosing != nullptr)
+    {
+        delete graph_chosing;
+    }
+    if(control_layout != nullptr)
+    {
+        delete control_layout;
+    }
+    if(download_layout != nullptr)
+    {
+        delete download_layout;
+    }
+    if(download_all_layout != nullptr)
+    {
+        delete download_all_layout;
+    }
+    if(main_V_layout != nullptr)
+    {
+        delete main_V_layout;
+    }
+    if(main_H_layout != nullptr)
+    {
+        delete main_H_layout;
+    }
+
+}
 
 void Results_widget::set_window()
 {

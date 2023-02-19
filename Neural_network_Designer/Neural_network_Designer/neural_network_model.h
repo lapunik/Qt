@@ -82,14 +82,11 @@ private:
     double derivate(std::vector<function> functions, double x, double x2);
     std::vector<double> derivate(function f, std::vector<double> x, std::vector<double> x2);
     std::vector<double> derivate(std::vector<function> functions, std::vector<double> x, std::vector<double> x2);
-    std::vector<double> partial_derivate(std::vector<double> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, int t, int l, int n);
     double derivate_mse(std::vector<double> y0, std::vector<std::vector<double>> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, int t, int l, int n);
     double derivate_mse(std::vector<double> y0, std::vector<std::vector<double>> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, int t, int l, int n, double lambda);
     double derivate_mse(std::vector<double> y0, std::vector<double> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, int t, int l, int n);
     double derivate_mse(std::vector<double> y0, std::vector<double> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, int t, int l, int n, double lambda);
-    std::vector<std::vector<std::vector<double>>> ADAM(std::vector<double> y0, std::vector<std::vector<double>> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N, double lambda = 0);
-    std::vector<std::vector<std::vector<double>>> ADAM(std::vector<double> y0, std::vector<double> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N, double lambda);
-    std::vector<std::vector<std::vector<double>>> ADAM(std::vector<double> y0, std::vector<double> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N);
+    std::vector<std::vector<std::vector<double>>> ADAM(std::vector<double> y0, std::vector<std::vector<double>> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N, double lambda);
     std::vector<std::vector<std::vector<double>>> stochastic_ADAM(std::vector<double> y0, std::vector<std::vector<double>> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N, double ratio, double lambda);
     std::vector<std::vector<std::vector<double>>> stochastic_ADAM(std::vector<double> y0, std::vector<std::vector<double>> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N, double ratio);
     std::vector<std::vector<std::vector<double>>> stochastic_ADAM(std::vector<double> y0, std::vector<double> x, std::vector<std::vector<function>> net, std::vector<std::vector<std::vector<double>>> koef, double alpha, double tau, int N, double ratio, double lambda);

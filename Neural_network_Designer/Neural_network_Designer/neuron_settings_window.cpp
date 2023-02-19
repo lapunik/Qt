@@ -124,11 +124,7 @@ Neuron_settings_window::Neuron_settings_window(Neuron *n ,QWidget *parent): QDia
 }
 
 Neuron_settings_window::~Neuron_settings_window()
-{/*
-    if(neuron != nullptr)
-    {
-        delete neuron;
-    }
+{
     if(exit_button != nullptr)
     {
         delete exit_button;
@@ -192,7 +188,7 @@ Neuron_settings_window::~Neuron_settings_window()
     if(layout_main_horizontal != nullptr)
     {
         delete layout_main_horizontal;
-    }*/
+    }
 
 }
 

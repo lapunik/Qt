@@ -18,62 +18,135 @@ Settings_widget::Settings_widget(QWidget *parent) : QWidget{parent}
 Settings_widget::~Settings_widget()
 {
 
-    if(main_H_layout != nullptr)
-    {
-        main_H_layout = nullptr;
-    }
-    if(main_V_layout != nullptr)
-    {
-        main_V_layout = nullptr;
-    }
     if(main_V_layout2 != nullptr)
     {
-        main_V_layout2 = nullptr;
+        delete main_V_layout2 ;
     }
     if(algorithm_layout != nullptr)
     {
-        algorithm_layout = nullptr;
+        delete algorithm_layout ;
     }
     if(stochastic_layout != nullptr)
     {
-        stochastic_layout = nullptr;
+        delete stochastic_layout ;
     }
     if(learning_coef_layout != nullptr)
     {
-        learning_coef_layout = nullptr;
+        delete learning_coef_layout ;
     }
     if(max_iterations_layout != nullptr)
     {
-        max_iterations_layout = nullptr;
+        delete max_iterations_layout ;
     }
     if(tolerance_layout != nullptr)
     {
-        tolerance_layout = nullptr;
+        delete tolerance_layout ;
     }
     if(input_data_layout != nullptr)
     {
-        input_data_layout = nullptr;
+        delete input_data_layout ;
     }
     if(regularization_layout != nullptr)
     {
-        regularization_layout = nullptr;
+        delete regularization_layout ;
     }
     if(regularization_setting_iterations_layout != nullptr)
     {
-        regularization_setting_iterations_layout = nullptr;
+        delete regularization_setting_iterations_layout ;
+    }
+    if(regularization_setting_iterations_cycles_layout != nullptr)
+    {
+        delete regularization_setting_iterations_cycles_layout ;
+    }
+    if(main_H_layout != nullptr)
+    {
+        delete main_H_layout;
+    }
+    if(main_V_layout != nullptr)
+    {
+        delete main_V_layout;
     }
     if(algorithm_combo != nullptr)
     {
-        algorithm_combo = nullptr;
+        delete algorithm_combo ;
     }
     if(stochastic_check != nullptr)
     {
-        stochastic_check = nullptr;
+       delete  stochastic_check ;
     }
     if(stochastic_spin != nullptr)
     {
-        stochastic_spin = nullptr;
+       delete  stochastic_spin ;
     }
+    if(stochastic_label != nullptr)
+    {
+         delete stochastic_label;
+    }
+    if(learning_coef_spin != nullptr)
+    {
+        delete learning_coef_spin;
+    }
+    if(max_iterations_check != nullptr)
+    {
+         delete max_iterations_check;
+    }
+    if(max_iterations_spin != nullptr)
+    {
+         delete max_iterations_spin;
+    }
+    if(tolerance_check != nullptr)
+    {
+         delete tolerance_check;
+    }
+    if(tolerance_spin != nullptr)
+    {
+         delete tolerance_spin;
+    }
+    if(input_data_button != nullptr)
+    {
+         delete input_data_button;
+    }
+    if(input_data_label != nullptr)
+    {
+         delete input_data_label;
+    }
+    if(regularization_combo != nullptr)
+    {
+          delete regularization_combo;
+    }
+    if(regularization_check != nullptr)
+    {
+          delete regularization_check ;
+    }
+    if(regularization_spin_from != nullptr)
+    {
+          delete regularization_spin_from;
+    }
+    if(regularization_spin_to != nullptr)
+    {
+          delete regularization_spin_to;
+    }
+    if(regularization_label_from != nullptr)
+    {
+          delete regularization_label_from;
+    }
+    if(regularization_label_to != nullptr)
+    {
+          delete regularization_label_to;
+    }
+    if(regularization_label_cycles != nullptr)
+    {
+          delete regularization_label_cycles;
+    }
+    if(regularization_spin_cycles != nullptr)
+    {
+          delete regularization_spin_cycles;
+    }
+    if(calculate_button != nullptr)
+    {
+          delete calculate_button;
+    }
+
 
 }
 

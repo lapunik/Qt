@@ -89,49 +89,42 @@ Information_window::Information_window(std::vector<double> e,std::vector<int> N,
 
 Information_window::~Information_window()
 {
-    if(mp_main_layout != nullptr)
+
+    if(scroll_bar != nullptr)
     {
-        delete mp_main_layout;
-    }
-    if( mp_button_layout != nullptr)
-    {
-        delete  mp_button_layout;
+        delete scroll_bar;
     }
     if(mp_text != nullptr)
     {
         delete mp_text ;
     }
-    if(mp_string_list_model != nullptr)
+    if( mp_button_layout != nullptr)
     {
-        delete mp_string_list_model;
+        delete  mp_button_layout;
+    }
+    if(mp_main_layout != nullptr)
+    {
+        delete mp_main_layout;
+    }
+    if(layout_title_bar != nullptr)
+    {
+        delete layout_title_bar;
     }
     if( mp_button_ok != nullptr)
     {
         delete  mp_button_ok;
     }
-    if(scroll_bar != nullptr)
+    if(label != nullptr)
     {
-        delete scroll_bar;
+        delete label;
     }
     if(mp_main_widget != nullptr)
     {
         delete mp_main_widget;
     }
-    if(label != nullptr)
+    if(mp_string_list_model != nullptr)
     {
-        delete label;
-    }
-    if( exit_button != nullptr)
-    {
-        delete  exit_button;
-    }
-    if(title != nullptr)
-    {
-        delete title;
-    }
-    if(icon != nullptr)
-    {
-        delete icon;
+        delete mp_string_list_model;
     }
     if(space != nullptr)
     {
@@ -145,20 +138,26 @@ Information_window::~Information_window()
     {
         delete space3;
     }
-    if(layout_main_horizontal != nullptr)
+    if(title != nullptr)
     {
-        delete layout_main_horizontal;
+        delete title;
     }
-    if(layout_title_bar != nullptr)
+    if(icon != nullptr)
     {
-        delete layout_title_bar;
+        delete icon;
+    }
+    if( exit_button != nullptr)
+    {
+        delete  exit_button;
     }
     if(title_bar_w != nullptr)
     {
         delete title_bar_w;
     }
-
-
+    if(layout_main_horizontal != nullptr)
+    {
+        delete layout_main_horizontal;
+    }
 
 
 }
